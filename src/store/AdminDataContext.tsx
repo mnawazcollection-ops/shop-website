@@ -83,12 +83,12 @@ interface AdminDataContextType {
 
 const AdminDataContext = createContext<AdminDataContextType | undefined>(undefined);
 
-const PREFIX = "sir_ihsan_admin_";
+const PREFIX = "mnawaz_admin_";
 
 function getInitialData<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
   try {
-    const item = localStorage.getItem(`${PREFIX}${key}`);
+    const item = localStorage.getItem(`${PREFIX}${key}`) || localStorage.getItem(`sir_ihsan_admin_${key}`);
     return item ? JSON.parse(item) : fallback;
   } catch {
     return fallback;

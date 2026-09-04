@@ -15,13 +15,13 @@ interface AdminAuthContextType {
 
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
-const STORAGE_KEY = "sir_ihsan_admin_session";
+const STORAGE_KEY = "mnawaz_admin_session";
 
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AdminUser | null>(() => {
     if (typeof window === "undefined") return initialAdminUser;
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("sir_ihsan_admin_session");
       if (stored) return JSON.parse(stored);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(initialAdminUser));
       return initialAdminUser;
