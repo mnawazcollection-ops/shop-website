@@ -28,8 +28,7 @@ export default function CartPage() {
   } | null>(null);
   const [couponError, setCouponError] = useState("");
   const [couponSuccess, setCouponSuccess] = useState("");
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+  const [checkoutSuccess] = useState(false);
 
   // Discount calculation
   const discountAmount = appliedDiscount

@@ -8,12 +8,6 @@ import {
   Edit3,
   Trash2,
   FolderTree,
-  ExternalLink,
-  Check,
-  X,
-  Layers,
-  Sparkles,
-  ArrowRight,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";

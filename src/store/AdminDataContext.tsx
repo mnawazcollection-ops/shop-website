@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
   AdminProduct,
   AdminCategory,
@@ -85,49 +85,26 @@ const AdminDataContext = createContext<AdminDataContextType | undefined>(undefin
 
 const PREFIX = "sir_ihsan_admin_";
 
+function getInitialData<T>(key: string, fallback: T): T {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const item = localStorage.getItem(`${PREFIX}${key}`);
+    return item ? JSON.parse(item) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export function AdminDataProvider({ children }: { children: React.ReactNode }) {
-  const [products, setProducts] = useState<AdminProduct[]>(initialAdminProducts);
-  const [categories, setCategories] = useState<AdminCategory[]>(initialAdminCategories);
-  const [orders, setOrders] = useState<AdminOrder[]>(initialAdminOrders);
-  const [customers, setCustomers] = useState<AdminCustomer[]>(initialAdminCustomers);
-  const [coupons, setCoupons] = useState<AdminCoupon[]>(initialAdminCoupons);
-  const [banners, setBanners] = useState<AdminBanner[]>(initialAdminBanners);
-  const [reviews, setReviews] = useState<AdminReview[]>(initialAdminReviews);
-  const [settings, setSettings] = useState<AdminSettings>(initialAdminSettings);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Initialize from LocalStorage or seed with mock data
-  useEffect(() => {
-    try {
-      const p = localStorage.getItem(`${PREFIX}products`);
-      if (p) setProducts(JSON.parse(p));
-
-      const c = localStorage.getItem(`${PREFIX}categories`);
-      if (c) setCategories(JSON.parse(c));
-
-      const o = localStorage.getItem(`${PREFIX}orders`);
-      if (o) setOrders(JSON.parse(o));
-
-      const cu = localStorage.getItem(`${PREFIX}customers`);
-      if (cu) setCustomers(JSON.parse(cu));
-
-      const cp = localStorage.getItem(`${PREFIX}coupons`);
-      if (cp) setCoupons(JSON.parse(cp));
-
-      const b = localStorage.getItem(`${PREFIX}banners`);
-      if (b) setBanners(JSON.parse(b));
-
-      const r = localStorage.getItem(`${PREFIX}reviews`);
-      if (r) setReviews(JSON.parse(r));
-
-      const s = localStorage.getItem(`${PREFIX}settings`);
-      if (s) setSettings(JSON.parse(s));
-    } catch (e) {
-      console.warn("Failed to load admin data from localStorage", e);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const [products, setProducts] = useState<AdminProduct[]>(() => getInitialData("products", initialAdminProducts));
+  const [categories, setCategories] = useState<AdminCategory[]>(() => getInitialData("categories", initialAdminCategories));
+  const [orders, setOrders] = useState<AdminOrder[]>(() => getInitialData("orders", initialAdminOrders));
+  const [customers, setCustomers] = useState<AdminCustomer[]>(() => getInitialData("customers", initialAdminCustomers));
+  const [coupons, setCoupons] = useState<AdminCoupon[]>(() => getInitialData("coupons", initialAdminCoupons));
+  const [banners, setBanners] = useState<AdminBanner[]>(() => getInitialData("banners", initialAdminBanners));
+  const [reviews, setReviews] = useState<AdminReview[]>(() => getInitialData("reviews", initialAdminReviews));
+  const [settings, setSettings] = useState<AdminSettings>(() => getInitialData("settings", initialAdminSettings));
+  const [isLoading] = useState(false);
 
   // Save changes helpers
   const saveProducts = (updated: AdminProduct[]) => {
@@ -291,11 +268,12 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
       cancelled: "Order Cancelled",
     };
 
+    const label = statusLabels[status] || status;
     const updated = orders.map((o) => {
       if (o.id !== orderId) return o;
 
       const updatedTimeline = o.timeline.map((evt) => {
-        if (evt.title.toLowerCase().includes(status.toLowerCase())) {
+        if (evt.title.toLowerCase().includes(status.toLowerCase()) || evt.title === label) {
           return { ...evt, completed: true, current: true, date: new Date().toLocaleString() };
         }
         return evt;

@@ -6,23 +6,15 @@ import Image from "next/image";
 import {
   Plus,
   Search,
-  Filter,
-  SlidersHorizontal,
-  ArrowUpDown,
-  MoreVertical,
   Edit3,
   Copy,
   Trash2,
-  Eye,
   Star,
   CheckSquare,
   Square,
   ChevronLeft,
   ChevronRight,
   Download,
-  AlertTriangle,
-  Layers,
-  Sparkles,
   ExternalLink,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
@@ -52,7 +44,6 @@ export default function ProductsPage() {
 
   // Selection & Bulk Actions
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [bulkAction, setBulkAction] = useState("");
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -332,7 +323,7 @@ export default function ProductsPage() {
             <span className="text-stone-400">Sort by:</span>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e) => setSortBy(e.target.value as "newest" | "price-asc" | "price-desc" | "stock-asc")}
               className="bg-transparent text-stone-700 font-medium focus:outline-none cursor-pointer"
             >
               <option value="newest">Recently Crafted (Newest)</option>

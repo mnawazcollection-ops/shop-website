@@ -2,24 +2,19 @@
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Star,
   CheckCircle,
   XCircle,
   Trash2,
   Search,
-  Filter,
-  Eye,
-  MessageSquare,
   AlertCircle,
-  ExternalLink,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import StatusBadge from "@/components/admin/StatusBadge";
-import { AdminReview } from "@/types/admin";
+import type { AdminReview } from "@/types/admin";
 
 export default function ReviewsPage() {
   const { reviews, approveReview, rejectReview, toggleFeatureReview, deleteReview } = useAdminData();
@@ -213,7 +208,7 @@ export default function ReviewsPage() {
                     <td className="py-3.5 px-4 max-w-sm">
                       <p className="font-semibold text-stone-900 text-xs truncate">{rev.title}</p>
                       <p className="text-xs text-stone-500 line-clamp-2 mt-0.5 leading-relaxed">
-                        "{rev.content}"
+                        &quot;{rev.content}&quot;
                       </p>
                     </td>
 

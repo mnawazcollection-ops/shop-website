@@ -1,23 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowLeft,
-  Clock,
   Printer,
   ShieldCheck,
   Truck,
   Package,
   User,
   MapPin,
-  CreditCard,
   CheckCircle2,
   AlertCircle,
-  Sparkles,
-  DollarSign,
   Send,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
@@ -27,7 +23,6 @@ import { AdminOrder } from "@/types/admin";
 
 export default function OrderDetailsPage() {
   const params = useParams();
-  const router = useRouter();
   const { orders, updateOrderStatus, updateOrderPaymentStatus, updateOrderNotes, isLoading } =
     useAdminData();
   const { addToast } = useAdminToast();
@@ -217,7 +212,6 @@ export default function OrderDetailsPage() {
             {timelineStages.map((stage, idx) => {
               const isPast = currentStageIndex > idx;
               const isCurrent = currentStageIndex === idx;
-              const isFuture = currentStageIndex < idx;
 
               return (
                 <div key={stage.key} className="flex flex-col sm:items-center text-left sm:text-center">
@@ -509,7 +503,7 @@ export default function OrderDetailsPage() {
               Vault & Transit Guarantee
             </div>
             <p className="text-xs text-stone-300 leading-relaxed">
-              Every high-jewelry shipment is fully insured by Lloyd's of London syndicates and requires
+              Every high-jewelry shipment is fully insured by Lloyd&apos;s of London syndicates and requires
               in-person identity verification upon handover.
             </p>
           </div>

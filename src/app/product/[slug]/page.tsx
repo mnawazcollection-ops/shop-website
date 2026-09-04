@@ -23,37 +23,33 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.slug === slug);
 
   // Recently viewed (client-side localStorage)
-  const [recentlyViewed, setRecentlyViewed] = useState<typeof products>([]);
-
-  useEffect(() => {
-    if (!product) return;
-
-    // Get recently viewed from localStorage
+  const [recentlyViewed] = useState<typeof products>(() => {
+    if (typeof window === "undefined" || !product) return [];
     try {
       const stored = localStorage.getItem("sir-ihsan-recently-viewed");
       const viewed: string[] = stored ? JSON.parse(stored) : [];
-
-      // Add current product to front, dedupe, limit to 8
-      const updated = [
-        product.slug,
-        ...viewed.filter((s) => s !== product.slug),
-      ].slice(0, 8);
-
-      localStorage.setItem(
-        "sir-ihsan-recently-viewed",
-        JSON.stringify(updated)
-      );
-
-      // Build recently viewed products (excluding current)
-      const recentProducts = updated
+      return viewed
         .filter((s) => s !== product.slug)
         .map((s) => products.find((p) => p.slug === s))
         .filter(Boolean)
         .slice(0, 4) as typeof products;
-
-      setRecentlyViewed(recentProducts);
     } catch {
-      // localStorage not available
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    if (!product) return;
+    try {
+      const stored = localStorage.getItem("sir-ihsan-recently-viewed");
+      const viewed: string[] = stored ? JSON.parse(stored) : [];
+      const updated = [
+        product.slug,
+        ...viewed.filter((s) => s !== product.slug),
+      ].slice(0, 8);
+      localStorage.setItem("sir-ihsan-recently-viewed", JSON.stringify(updated));
+    } catch {
+      // localStorage error fallback
     }
   }, [product]);
 
@@ -102,8 +98,43 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   const allRelated = [...relatedProducts, ...fillProducts];
 
+  const productJsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.image.startsWith("http") ? product.image : `https://sir-ihsan-jewelry.com${product.image}`,
+    "description": product.shortDescription || product.description,
+    "sku": product.sku || `SIJ-${product.id}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "Sir Ihsan"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": `https://sir-ihsan-jewelry.com/product/${product.slug}`,
+      "priceCurrency": "USD",
+      "price": product.price,
+      "availability": product.inStock !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Sir Ihsan Luxury Jewelry"
+      }
+    },
+    ...(product.rating ? {
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": product.rating,
+        "reviewCount": product.reviewCount || 1
+      }
+    } : {})
+  };
+
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Breadcrumb */}
       <div className="bg-[#FAF7F4] border-b border-[#f0ece5]">
         <div className="max-w-[1400px] mx-auto px-6 py-4">

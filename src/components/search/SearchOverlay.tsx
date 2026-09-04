@@ -1,19 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearch } from "@/store/StoreContext";
 import { products } from "@/data";
-import { Product } from "@/types";
 
 export default function SearchOverlay() {
   const { isSearchOpen, setSearchOpen } = useSearch();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const handleClose = () => {
+    setQuery("");
+    setSearchOpen(false);
+  };
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -21,31 +24,27 @@ export default function SearchOverlay() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
-      setQuery("");
-      setResults([]);
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isSearchOpen]);
 
-  useEffect(() => {
-    if (query.trim().length < 2) {
-      setResults([]);
-      return;
-    }
+  const results = useMemo(() => {
+    if (query.trim().length < 2) return [];
     const q = query.toLowerCase();
-    const matched = products.filter(
+    return products.filter(
       (p) =>
         p.name.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q) ||
         p.tags?.some((t) => t.toLowerCase().includes(q))
     );
-    setResults(matched);
   }, [query]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      setSearchOpen(false);
+      handleClose();
       router.push(`/search?q=${encodeURIComponent(query.trim())}`);
     }
   };
@@ -59,7 +58,7 @@ export default function SearchOverlay() {
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={() => setSearchOpen(false)}
+        onClick={handleClose}
       />
 
       {/* Search panel */}
@@ -90,7 +89,7 @@ export default function SearchOverlay() {
           )}
           <button
             type="button"
-            onClick={() => setSearchOpen(false)}
+            onClick={handleClose}
             className="px-5 py-5 text-[12px] uppercase tracking-wider text-[#888] hover:text-[#D97706] font-bold border-l border-[#eee] transition-colors"
           >
             Close

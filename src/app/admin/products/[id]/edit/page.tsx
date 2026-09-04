@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, AlertCircle } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
@@ -9,7 +8,6 @@ import ProductForm from "@/components/admin/ProductForm";
 
 export default function EditProductPage() {
   const params = useParams();
-  const router = useRouter();
   const { products, isLoading } = useAdminData();
 
   const productId = params?.id as string;

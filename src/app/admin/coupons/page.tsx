@@ -3,22 +3,14 @@
 import React, { useState } from "react";
 import {
   Plus,
-  Percent,
-  DollarSign,
-  Calendar,
   Trash2,
   Edit3,
-  CheckCircle2,
-  AlertCircle,
   Copy,
-  Tag,
-  ShieldCheck,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 import SlideOverDrawer from "@/components/admin/SlideOverDrawer";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
-import StatusBadge from "@/components/admin/StatusBadge";
 import { AdminCoupon } from "@/types/admin";
 
 export default function CouponsPage() {

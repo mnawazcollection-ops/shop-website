@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
 
@@ -141,60 +141,109 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
-    const randomSuffix = Math.floor(10000 + Math.random() * 90000);
-    const orderId = `SIJ-2026-${randomSuffix}`;
-
-    const orderData = {
-      orderId,
-      createdAt: new Date().toISOString(),
-      customer: {
-        email,
-        phone,
-        firstName,
-        lastName,
-        country,
-        address1,
-        address2,
-        city,
-        state,
-        zip,
-      },
-      shipping: selectedShipping,
-      payment: {
-        method: paymentMethod,
-        cardLast4: cardNumber ? cardNumber.replace(/\s+/g, "").slice(-4) : "8821",
-      },
-      items: items.map((i) => ({
-        id: i.product.id,
-        name: i.product.name,
-        slug: i.product.slug,
-        image: i.product.image,
-        price: i.product.price,
-        quantity: i.quantity,
-        variants: i.selectedVariants,
-      })),
-      subtotal: cartSubtotal,
-      discount: discountAmount,
-      shippingCost: selectedShipping.price,
-      total,
-    };
-
-    // Save to localStorage
     try {
-      const existing = localStorage.getItem("sir-ihsan-orders");
-      const orders = existing ? JSON.parse(existing) : [];
-      orders.unshift(orderData);
-      localStorage.setItem("sir-ihsan-orders", JSON.stringify(orders));
-      localStorage.setItem("sir-ihsan-latest-order", JSON.stringify(orderData));
-    } catch {
-      // ignore storage errors
-    }
+      const payload = {
+        items: items.map((i) => ({
+          id: i.product.id,
+          quantity: i.quantity,
+          selectedVariants: i.selectedVariants,
+        })),
+        customer: {
+          email,
+          phone,
+          firstName,
+          lastName,
+          country,
+          address1,
+          address2,
+          city,
+          state,
+          zip,
+        },
+        shippingMethod,
+        couponCode: appliedDiscount?.code,
+        paymentMethod,
+        cardLast4: cardNumber ? cardNumber.replace(/\s+/g, "").slice(-4) : undefined,
+      };
 
-    setTimeout(() => {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to verify and place order. Please try again.");
+      }
+
+      const verifiedOrder = data.order;
+      const orderId = verifiedOrder.orderNumber;
+
+      // Customer-facing order snapshot for order-success page
+      const customerOrderData = {
+        orderId,
+        createdAt: verifiedOrder.createdAt,
+        customer: {
+          email,
+          phone,
+          firstName,
+          lastName,
+          country,
+          address1,
+          address2,
+          city,
+          state,
+          zip,
+        },
+        shipping: selectedShipping,
+        payment: {
+          method: paymentMethod,
+          cardLast4: cardNumber ? cardNumber.replace(/\s+/g, "").slice(-4) : "8821",
+        },
+        items: items.map((i) => ({
+          id: i.product.id,
+          name: i.product.name,
+          slug: i.product.slug,
+          image: i.product.image,
+          price: i.product.price,
+          quantity: i.quantity,
+          variants: i.selectedVariants,
+        })),
+        subtotal: verifiedOrder.subtotal,
+        discount: verifiedOrder.discount,
+        shippingCost: verifiedOrder.shipping,
+        total: verifiedOrder.total,
+      };
+
+      // Save to customer order history
+      try {
+        const existing = localStorage.getItem("sir-ihsan-orders");
+        const orders = existing ? JSON.parse(existing) : [];
+        orders.unshift(customerOrderData);
+        localStorage.setItem("sir-ihsan-orders", JSON.stringify(orders));
+        localStorage.setItem("sir-ihsan-latest-order", JSON.stringify(customerOrderData));
+
+        // Also push to admin orders if localStorage key is initialized
+        const adminOrdersKey = "sir_ihsan_admin_orders";
+        const adminExisting = localStorage.getItem(adminOrdersKey);
+        const adminOrders = adminExisting ? JSON.parse(adminExisting) : [];
+        adminOrders.unshift(verifiedOrder);
+        localStorage.setItem(adminOrdersKey, JSON.stringify(adminOrders));
+      } catch {
+        // Safe fallback if local storage is restricted
+      }
+
       clearCart();
       setIsProcessing(false);
       router.push(`/order-success?orderId=${orderId}`);
-    }, 1800);
+    } catch (err: unknown) {
+      setIsProcessing(false);
+      const msg = err instanceof Error ? err.message : "An unexpected error occurred during checkout.";
+      setFormError(msg);
+      window.scrollTo({ top: 120, behavior: "smooth" });
+    }
   };
 
   return (
@@ -575,15 +624,17 @@ export default function CheckoutPage() {
 
               {/* Payment selector tabs */}
               <div className="grid grid-cols-3 gap-2 mb-6 border-b border-[#eee] pb-4">
-                {[
-                  { id: "card", label: "Credit / Debit Card" },
-                  { id: "paypal", label: "PayPal" },
-                  { id: "wire", label: "Bank Wire / COD" },
-                ].map((p) => (
+                {(
+                  [
+                    { id: "card", label: "Credit / Debit Card" },
+                    { id: "paypal", label: "PayPal" },
+                    { id: "wire", label: "Bank Wire / COD" },
+                  ] as const
+                ).map((p) => (
                   <button
                     key={p.id}
                     type="button"
-                    onClick={() => setPaymentMethod(p.id as any)}
+                    onClick={() => setPaymentMethod(p.id)}
                     className={`py-2 text-[12px] uppercase tracking-wider font-bold border-b-2 transition-all ${
                       paymentMethod === p.id
                         ? "border-[#D97706] text-amber-700 font-bold"
@@ -751,7 +802,7 @@ export default function CheckoutPage() {
                         <p className="font-medium text-[13px] text-[#1A1A1A] truncate">{product.name}</p>
                         {selectedVariants && (
                           <p className="text-[11px] text-[#888] capitalize mt-0.5">
-                            {Object.entries(selectedVariants).map(([k, v]) => `${v}`).join(" • ")}
+                            {Object.values(selectedVariants).join(" • ")}
                           </p>
                         )}
                         <p className="text-[12px] text-amber-600 font-bold mt-0.5">

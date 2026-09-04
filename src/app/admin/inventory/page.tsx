@@ -9,10 +9,6 @@ import {
   Plus,
   Minus,
   Check,
-  RotateCcw,
-  SlidersHorizontal,
-  Box,
-  TrendingDown,
   ArrowRight,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";

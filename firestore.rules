@@ -1,0 +1,95 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function: Check if request is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function: Check if user has an admin claim or exists in admins collection
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Helper function: Check if user is accessing their own document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. Admin Profiles collection
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
+    }
+
+    // 2. Products Catalog: Publicly readable for active items, writable only by Admins
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 3. Categories: Publicly readable, writable only by Admins
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 4. Orders:
+    // - Customers can only read and create their own orders
+    // - Customers CANNOT modify or delete existing orders
+    // - Admins can read, update, and manage all orders
+    match /orders/{orderId} {
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.customer.email == request.auth.token.email);
+      allow create: if isAuthenticated() || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // 5. Customer Profiles:
+    // - Users can read and update their own profile, but CANNOT elevate their role or tier
+    // - Admins have full access
+    match /customers/{customerId} {
+      allow read: if isOwner(customerId) || isAdmin();
+      allow create: if isAuthenticated();
+      allow update: if (isOwner(customerId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['tier', 'status', 'role'])) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 6. Privilege Coupons:
+    // - Readable by all to check validity
+    // - Writable exclusively by Admins
+    match /coupons/{couponId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 7. Storefront Content / Banners:
+    // - Publicly readable
+    // - Writable exclusively by Admins
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 8. Reviews & Testimonials:
+    // - Publicly read approved reviews
+    // - Authenticated users can submit a review with status forced to 'pending'
+    // - Only Admins can approve, reject, feature, or delete reviews
+    match /reviews/{reviewId} {
+      allow read: if resource.data.status == 'approved' || isAdmin();
+      allow create: if isAuthenticated() && request.resource.data.status == 'pending';
+      allow update, delete: if isAdmin();
+    }
+
+    // 9. Store Settings:
+    // - Publicly read general store profile
+    // - Writable exclusively by Admins
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

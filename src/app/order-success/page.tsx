@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,28 +50,27 @@ function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId") || "SIJ-2026-89421";
 
-  const [order, setOrder] = useState<OrderData | null>(null);
-
-  useEffect(() => {
+  const [order] = useState<OrderData | null>(() => {
+    if (typeof window === "undefined") return null;
     try {
       const stored = localStorage.getItem("sir-ihsan-latest-order");
       if (stored) {
         const parsed = JSON.parse(stored);
         if (parsed.orderId === orderId || !searchParams.get("orderId")) {
-          setOrder(parsed);
-          return;
+          return parsed;
         }
       }
       const allOrders = localStorage.getItem("sir-ihsan-orders");
       if (allOrders) {
         const list = JSON.parse(allOrders);
         const match = list.find((o: OrderData) => o.orderId === orderId);
-        if (match) setOrder(match);
+        if (match) return match;
       }
     } catch {
       // fallback
     }
-  }, [orderId, searchParams]);
+    return null;
+  });
 
   // Fallback demo order if visited directly without storage
   const displayOrder: OrderData = order || {
@@ -183,7 +182,7 @@ function OrderSuccessContent() {
                 desc: `Est: ${displayOrder.shipping.eta}`,
                 status: "pending",
               },
-            ].map((s, idx) => (
+            ].map((s) => (
               <div key={s.step} className="flex sm:flex-col items-start gap-4 sm:gap-2">
                 <div
                   className={`w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-bold shrink-0 ${

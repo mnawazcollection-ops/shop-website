@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { AdminUser } from "@/types/admin";
 import { initialAdminUser } from "@/data/adminMockData";
 
@@ -18,27 +18,18 @@ const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefin
 const STORAGE_KEY = "sir_ihsan_admin_session";
 
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AdminUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
+  const [user, setUser] = useState<AdminUser | null>(() => {
+    if (typeof window === "undefined") return initialAdminUser;
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setUser(JSON.parse(stored));
-      } else {
-        // Automatically provide demo session on first load for frictionless development testing,
-        // but still allow explicit logout / login testing
-        setUser(initialAdminUser);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initialAdminUser));
-      }
-    } catch (e) {
-      console.warn("Failed to read admin auth from localStorage", e);
-      setUser(initialAdminUser);
-    } finally {
-      setIsLoading(false);
+      if (stored) return JSON.parse(stored);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialAdminUser));
+      return initialAdminUser;
+    } catch {
+      return initialAdminUser;
     }
-  }, []);
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = async (email: string, password: string, rememberMe = true) => {
     setIsLoading(true);

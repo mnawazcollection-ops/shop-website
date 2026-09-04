@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import SectionHeading from "@/components/ui/SectionHeading";
 
 interface OrderRecord {
   orderId: string;
@@ -33,59 +32,53 @@ interface OrderRecord {
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState<"portal" | "orders" | "track">("portal");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [clientName, setClientName] = useState("Victoria Sterling");
-  const [clientEmail, setClientEmail] = useState("v.sterling@luxury.com");
+  const clientName = "Victoria Sterling";
+  const clientEmail = "v.sterling@luxury.com";
 
-  const [orders, setOrders] = useState<OrderRecord[]>([]);
-  const [trackQuery, setTrackQuery] = useState("");
-  const [trackResult, setTrackResult] = useState<OrderRecord | null>(null);
-  const [trackError, setTrackError] = useState("");
-
-  // Load orders from localStorage
-  useEffect(() => {
+  const [orders] = useState<OrderRecord[]>(() => {
+    if (typeof window === "undefined") return [];
     try {
       const stored = localStorage.getItem("sir-ihsan-orders");
       if (stored) {
-        setOrders(JSON.parse(stored));
-      } else {
-        // Sample default order for luxury demonstration
-        const sampleOrders: OrderRecord[] = [
-          {
-            orderId: "SIJ-2026-89421",
-            createdAt: new Date().toISOString(),
-            customer: {
-              firstName: "Victoria",
-              lastName: "Sterling",
-              email: "v.sterling@luxury.com",
-              city: "New York",
-              country: "United States",
-            },
-            shipping: {
-              name: "Complimentary Insured Courier",
-              eta: "4–6 Business Days",
-            },
-            items: [
-              {
-                id: "1",
-                name: "Golden Bloom Earrings",
-                slug: "golden-bloom-earrings",
-                image: "/images/products/earrings-1.jpg",
-                price: 245,
-                quantity: 1,
-                variants: { metal: "18K Yellow Gold" },
-              },
-            ],
-            total: 245,
-          },
-        ];
-        setOrders(sampleOrders);
+        return JSON.parse(stored);
       }
+      return [
+        {
+          orderId: "SIJ-2026-89421",
+          createdAt: new Date().toISOString(),
+          customer: {
+            firstName: "Victoria",
+            lastName: "Sterling",
+            email: "v.sterling@luxury.com",
+            city: "New York",
+            country: "United States",
+          },
+          shipping: {
+            name: "Complimentary Insured Courier",
+            eta: "4–6 Business Days",
+          },
+          items: [
+            {
+              id: "1",
+              name: "Golden Bloom Earrings",
+              slug: "golden-bloom-earrings",
+              image: "/images/products/earrings-1.jpg",
+              price: 245,
+              quantity: 1,
+              variants: { metal: "18K Yellow Gold" },
+            },
+          ],
+          total: 245,
+        },
+      ];
     } catch {
-      // ignore
+      return [];
     }
-  }, []);
+  });
+
+  const [trackQuery, setTrackQuery] = useState("");
+  const [trackResult, setTrackResult] = useState<OrderRecord | null>(null);
+  const [trackError, setTrackError] = useState("");
 
   const handleTrackSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,12 +96,6 @@ export default function AccountPage() {
     }
   };
 
-  const handleAuthSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoggedIn(true);
-    setActiveTab("portal");
-  };
-
   return (
     <div className="bg-[#FCFAF8] min-h-[85vh] py-12 text-[#1A1A1A]">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
@@ -124,14 +111,16 @@ export default function AccountPage() {
 
         {/* Navigation Tabs */}
         <div className="flex justify-center border-b border-[#eee] mb-10 max-w-2xl mx-auto">
-          {[
-            { id: "portal", label: "My Profile & Status" },
-            { id: "orders", label: `Order History (${orders.length})` },
-            { id: "track", label: "Track Acquisition" },
-          ].map((tab) => (
+          {(
+            [
+              { id: "portal", label: "My Profile & Status" },
+              { id: "orders", label: `Order History (${orders.length})` },
+              { id: "track", label: "Track Acquisition" },
+            ] as const
+          ).map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id)}
               className={`pb-4 px-4 sm:px-8 text-[12px] sm:text-[13px] uppercase tracking-[1.5px] font-bold border-b-2 transition-all cursor-pointer ${
                 activeTab === tab.id
                   ? "border-[#D97706] text-[#D97706]"

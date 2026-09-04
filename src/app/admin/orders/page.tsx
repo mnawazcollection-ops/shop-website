@@ -4,26 +4,16 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import {
   Search,
-  Filter,
-  ArrowUpDown,
   Eye,
   ChevronLeft,
   ChevronRight,
-  Download,
-  Calendar,
-  CreditCard,
-  Truck,
-  CheckCircle2,
-  Clock,
   AlertCircle,
-  ExternalLink,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import StatusBadge from "@/components/admin/StatusBadge";
-import { AdminOrder } from "@/types/admin";
 
 export default function OrdersPage() {
-  const { orders, updateOrderStatus } = useAdminData();
+  const { orders } = useAdminData();
 
   // Filter States
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -170,7 +160,7 @@ export default function OrdersPage() {
           {/* Sort By */}
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
+            onChange={(e) => setSortBy(e.target.value as "date-desc" | "date-asc" | "total-desc" | "total-asc")}
             className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-700 focus:outline-none"
           >
             <option value="date-desc">Newest Orders</option>

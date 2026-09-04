@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
@@ -35,19 +35,19 @@ export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const goToSlide = useCallback((index: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide(index);
+    setTimeout(() => setIsTransitioning(false), 800);
+  }, [isTransitioning]);
+
   useEffect(() => {
     const timer = setInterval(() => {
       goToSlide((currentSlide + 1) % slides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [currentSlide]);
-
-  const goToSlide = (index: number) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentSlide(index);
-    setTimeout(() => setIsTransitioning(false), 800);
-  };
+  }, [currentSlide, goToSlide]);
 
   return (
     <section className="relative h-[500px] md:h-[600px] lg:h-[700px] xl:h-[80vh] overflow-hidden">

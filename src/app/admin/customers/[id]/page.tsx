@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -10,11 +10,8 @@ import {
   Phone,
   MapPin,
   Calendar,
-  ShoppingBag,
-  DollarSign,
   AlertCircle,
   ExternalLink,
-  Shield,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
@@ -22,7 +19,6 @@ import StatusBadge from "@/components/admin/StatusBadge";
 
 export default function CustomerDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const { customers, orders, toggleCustomerStatus, isLoading } = useAdminData();
   const { addToast } = useAdminToast();
 

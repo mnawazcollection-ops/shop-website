@@ -13,7 +13,6 @@ import {
   Sparkles,
   Mail,
   Phone,
-  MapPin,
   Database,
   Cloud,
 } from "lucide-react";
@@ -123,19 +122,21 @@ export default function SettingsPage() {
 
       {/* Settings Navigation Tabs */}
       <div className="flex items-center gap-2 border-b border-stone-200 overflow-x-auto pb-1 scrollbar-none">
-        {[
-          { id: "store", label: "Brand Profile & Flagship", icon: Store },
-          { id: "shipping", label: "Insured Transit & Logistics", icon: Truck },
-          { id: "tax", label: "Taxation & Currency", icon: DollarSign },
-          { id: "notifications", label: "Concierge Alerts", icon: Bell },
-          { id: "firebase", label: "Cloudinary & Cloud Storage", icon: Cloud },
-        ].map((tab) => {
+        {(
+          [
+            { id: "store", label: "General & Branding", icon: Store },
+            { id: "shipping", label: "Shipping & Delivery", icon: Truck },
+            { id: "tax", label: "Taxation & Currency", icon: DollarSign },
+            { id: "notifications", label: "Concierge Alerts", icon: Bell },
+            { id: "firebase", label: "Cloudinary & Cloud Storage", icon: Cloud },
+          ] as const
+        ).map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold whitespace-nowrap border-b-2 transition-all ${
                 isActive
                   ? "border-amber-600 text-amber-600"
@@ -352,7 +353,12 @@ export default function SettingsPage() {
                 </label>
                 <select
                   value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setCurrency(val);
+                    const symbols: Record<string, string> = { USD: "$", EUR: "€", GBP: "£", AED: "AED" };
+                    setCurrencySymbol(symbols[val] || "$");
+                  }}
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
                 >
                   <option value="USD">USD ($) - United States Dollar</option>
@@ -448,7 +454,7 @@ export default function SettingsPage() {
               </div>
 
               <p className="text-xs text-stone-600 leading-relaxed">
-                All fine jewelry photography, gallery views, and promotional banners are processed and delivered via Cloudinary's global image CDN with automated format optimization and lossless high-DPI compression.
+                All fine jewelry photography, gallery views, and promotional banners are processed and delivered via Cloudinary&apos;s global image CDN with automated format optimization and lossless high-DPI compression.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

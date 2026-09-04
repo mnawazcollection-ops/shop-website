@@ -4,17 +4,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Sparkles,
-  Layers,
-  Image as ImageIcon,
   Plus,
   Trash2,
   Edit3,
   ExternalLink,
-  Eye,
-  Check,
   Star,
-  Sliders,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
@@ -28,7 +22,6 @@ export default function ContentManagementPage() {
     addBanner,
     updateBanner,
     deleteBanner,
-    categories,
     products,
     updateProduct,
   } = useAdminData();
@@ -258,7 +251,7 @@ export default function ContentManagementPage() {
                 <div className="p-4 flex-1 flex items-center justify-between text-xs border-t border-stone-100 bg-stone-50/50">
                   <div className="space-y-0.5">
                     <p className="text-stone-700 font-medium">
-                      CTA: <span className="font-bold text-stone-900">"{banner.buttonText}"</span>
+                      CTA: <span className="font-bold text-stone-900">&quot;{banner.buttonText}&quot;</span>
                     </p>
                     <p className="text-stone-400 font-mono text-[11px]">{banner.buttonLink}</p>
                   </div>

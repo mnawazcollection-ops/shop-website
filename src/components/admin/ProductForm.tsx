@@ -1,25 +1,20 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
   Upload,
-  Plus,
   Trash2,
   Image as ImageIcon,
   Check,
-  AlertCircle,
-  HelpCircle,
   Layers,
   Sparkles,
   DollarSign,
   Tag,
   Box,
-  Eye,
-  GripVertical,
 } from "lucide-react";
 import { AdminProduct, AdminProductVariant } from "@/types/admin";
 import { useAdminData } from "@/store/AdminDataContext";
@@ -128,10 +123,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         message: "Uploaded and optimized via Cloudinary.",
         type: "success",
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to upload image.";
       addToast({
         title: "Upload Failed",
-        message: err.message || "Failed to upload image.",
+        message: msg,
         type: "error",
       });
     } finally {

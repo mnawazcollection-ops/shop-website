@@ -66,10 +66,11 @@ export async function POST(req: NextRequest) {
       { error: "Unsupported content type. Send multipart/form-data or application/json" },
       { status: 400 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to process image upload";
     console.error("API /api/upload error:", error);
     return NextResponse.json(
-      { error: error?.message || "Failed to process image upload" },
+      { error: message },
       { status: 500 }
     );
   }

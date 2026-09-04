@@ -4,12 +4,10 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import {
   UploadCloud,
-  Image as ImageIcon,
   X,
   Check,
   Link as LinkIcon,
   Cloud,
-  Sparkles,
   AlertCircle,
   Loader2,
 } from "lucide-react";
@@ -62,9 +60,10 @@ export default function ImageUploader({
       const response = await uploadImage(file, folder);
       onChange(response.url);
       setUrlInput(response.url);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Cloudinary upload failed:", err);
-      setUploadError(err.message || "Failed to upload image. Please try again.");
+      const msg = err instanceof Error ? err.message : "Failed to upload image. Please try again.";
+      setUploadError(msg);
     } finally {
       setIsUploading(false);
     }

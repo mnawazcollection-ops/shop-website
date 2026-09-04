@@ -3,7 +3,6 @@
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
-import SectionHeading from "@/components/ui/SectionHeading";
 import { products, categories } from "@/data";
 
 function ShopContent() {

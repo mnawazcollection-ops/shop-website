@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to verify admin claims
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.admin == true ||
+        request.auth.token.email.matches('.*@sirihsan\\.com')
+      );
+    }
+
+    // Helper function to validate safe image uploads
+    function isValidImage() {
+      return request.resource.contentType.matches('image/(jpeg|png|webp|avif|gif)')
+        && request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+
+    // Public product and banner images
+    match /sir-ihsan/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidImage();
+      allow delete: if isAdmin();
+    }
+
+    // Default catch-all
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidImage();
+    }
+  }
+}

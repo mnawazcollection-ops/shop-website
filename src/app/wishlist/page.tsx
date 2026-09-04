@@ -7,16 +7,7 @@ import { useWishlist, useCart } from "@/store/StoreContext";
 import { Product } from "@/types";
 
 export default function WishlistPage() {
-  const { items, removeFromWishlist, clearWishlist } = (() => {
-    const w = useWishlist();
-    return {
-      items: w.items,
-      removeFromWishlist: w.removeFromWishlist,
-      clearWishlist: () => {
-        w.items.forEach((item) => w.removeFromWishlist(item.id));
-      },
-    };
-  })();
+  const { items, removeFromWishlist, clearWishlist } = useWishlist();
 
   const { addToCart, setCartOpen } = useCart();
   const [copiedLink, setCopiedLink] = useState(false);

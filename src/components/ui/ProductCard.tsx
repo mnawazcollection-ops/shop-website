@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Product } from "@/types";
 import { useState } from "react";
 import { useCart, useWishlist } from "@/store/StoreContext";
@@ -11,6 +12,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
@@ -104,7 +106,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              window.location.href = `/product/${product.slug}`;
+              router.push(`/product/${product.slug}`);
             }}
             className="w-9 h-9 flex items-center justify-center border border-[#e5e5e5] hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 hover:border-amber-600 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-amber-500/25"
             title="View Details"

@@ -65,6 +65,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedVariants);
     setAddedToCart(true);
+    setCartOpen(true);
     setTimeout(() => setAddedToCart(false), 2500);
   };
 

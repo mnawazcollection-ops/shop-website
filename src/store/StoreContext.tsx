@@ -28,6 +28,7 @@ interface StoreContextType {
   removeFromWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
   toggleWishlist: (product: Product) => void;
+  clearWishlist: () => void;
   wishlistCount: number;
   // Search
   isSearchOpen: boolean;
@@ -37,36 +38,46 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setCartOpen] = useState(false);
-  const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
-  const [isSearchOpen, setSearchOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
-  // Hydrate from localStorage on mount
-  useEffect(() => {
+  // Lazy state initialization from localStorage
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
     try {
       const savedCart = localStorage.getItem("sir-ihsan-cart");
-      if (savedCart) setCartItems(JSON.parse(savedCart));
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [isCartOpen, setCartOpen] = useState(false);
+
+  const [wishlistItems, setWishlistItems] = useState<Product[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
       const savedWishlist = localStorage.getItem("sir-ihsan-wishlist");
-      if (savedWishlist) setWishlistItems(JSON.parse(savedWishlist));
-    } catch { /* ignore */ }
-    setHydrated(true);
-  }, []);
+      return savedWishlist ? JSON.parse(savedWishlist) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [isSearchOpen, setSearchOpen] = useState(false);
 
   // Persist cart
   useEffect(() => {
-    if (hydrated) {
-      try { localStorage.setItem("sir-ihsan-cart", JSON.stringify(cartItems)); } catch { /* ignore */ }
+    try {
+      localStorage.setItem("sir-ihsan-cart", JSON.stringify(cartItems));
+    } catch {
+      /* ignore */
     }
-  }, [cartItems, hydrated]);
+  }, [cartItems]);
 
   // Persist wishlist
   useEffect(() => {
-    if (hydrated) {
-      try { localStorage.setItem("sir-ihsan-wishlist", JSON.stringify(wishlistItems)); } catch { /* ignore */ }
+    try {
+      localStorage.setItem("sir-ihsan-wishlist", JSON.stringify(wishlistItems));
+    } catch {
+      /* ignore */
     }
-  }, [wishlistItems, hydrated]);
+  }, [wishlistItems]);
 
   /* ── Cart ── */
   const addToCart = useCallback(
@@ -131,6 +142,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [wishlistItems, addToWishlist, removeFromWishlist]
   );
 
+  const clearWishlist = useCallback(() => {
+    setWishlistItems([]);
+  }, []);
+
   const wishlistCount = wishlistItems.length;
 
   return (
@@ -139,7 +154,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         cartItems, addToCart, removeFromCart, updateQuantity, clearCart,
         cartCount, cartSubtotal, isCartOpen, setCartOpen,
         wishlistItems, addToWishlist, removeFromWishlist, isInWishlist,
-        toggleWishlist, wishlistCount,
+        toggleWishlist, clearWishlist, wishlistCount,
         isSearchOpen, setSearchOpen,
       }}
     >
@@ -169,7 +184,7 @@ export function useWishlist() {
   return {
     items: s.wishlistItems, addToWishlist: s.addToWishlist,
     removeFromWishlist: s.removeFromWishlist, isInWishlist: s.isInWishlist,
-    toggleWishlist: s.toggleWishlist, wishlistCount: s.wishlistCount,
+    toggleWishlist: s.toggleWishlist, clearWishlist: s.clearWishlist, wishlistCount: s.wishlistCount,
   };
 }
 

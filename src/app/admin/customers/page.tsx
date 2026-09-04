@@ -4,22 +4,14 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import {
   Search,
-  User,
   Crown,
   Eye,
-  MoreVertical,
-  Shield,
-  Phone,
-  Mail,
-  ShoppingBag,
-  DollarSign,
-  Calendar,
   AlertCircle,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 import StatusBadge from "@/components/admin/StatusBadge";
-import { AdminCustomer } from "@/types/admin";
+import type { AdminCustomer } from "@/types/admin";
 
 export default function CustomersPage() {
   const { customers, toggleCustomerStatus } = useAdminData();
