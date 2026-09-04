@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/store/StoreContext";
-import TopBar from "@/components/layout/TopBar";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import CartDrawer from "@/components/cart/CartDrawer";
-import SearchOverlay from "@/components/search/SearchOverlay";
+import StorefrontShell from "@/components/layout/StorefrontShell";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -38,14 +34,9 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="min-h-full flex flex-col font-sans bg-[#FAF7F4] text-[#1A1A1A]">
         <StoreProvider>
-          <TopBar />
-          <Header />
-          <SearchOverlay />
-          <CartDrawer />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <StorefrontShell>{children}</StorefrontShell>
         </StoreProvider>
       </body>
     </html>
