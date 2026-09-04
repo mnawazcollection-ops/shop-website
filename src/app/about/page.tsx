@@ -8,7 +8,7 @@ export default function AboutPage() {
       {/* Hero Banner */}
       <section className="relative h-[380px] md:h-[450px] bg-[#1A1A1A] flex items-center justify-center text-center px-6">
         <div className="max-w-2xl text-white">
-          <p className="text-[12px] uppercase tracking-[4px] text-[#C8A165] font-semibold mb-3">
+          <p className="text-[12px] uppercase tracking-[4px] text-amber-400 font-bold mb-3 drop-shadow">
             Since 2001
           </p>
           <h1 className="font-cormorant text-4xl md:text-6xl font-bold mb-4">
@@ -37,16 +37,16 @@ export default function AboutPage() {
             </p>
             <div className="grid grid-cols-3 gap-6 pt-6 border-t border-[#f0f0f0]">
               <div>
-                <span className="font-cormorant text-3xl font-bold text-[#C8A165]">25+</span>
-                <p className="text-[12px] uppercase tracking-wider text-[#888] mt-1">Years Mastery</p>
+                <span className="font-cormorant text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] bg-clip-text text-transparent drop-shadow-sm">25+</span>
+                <p className="text-[12px] uppercase tracking-wider text-[#888] font-medium mt-1">Years Mastery</p>
               </div>
               <div>
-                <span className="font-cormorant text-3xl font-bold text-[#C8A165]">100%</span>
-                <p className="text-[12px] uppercase tracking-wider text-[#888] mt-1">Conflict-Free</p>
+                <span className="font-cormorant text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] bg-clip-text text-transparent drop-shadow-sm">100%</span>
+                <p className="text-[12px] uppercase tracking-wider text-[#888] font-medium mt-1">Conflict-Free</p>
               </div>
               <div>
-                <span className="font-cormorant text-3xl font-bold text-[#C8A165]">10k+</span>
-                <p className="text-[12px] uppercase tracking-wider text-[#888] mt-1">Bespoke Pieces</p>
+                <span className="font-cormorant text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] bg-clip-text text-transparent drop-shadow-sm">10k+</span>
+                <p className="text-[12px] uppercase tracking-wider text-[#888] font-medium mt-1">Bespoke Pieces</p>
               </div>
             </div>
           </div>

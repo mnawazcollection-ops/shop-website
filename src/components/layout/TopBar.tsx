@@ -2,47 +2,48 @@ import Link from "next/link";
 
 export default function TopBar() {
   return (
-    <div className="bg-[#1A1A1A] text-white/80 text-[12px] hidden lg:block">
+    <div className="bg-gradient-to-r from-[#0B0F19] via-[#1E1B4B] to-[#1E1202] text-white/90 text-[12px] hidden lg:block border-b border-amber-500/20">
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-[42px]">
         {/* Left — Contact */}
         <div className="flex items-center gap-6">
           <a
             href="tel:+1234567890"
-            className="flex items-center gap-2 hover:text-[#C8A165] transition-colors"
+            className="flex items-center gap-2 hover:text-[#FBBF24] transition-colors"
           >
             <svg
               width="14"
               height="14"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
+              stroke="#F59E0B"
+              strokeWidth="1.8"
               viewBox="0 0 24 24"
             >
               <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
             </svg>
-            +1 (234) 567-890
+            <span className="font-medium">+1 (234) 567-890</span>
           </a>
           <a
             href="mailto:info@sirhisan.com"
-            className="flex items-center gap-2 hover:text-[#C8A165] transition-colors"
+            className="flex items-center gap-2 hover:text-[#FBBF24] transition-colors"
           >
             <svg
               width="14"
               height="14"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
+              stroke="#F59E0B"
+              strokeWidth="1.8"
               viewBox="0 0 24 24"
             >
               <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
             </svg>
-            info@sirhisan.com
+            <span>concierge@sirihsan.com</span>
           </a>
         </div>
 
         {/* Center — Welcome */}
-        <p className="text-[12px] tracking-wide">
-          Free shipping on orders over $500 | Handcrafted with ❤️
+        <p className="text-[12px] tracking-wide flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+          <span className="text-amber-300 font-semibold">Complimentary Insured Express Delivery</span> on orders over $500 • Certified 18K/24K Gold & Natural Diamonds
         </p>
 
         {/* Right — Social & Selectors */}
@@ -54,7 +55,7 @@ export default function TopBar() {
                 <Link
                   key={social}
                   href="#"
-                  className="hover:text-[#C8A165] transition-colors"
+                  className="hover:text-amber-400 transition-colors"
                   aria-label={social}
                 >
                   <SocialIcon name={social} />

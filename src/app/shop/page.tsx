@@ -39,14 +39,14 @@ function ShopContent() {
     <div className="max-w-[1400px] mx-auto px-6 py-12">
       {/* Breadcrumb / Title */}
       <div className="text-center mb-12">
-        <p className="text-[12px] tracking-[3px] uppercase text-[#C8A165] mb-2 font-medium">
+        <p className="text-[12px] tracking-[3px] uppercase text-amber-600 mb-2 font-bold">
           Sir Ihsan Collection
         </p>
         <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A]">
-          Shop Jewelry
+          Shop Fine Jewelry
         </h1>
         <div className="flex justify-center mt-3">
-          <div className="w-12 h-[1px] bg-[#C8A165]"></div>
+          <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ function ShopContent() {
         {/* Sidebar Filters */}
         <aside className="w-full lg:w-64 flex-shrink-0 space-y-8">
           {/* Categories Filter */}
-          <div className="border border-[#f0f0f0] p-6 bg-white">
+          <div className="border border-[#f0f0f0] p-6 bg-white shadow-sm rounded-sm">
             <h3 className="font-cormorant text-xl font-bold text-[#1A1A1A] mb-4 pb-2 border-b border-[#f0f0f0]">
               Categories
             </h3>
@@ -64,12 +64,12 @@ function ShopContent() {
                   onClick={() => setSelectedCategory("all")}
                   className={`w-full text-left text-[14px] transition-colors flex justify-between items-center ${
                     selectedCategory === "all"
-                      ? "text-[#C8A165] font-semibold"
-                      : "text-[#666] hover:text-[#C8A165]"
+                      ? "text-amber-600 font-bold"
+                      : "text-[#666] hover:text-amber-600"
                   }`}
                 >
                   <span>All Categories</span>
-                  <span className="text-[12px] text-[#999]">{products.length}</span>
+                  <span className="text-[12px] text-[#999] font-medium">{products.length}</span>
                 </button>
               </li>
               {categories.map((cat) => (
@@ -78,12 +78,12 @@ function ShopContent() {
                     onClick={() => setSelectedCategory(cat.slug)}
                     className={`w-full text-left text-[14px] transition-colors flex justify-between items-center ${
                       selectedCategory === cat.slug
-                        ? "text-[#C8A165] font-semibold"
-                        : "text-[#666] hover:text-[#C8A165]"
+                        ? "text-amber-600 font-bold"
+                        : "text-[#666] hover:text-amber-600"
                     }`}
                   >
                     <span>{cat.name}</span>
-                    <span className="text-[12px] text-[#999]">
+                    <span className="text-[12px] text-[#999] font-medium">
                       {cat.productCount}
                     </span>
                   </button>
@@ -93,9 +93,9 @@ function ShopContent() {
           </div>
 
           {/* Price Range Filter */}
-          <div className="border border-[#f0f0f0] p-6 bg-white">
+          <div className="border border-[#f0f0f0] p-6 bg-white shadow-sm rounded-sm">
             <h3 className="font-cormorant text-xl font-bold text-[#1A1A1A] mb-4 pb-2 border-b border-[#f0f0f0]">
-              Max Price: ${priceRange}
+              Max Price: <span className="text-amber-600">${priceRange}</span>
             </h3>
             <input
               type="range"
@@ -104,11 +104,11 @@ function ShopContent() {
               step="50"
               value={priceRange}
               onChange={(e) => setPriceRange(Number(e.target.value))}
-              className="w-full accent-[#C8A165] cursor-pointer"
+              className="w-full accent-amber-600 cursor-pointer"
             />
-            <div className="flex justify-between text-[12px] text-[#888] mt-2">
+            <div className="flex justify-between text-[12px] text-[#888] mt-2 font-medium">
               <span>$100</span>
-              <span>$2,000+</span>
+              <span className="text-amber-600 font-bold">$2,000+</span>
             </div>
           </div>
         </aside>
@@ -118,17 +118,17 @@ function ShopContent() {
           {/* Controls Bar */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-4 border-b border-[#f0f0f0]">
             <p className="text-[14px] text-[#666]">
-              Showing <span className="font-semibold text-[#1A1A1A]">{filteredProducts.length}</span> results
+              Showing <span className="font-bold text-[#1A1A1A]">{filteredProducts.length}</span> luxury creations
             </p>
             <div className="flex items-center gap-3">
-              <label htmlFor="sort" className="text-[13px] text-[#666] uppercase tracking-wider">
+              <label htmlFor="sort" className="text-[13px] text-[#666] uppercase tracking-wider font-semibold">
                 Sort By:
               </label>
               <select
                 id="sort"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border border-[#ddd] px-3 py-1.5 text-[13px] text-[#333] focus:outline-none focus:border-[#C8A165]"
+                className="border border-[#ddd] px-3 py-1.5 text-[13px] text-[#333] focus:outline-none focus:border-amber-600 bg-white"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -155,7 +155,7 @@ function ShopContent() {
                   setSelectedCategory("all");
                   setPriceRange(2000);
                 }}
-                className="text-[#C8A165] underline text-[14px] font-medium"
+                className="text-amber-600 hover:text-amber-700 underline text-[14px] font-bold"
               >
                 Reset Filters
               </button>

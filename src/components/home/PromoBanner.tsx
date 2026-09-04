@@ -17,19 +17,17 @@ export default function PromoBanner() {
       {/* Content */}
       <div className="absolute inset-0 flex items-center justify-center text-center">
         <div className="max-w-2xl px-6">
-          <p className="text-[12px] tracking-[4px] uppercase text-[#C8A165] mb-4 font-medium">
-            Special Offer
-          </p>
-          <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl xl:text-[56px] font-semibold text-white leading-tight mb-6">
-            Discover Beauty In Graceful With Our Luxury
+          <span className="inline-block text-[11px] tracking-[4px] uppercase bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 text-white font-bold px-5 py-1.5 rounded-full mb-5 shadow-lg shadow-amber-500/30 border border-amber-300/30">
+            ✦ Bespoke Haute Joaillerie ✦
+          </span>
+          <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl xl:text-[56px] font-bold text-white leading-tight mb-5 drop-shadow-md">
+            Discover Radiant Beauty In Pure Handcrafted Gold
           </h2>
-          <p className="text-[15px] text-white/70 mb-8 max-w-lg mx-auto leading-relaxed">
-            Explore our exclusive collection of handcrafted jewelry pieces
-            designed to elevate your style and celebrate life&apos;s precious
-            moments.
+          <p className="text-[15px] text-white/90 mb-8 max-w-lg mx-auto leading-relaxed drop-shadow-sm">
+            Explore our exclusive collection of master-sculpted jewelry pieces designed with ethically sourced precious gemstones to illuminate life&apos;s grandest milestones.
           </p>
           <Button href="/shop" variant="primary" size="lg">
-            Shop Collection
+            Shop The Collection
           </Button>
         </div>
       </div>

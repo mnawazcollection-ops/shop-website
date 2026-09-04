@@ -198,21 +198,21 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto text-white">
           {/* Breadcrumb */}
           <nav className="flex justify-center items-center gap-2 text-[11px] uppercase tracking-[2px] text-[#ddd] mb-3">
-            <Link href="/" className="hover:text-[#C8A165] transition-colors">
+            <Link href="/" className="hover:text-amber-400 transition-colors">
               Home
             </Link>
             <span>/</span>
-            <Link href="/shop" className="hover:text-[#C8A165] transition-colors">
+            <Link href="/shop" className="hover:text-amber-400 transition-colors">
               Collections
             </Link>
             <span>/</span>
-            <span className="text-[#C8A165] font-semibold">{meta.title}</span>
+            <span className="text-amber-400 font-bold">{meta.title}</span>
           </nav>
 
-          <p className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold mb-2">
+          <p className="text-[12px] uppercase tracking-[3px] text-amber-400 font-bold mb-2 drop-shadow">
             {meta.subtitle}
           </p>
-          <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+          <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 drop-shadow-md">
             {meta.title}
           </h1>
           <p className="text-[14px] md:text-[15px] text-[#eee] max-w-xl mx-auto leading-relaxed">
@@ -238,7 +238,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             </button>
 
             <span className="text-[13px] text-[#777]">
-              Showing <strong className="text-[#1A1A1A]">{visibleProducts.length}</strong> of{" "}
+              Showing <strong className="text-amber-600 font-bold">{visibleProducts.length}</strong> of{" "}
               <strong className="text-[#1A1A1A]">{filteredProducts.length}</strong> pieces
             </span>
           </div>
@@ -257,10 +257,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               <button
                 key={p.val}
                 onClick={() => setPriceFilter(p.val)}
-                className={`px-3 py-1 text-[12px] uppercase tracking-wider transition-colors ${
+                className={`px-3 py-1.5 text-[12px] uppercase tracking-wider rounded-sm transition-all ${
                   priceFilter === p.val
-                    ? "bg-[#1A1A1A] text-white font-semibold"
-                    : "bg-[#FAF7F4] text-[#555] hover:bg-[#eee]"
+                    ? "bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white font-bold shadow-md shadow-amber-500/25"
+                    : "bg-[#FAF7F4] text-[#555] hover:bg-amber-50 hover:text-amber-700"
                 }`}
               >
                 {p.label}
@@ -271,10 +271,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
             <button
               onClick={() => setSaleFilter(!saleFilter)}
-              className={`px-3 py-1 text-[12px] uppercase tracking-wider transition-colors ${
+              className={`px-3 py-1.5 text-[12px] uppercase tracking-wider rounded-sm transition-all ${
                 saleFilter
-                  ? "bg-[#E74C3C] text-white font-semibold"
-                  : "bg-[#FAF7F4] text-[#555] hover:bg-[#eee]"
+                  ? "bg-gradient-to-r from-rose-600 to-red-600 text-white font-bold shadow-md shadow-rose-500/25"
+                  : "bg-[#FAF7F4] text-[#555] hover:bg-rose-50 hover:text-rose-700"
               }`}
             >
               Sale Only
@@ -362,7 +362,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 setMetalFilter("all");
                 setSaleFilter(false);
               }}
-              className="bg-[#1A1A1A] hover:bg-[#C8A165] text-white px-6 py-2.5 text-[12px] uppercase tracking-wider font-semibold transition-colors"
+              className="bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white px-6 py-2.5 text-[12px] uppercase tracking-wider font-bold transition-all shadow-md shadow-amber-500/25 rounded-sm"
             >
               Reset Filters
             </button>
@@ -380,7 +380,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               <div className="text-center mt-12">
                 <button
                   onClick={() => setVisibleCount((prev) => prev + 4)}
-                  className="px-10 py-3.5 bg-white border border-[#1A1A1A] text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white text-[12px] uppercase tracking-[2px] font-bold transition-all duration-300 shadow-sm"
+                  className="px-10 py-4 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] text-white text-[12px] uppercase tracking-[2px] font-bold transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 rounded-sm"
                 >
                   Load More Pieces ({filteredProducts.length - visibleCount} remaining)
                 </button>
@@ -392,12 +392,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         {/* Category Exploration Carousel / Cards */}
         <div className="mt-20 pt-12 border-t border-[#eee]">
           <div className="text-center mb-10">
-            <p className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold mb-2">
+            <p className="text-[12px] uppercase tracking-[3px] text-amber-600 font-bold mb-2">
               Explore More
             </p>
             <h3 className="font-cormorant text-3xl font-bold text-[#1A1A1A]">
               Other Collections You May Adore
             </h3>
+            <div className="flex justify-center mt-3">
+              <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -405,13 +408,13 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               <Link
                 key={c.id}
                 href={`/category/${c.slug}`}
-                className={`group p-4 text-center border transition-all duration-200 ${
+                className={`group p-4 text-center border rounded transition-all duration-200 ${
                   c.slug === normalizedSlug
-                    ? "border-[#C8A165] bg-[#FAF7F4]"
-                    : "border-[#eee] bg-white hover:border-[#C8A165] hover:shadow-sm"
+                    ? "border-[#D97706] bg-amber-50/60 shadow-sm"
+                    : "border-[#eee] bg-white hover:border-[#D97706] hover:shadow-md"
                 }`}
               >
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-3 overflow-hidden border border-[#eee]">
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-3 overflow-hidden border border-[#eee] ring-2 ring-transparent group-hover:ring-amber-400/50 transition-all">
                   <Image
                     src={c.image}
                     alt={c.name}
@@ -420,10 +423,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     sizes="64px"
                   />
                 </div>
-                <p className="font-cormorant font-bold text-[15px] text-[#1A1A1A] group-hover:text-[#C8A165] transition-colors">
+                <p className="font-cormorant font-bold text-[15px] text-[#1A1A1A] group-hover:text-amber-600 transition-colors">
                   {c.name}
                 </p>
-                <p className="text-[11px] text-[#888] mt-0.5">{c.productCount} Pieces</p>
+                <p className="text-[11px] text-[#888] mt-0.5 font-medium">{c.productCount} Pieces</p>
               </Link>
             ))}
           </div>

@@ -57,16 +57,16 @@ export default function TrendStyles() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             <div className="absolute bottom-6 left-6">
-              <h3 className="font-cormorant text-2xl lg:text-3xl font-semibold text-white whitespace-pre-line leading-tight">
+              <h3 className="font-cormorant text-2xl lg:text-3xl font-bold text-white whitespace-pre-line leading-tight drop-shadow-md">
                 {trendItems[0].title}
               </h3>
-              <span className="inline-flex items-center gap-2 text-[12px] tracking-[2px] uppercase text-[#C8A165] font-medium mt-3">
-                Explore
+              <span className="inline-flex items-center gap-2 text-[12px] tracking-[2px] uppercase text-amber-300 font-bold mt-3 group-hover:text-amber-200 transition-colors">
+                Explore Collection
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                   viewBox="0 0 24 24"
                 >
                   <path d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -80,7 +80,7 @@ export default function TrendStyles() {
             <Link
               key={index}
               href={item.href}
-              className="group relative overflow-hidden"
+              className="group relative overflow-hidden rounded-sm"
             >
               <Image
                 src={item.image}
@@ -89,14 +89,14 @@ export default function TrendStyles() {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-colors" />
               <div className="absolute bottom-4 left-5">
                 {item.subtitle && (
-                  <p className="text-[10px] tracking-[2px] uppercase text-[#C8A165] mb-1 font-medium">
+                  <p className="text-[10px] tracking-[2px] uppercase text-amber-400 mb-1 font-bold drop-shadow">
                     {item.subtitle}
                   </p>
                 )}
-                <h3 className="font-cormorant text-xl font-semibold text-white">
+                <h3 className="font-cormorant text-xl font-bold text-white drop-shadow">
                   {item.title}
                 </h3>
               </div>

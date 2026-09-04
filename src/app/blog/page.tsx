@@ -24,7 +24,7 @@ export default function BlogPage() {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <span className="absolute top-4 left-4 bg-[#C8A165] text-white text-[11px] uppercase tracking-wider px-3 py-1 font-semibold">
+              <span className="absolute top-4 left-4 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[11px] uppercase tracking-wider px-3 py-1 font-bold shadow-md shadow-amber-500/30 rounded-sm">
                 {post.category}
               </span>
             </div>
@@ -36,7 +36,7 @@ export default function BlogPage() {
                   <span>•</span>
                   <span>{post.author}</span>
                 </div>
-                <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] group-hover:text-[#C8A165] transition-colors mb-3 leading-snug">
+                <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] group-hover:text-amber-600 transition-colors mb-3 leading-snug">
                   <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                 </h2>
                 <p className="text-[#666] text-[14px] leading-relaxed mb-6">
@@ -46,7 +46,7 @@ export default function BlogPage() {
 
               <Link
                 href={`/blog/${post.slug}`}
-                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-widest text-[#C8A165] font-bold"
+                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-widest text-amber-600 hover:text-amber-700 font-bold transition-colors"
               >
                 Read Article →
               </Link>

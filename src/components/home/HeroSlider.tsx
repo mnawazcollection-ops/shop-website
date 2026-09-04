@@ -77,18 +77,21 @@ export default function HeroSlider() {
       <div className="absolute inset-0 z-20 flex items-center">
         <div className="max-w-[1400px] mx-auto px-6 w-full">
           <div className="max-w-xl">
-            <p
-              className={`text-[12px] md:text-[13px] tracking-[4px] uppercase text-[#C8A165] mb-4 font-medium transition-all duration-700 ${
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-1.5 bg-black/40 backdrop-blur-md border border-amber-400/50 rounded-full mb-5 transition-all duration-700 shadow-lg shadow-amber-500/10 ${
                 !isTransitioning
                   ? "translate-y-0 opacity-100"
                   : "translate-y-6 opacity-0"
               }`}
               style={{ transitionDelay: "200ms" }}
             >
-              {slides[currentSlide].subtitle}
-            </p>
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <p className="text-[11px] md:text-[12px] tracking-[3px] uppercase text-amber-300 font-bold">
+                {slides[currentSlide].subtitle}
+              </p>
+            </div>
             <h2
-              className={`font-cormorant text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] mb-5 whitespace-pre-line transition-all duration-700 ${
+              className={`font-cormorant text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] mb-5 whitespace-pre-line drop-shadow-md transition-all duration-700 ${
                 !isTransitioning
                   ? "translate-y-0 opacity-100"
                   : "translate-y-8 opacity-0"
@@ -98,7 +101,7 @@ export default function HeroSlider() {
               {slides[currentSlide].title}
             </h2>
             <p
-              className={`text-[15px] md:text-[16px] text-white/80 mb-8 max-w-md leading-relaxed transition-all duration-700 ${
+              className={`text-[15px] md:text-[16px] text-white/90 mb-8 max-w-md leading-relaxed drop-shadow-sm transition-all duration-700 ${
                 !isTransitioning
                   ? "translate-y-0 opacity-100"
                   : "translate-y-8 opacity-0"
@@ -135,8 +138,8 @@ export default function HeroSlider() {
             onClick={() => goToSlide(index)}
             className={`transition-all duration-300 ${
               index === currentSlide
-                ? "w-8 h-2 bg-[#C8A165] rounded-full"
-                : "w-2 h-2 bg-white/50 rounded-full hover:bg-white/80"
+                ? "w-8 h-2.5 bg-gradient-to-r from-[#F59E0B] to-[#D97706] rounded-full shadow-md shadow-amber-500/50"
+                : "w-2.5 h-2.5 bg-white/50 rounded-full hover:bg-white/80"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -150,7 +153,7 @@ export default function HeroSlider() {
             currentSlide === 0 ? slides.length - 1 : currentSlide - 1
           )
         }
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/30 flex items-center justify-center text-white hover:bg-[#C8A165] hover:border-[#C8A165] transition-all duration-300 hidden md:flex"
+        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gradient-to-r hover:from-[#F59E0B] hover:to-[#D97706] hover:border-transparent transition-all duration-300 hidden md:flex rounded-full shadow-lg"
         aria-label="Previous slide"
       >
         <svg
@@ -165,8 +168,12 @@ export default function HeroSlider() {
         </svg>
       </button>
       <button
-        onClick={() => goToSlide((currentSlide + 1) % slides.length)}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/30 flex items-center justify-center text-white hover:bg-[#C8A165] hover:border-[#C8A165] transition-all duration-300 hidden md:flex"
+        onClick={() =>
+          goToSlide(
+            currentSlide === slides.length - 1 ? 0 : currentSlide + 1
+          )
+        }
+        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gradient-to-r hover:from-[#F59E0B] hover:to-[#D97706] hover:border-transparent transition-all duration-300 hidden md:flex rounded-full shadow-lg"
         aria-label="Next slide"
       >
         <svg

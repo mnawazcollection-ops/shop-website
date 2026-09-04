@@ -58,16 +58,16 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#eee]">
           <div className="flex items-center gap-2">
-            <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A]">
+            <h2 className="font-cormorant text-2xl font-bold text-slate-900">
               Shopping Cart
             </h2>
-            <span className="text-[12px] bg-[#FAF7F4] text-[#C8A165] font-semibold px-2 py-0.5 rounded-full border border-[#eee]">
+            <span className="text-[12px] bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold px-2.5 py-0.5 rounded-full shadow-sm shadow-amber-500/30">
               {cartCount} {cartCount === 1 ? "item" : "items"}
             </span>
           </div>
           <button
             onClick={() => setCartOpen(false)}
-            className="p-2 text-[#999] hover:text-[#1A1A1A] transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-900 transition-colors"
             aria-label="Close cart"
           >
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -77,14 +77,14 @@ export default function CartDrawer() {
         </div>
 
         {/* Free Shipping Progress Bar */}
-        <div className="px-6 py-3.5 bg-[#FAF7F4] border-b border-[#eee]">
-          <p className="text-[12px] text-[#555] text-center mb-2">
+        <div className="px-6 py-3.5 bg-gradient-to-b from-[#FAF7F4] to-white border-b border-amber-100/60">
+          <p className="text-[12px] text-slate-600 text-center mb-2">
             {remainingForFreeShipping > 0 ? (
               <>
-                Add <span className="font-semibold text-[#C8A165]">${remainingForFreeShipping.toFixed(2)}</span> more to enjoy <span className="font-semibold">Free Express Shipping</span>!
+                Add <span className="font-bold text-amber-600">${remainingForFreeShipping.toFixed(2)}</span> more to enjoy <span className="font-bold text-slate-900">Free Express Shipping</span>!
               </>
             ) : (
-              <span className="font-semibold text-green-700 flex items-center justify-center gap-1.5">
+              <span className="font-bold text-emerald-600 flex items-center justify-center gap-1.5">
                 <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path d="M4.5 12.75l6 6 9-13.5" />
                 </svg>
@@ -92,33 +92,33 @@ export default function CartDrawer() {
               </span>
             )}
           </p>
-          <div className="w-full bg-[#E5DFD7] h-1.5 rounded-full overflow-hidden">
+          <div className="w-full bg-[#E5DFD7] h-2 rounded-full overflow-hidden">
             <div
-              className="bg-[#C8A165] h-full transition-all duration-500 rounded-full"
+              className="bg-gradient-to-r from-emerald-500 via-amber-400 to-[#F59E0B] shadow-sm shadow-amber-500/50 h-full transition-all duration-500 rounded-full"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
 
         {/* Item List */}
-        <div className="flex-1 overflow-y-auto px-6 divide-y divide-[#f0f0f0]">
+        <div className="flex-1 overflow-y-auto px-6 divide-y divide-slate-100">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center py-16">
-              <div className="w-16 h-16 rounded-full bg-[#FAF7F4] flex items-center justify-center mb-4 text-[#C8A165]">
+              <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-4 text-amber-600 shadow-sm">
                 <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
               </div>
-              <p className="font-cormorant text-2xl font-bold text-[#1A1A1A] mb-1">
+              <p className="font-cormorant text-2xl font-bold text-slate-900 mb-1">
                 Your cart is empty
               </p>
-              <p className="text-[13px] text-[#888] mb-6 max-w-[240px]">
+              <p className="text-[13px] text-slate-500 mb-6 max-w-[240px]">
                 Discover our timeless jewelry collections and artisan fine pieces.
               </p>
               <Link
                 href="/shop"
                 onClick={() => setCartOpen(false)}
-                className="bg-[#1A1A1A] hover:bg-[#C8A165] text-white px-7 py-3 text-[12px] font-semibold uppercase tracking-[2px] transition-colors"
+                className="bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white px-7 py-3 text-[12px] font-bold uppercase tracking-[2px] transition-all shadow-md shadow-amber-500/25 rounded-sm"
               >
                 Start Shopping
               </Link>
@@ -129,7 +129,7 @@ export default function CartDrawer() {
                 <Link
                   href={`/product/${product.slug}`}
                   onClick={() => setCartOpen(false)}
-                  className="relative w-20 h-20 bg-[#F8F6F3] shrink-0 border border-[#f0f0f0] overflow-hidden"
+                  className="relative w-20 h-20 bg-[#F8F6F3] shrink-0 border border-slate-150 overflow-hidden rounded-sm"
                 >
                   <Image
                     src={product.image}
@@ -144,18 +144,18 @@ export default function CartDrawer() {
                   <Link
                     href={`/product/${product.slug}`}
                     onClick={() => setCartOpen(false)}
-                    className="font-medium text-[14px] text-[#1A1A1A] hover:text-[#C8A165] transition-colors line-clamp-1"
+                    className="font-medium text-[14px] text-slate-900 hover:text-amber-600 transition-colors line-clamp-1"
                   >
                     {product.name}
                   </Link>
                   {selectedVariants && Object.keys(selectedVariants).length > 0 && (
-                    <p className="text-[11px] text-[#888] capitalize mt-0.5">
+                    <p className="text-[11px] text-slate-500 capitalize mt-0.5">
                       {Object.entries(selectedVariants)
                         .map(([k, v]) => `${k}: ${v}`)
                         .join(" / ")}
                     </p>
                   )}
-                  <p className="text-[13px] font-semibold text-[#C8A165] mt-1">
+                  <p className="text-[13px] font-bold text-amber-600 mt-1">
                     ${product.price.toFixed(2)}
                   </p>
 
@@ -221,7 +221,7 @@ export default function CartDrawer() {
               <Link
                 href="/checkout"
                 onClick={() => setCartOpen(false)}
-                className="w-full text-center py-3.5 bg-[#C8A165] hover:bg-[#b8914f] text-white uppercase text-[11px] tracking-[2px] font-bold transition-colors"
+                className="w-full text-center py-3.5 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#FBBF24] hover:to-[#D97706] text-white uppercase text-[11px] tracking-[2px] font-bold transition-all shadow-md shadow-amber-500/25 active:scale-95"
               >
                 Checkout
               </Link>

@@ -126,26 +126,26 @@ function OrderSuccessContent() {
       <div className="max-w-[1000px] mx-auto px-4 sm:px-6">
         {/* Celebration Header Card */}
         <div className="bg-white p-8 md:p-12 border border-[#eee] shadow-sm text-center mb-8 relative overflow-hidden">
-          <div className="w-20 h-20 bg-[#FAF7F4] text-[#C8A165] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#f0ece5]">
-            <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <div className="w-20 h-20 bg-gradient-to-tr from-emerald-500 to-teal-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-500/25">
+            <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
 
-          <p className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold mb-2">
+          <p className="text-[12px] uppercase tracking-[3px] text-emerald-600 font-bold mb-2">
             Order Confirmed & Secured
           </p>
           <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-3">
             Thank You, {displayOrder.customer.firstName}!
           </h1>
-          <p className="text-[15px] text-[#666] max-w-lg mx-auto leading-relaxed">
+          <p className="text-[15px] text-[#555] max-w-lg mx-auto leading-relaxed">
             Your fine jewellery acquisition has been secured. A confirmation email has been dispatched to{" "}
             <strong className="text-[#1A1A1A]">{displayOrder.customer.email}</strong>.
           </p>
 
-          <div className="inline-flex items-center gap-2 mt-6 px-4 py-2 bg-[#FAF7F4] border border-[#eee] rounded text-[13px] text-[#555]">
+          <div className="inline-flex items-center gap-2 mt-6 px-4 py-2 bg-amber-50/60 border border-amber-200/60 rounded text-[13px] text-[#555]">
             <span className="font-semibold uppercase tracking-wider text-[11px] text-[#888]">Order ID:</span>
-            <span className="font-bold text-[#C8A165] tracking-wider">{displayOrder.orderId}</span>
+            <span className="font-bold text-[#D97706] tracking-wider">{displayOrder.orderId}</span>
             <span className="text-[#bbb]">|</span>
             <span className="text-[#777]">{formattedDate}</span>
           </div>
@@ -188,9 +188,9 @@ function OrderSuccessContent() {
                 <div
                   className={`w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-bold shrink-0 ${
                     s.status === "completed"
-                      ? "bg-green-600 text-white"
+                      ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/25"
                       : s.status === "active"
-                      ? "bg-[#C8A165] text-white ring-4 ring-[#C8A165]/20 animate-pulse"
+                      ? "bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white ring-4 ring-amber-400/30 shadow-md shadow-amber-500/30 animate-pulse"
                       : "bg-[#eee] text-[#888]"
                   }`}
                 >
@@ -257,24 +257,24 @@ function OrderSuccessContent() {
                 <span className="font-semibold text-[#1A1A1A]">${displayOrder.subtotal.toFixed(2)}</span>
               </div>
               {displayOrder.discount > 0 && (
-                <div className="flex justify-between text-green-700">
+                <div className="flex justify-between text-emerald-600 font-semibold">
                   <span>VIP Promotional Privilege</span>
-                  <span className="font-semibold">-${displayOrder.discount.toFixed(2)}</span>
+                  <span>-${displayOrder.discount.toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between">
                 <span>Insured Courier Delivery</span>
-                <span className="font-semibold text-[#1A1A1A]">
+                <span className="font-semibold text-emerald-600">
                   {displayOrder.shippingCost === 0 ? "Complimentary (FREE)" : `$${displayOrder.shippingCost.toFixed(2)}`}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>Hallmark Certification & Duties</span>
-                <span className="font-semibold text-[#1A1A1A]">Included</span>
+                <span className="font-semibold text-emerald-600">Complimentary Included</span>
               </div>
               <div className="pt-3 border-t border-[#eee] flex justify-between items-baseline">
                 <span className="font-bold text-[15px] text-[#1A1A1A]">Final Paid Total</span>
-                <span className="font-cormorant text-3xl font-bold text-[#C8A165]">
+                <span className="font-cormorant text-3xl font-bold text-[#D97706]">
                   ${displayOrder.total.toFixed(2)}
                 </span>
               </div>
@@ -305,7 +305,7 @@ function OrderSuccessContent() {
                   Delivery Method
                 </p>
                 <p className="font-medium text-[#1A1A1A]">{displayOrder.shipping.name}</p>
-                <p className="text-[12px] text-[#C8A165] font-semibold mt-0.5">
+                <p className="text-[12px] text-[#D97706] font-bold mt-0.5">
                   Est. Delivery: {displayOrder.shipping.eta}
                 </p>
               </div>
@@ -319,7 +319,7 @@ function OrderSuccessContent() {
                     ? `Credit Card (ending in ${displayOrder.payment.cardLast4 || "8821"})`
                     : displayOrder.payment.method}
                 </p>
-                <p className="text-[12px] text-green-700 font-semibold mt-0.5">✓ Paid & Verified</p>
+                <p className="text-[12px] text-emerald-600 font-bold mt-0.5">✓ Paid & Verified</p>
               </div>
             </div>
 
@@ -327,7 +327,7 @@ function OrderSuccessContent() {
             <div className="bg-white p-6 border border-[#eee] shadow-sm space-y-3">
               <button
                 onClick={() => window.print()}
-                className="w-full py-3 border border-[#1A1A1A] text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white uppercase text-[11px] tracking-[2px] font-bold transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 border border-[#1A1A1A] text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white uppercase text-[11px] tracking-[2px] font-bold transition-colors flex items-center justify-center gap-2 rounded-sm"
               >
                 <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M6.72 13.829c-.24-1.076-.64-2.128-1.2-3.131M17.28 13.829c.24-1.076.64-2.128 1.2-3.131M3 6.75h18M6.75 3h10.5M6.75 21h10.5M4.5 12h15" />
@@ -337,7 +337,7 @@ function OrderSuccessContent() {
 
               <Link
                 href="/shop"
-                className="w-full py-3 bg-[#C8A165] hover:bg-[#b8914f] text-white uppercase text-[11px] tracking-[2px] font-bold transition-colors flex items-center justify-center gap-1.5"
+                className="w-full py-3 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] text-white uppercase text-[11px] tracking-[2px] font-bold transition-all shadow-lg shadow-amber-500/25 flex items-center justify-center gap-1.5 rounded-sm"
               >
                 Continue Shopping →
               </Link>

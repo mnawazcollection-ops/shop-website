@@ -93,7 +93,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
               key={i}
               className={`w-[15px] h-[15px] ${
                 i < (product.rating || 0)
-                  ? "text-[#C8A165]"
+                  ? "text-[#F59E0B] drop-shadow-sm"
                   : "text-[#ddd]"
               }`}
               fill="currentColor"
@@ -109,17 +109,17 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Price */}
-      <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-[#eee]">
+      <div className="flex items-center gap-3 mb-6 pb-6 border-b border-[#eee]">
         {computedOriginalPrice && (
           <span className="text-[20px] text-[#999] line-through">
             ${computedOriginalPrice.toFixed(2)}
           </span>
         )}
-        <span className="text-[28px] font-bold text-[#C8A165]">
+        <span className="text-[30px] font-bold text-[#D97706] tracking-tight">
           ${computedPrice.toFixed(2)}
         </span>
         {salePercent > 0 && (
-          <span className="text-[12px] font-semibold text-white bg-[#E74C3C] px-2 py-0.5 uppercase tracking-wider">
+          <span className="text-[11px] font-bold text-white bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm shadow-red-500/25">
             Save {salePercent}%
           </span>
         )}
@@ -161,7 +161,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                         disabled={option.inStock === false}
                         className={`relative w-9 h-9 rounded-full border-2 transition-all duration-200 ${
                           selectedVariants[variant.type] === option.value
-                            ? "border-[#C8A165] ring-2 ring-[#C8A165]/30 scale-110"
+                            ? "border-[#D97706] ring-2 ring-[#D97706]/40 scale-110 shadow-sm"
                             : "border-[#ddd] hover:border-[#aaa]"
                         } ${
                           option.inStock === false
@@ -193,10 +193,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                           }))
                         }
                         disabled={option.inStock === false}
-                        className={`px-4 py-2 text-[13px] border transition-all duration-200 ${
+                        className={`px-4 py-2 text-[13px] font-medium border transition-all duration-200 ${
                           selectedVariants[variant.type] === option.value
-                            ? "border-[#C8A165] bg-[#C8A165] text-white"
-                            : "border-[#ddd] text-[#555] hover:border-[#C8A165] hover:text-[#C8A165]"
+                            ? "border-[#D97706] bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white shadow-sm shadow-amber-500/25"
+                            : "border-[#ddd] text-[#555] hover:border-[#D97706] hover:text-[#D97706]"
                         } ${
                           option.inStock === false
                             ? "opacity-40 cursor-not-allowed line-through"
@@ -215,10 +215,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       {/* Quantity + Add to Cart + Buy Now Row */}
       <div className="flex flex-col sm:flex-row items-stretch gap-3 mb-4">
         {/* Quantity selector */}
-        <div className="flex items-center border border-[#ddd] shrink-0">
+        <div className="flex items-center border border-[#ddd] shrink-0 rounded overflow-hidden">
           <button
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="w-12 h-[52px] flex items-center justify-center text-[18px] text-[#666] hover:text-[#C8A165] hover:bg-[#faf8f5] transition-colors"
+            className="w-12 h-[52px] flex items-center justify-center text-[18px] text-[#666] hover:text-[#D97706] hover:bg-amber-50 transition-colors"
             aria-label="Decrease quantity"
           >
             −
@@ -234,7 +234,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           />
           <button
             onClick={() => setQuantity((q) => q + 1)}
-            className="w-12 h-[52px] flex items-center justify-center text-[18px] text-[#666] hover:text-[#C8A165] hover:bg-[#faf8f5] transition-colors"
+            className="w-12 h-[52px] flex items-center justify-center text-[18px] text-[#666] hover:text-[#D97706] hover:bg-amber-50 transition-colors"
             aria-label="Increase quantity"
           >
             +
@@ -244,10 +244,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {/* Add to Cart */}
         <button
           onClick={handleAddToCart}
-          className={`flex-1 h-[52px] flex items-center justify-center gap-2.5 text-[13px] font-semibold uppercase tracking-[1.5px] transition-all duration-300 ${
+          className={`flex-1 h-[52px] flex items-center justify-center gap-2.5 text-[13px] font-bold uppercase tracking-[1.5px] rounded transition-all duration-300 ${
             addedToCart
-              ? "bg-green-600 text-white border border-green-600"
-              : "bg-[#C8A165] text-white border border-[#C8A165] hover:bg-[#b8914f] hover:border-[#b8914f]"
+              ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/25"
+              : "bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] text-white shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.01] active:scale-[0.99]"
           }`}
         >
           {addedToCart ? (
@@ -284,7 +284,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {/* Buy Now */}
         <button
           onClick={handleBuyNow}
-          className="h-[52px] px-8 flex items-center justify-center text-[13px] font-semibold uppercase tracking-[1.5px] bg-[#1A1A1A] text-white border border-[#1A1A1A] hover:bg-[#333] transition-colors"
+          className="h-[52px] px-8 flex items-center justify-center text-[13px] font-bold uppercase tracking-[1.5px] rounded bg-[#1A1A1A] hover:bg-neutral-800 text-white border border-[#1A1A1A] hover:border-neutral-800 transition-all shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.99]"
         >
           Buy Now
         </button>
@@ -294,10 +294,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       <div className="flex items-center gap-5 py-4 mb-6 border-b border-[#eee]">
         <button
           onClick={() => toggleWishlist(product)}
-          className={`flex items-center gap-2 text-[13px] transition-colors ${
+          className={`flex items-center gap-2 text-[13px] font-medium transition-colors ${
             wishlisted
-              ? "text-[#E74C3C]"
-              : "text-[#666] hover:text-[#C8A165]"
+              ? "text-rose-600"
+              : "text-[#666] hover:text-[#D97706]"
           }`}
         >
           <svg
@@ -315,7 +315,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
         <span className="w-px h-4 bg-[#ddd]" />
 
-        <button className="flex items-center gap-2 text-[13px] text-[#666] hover:text-[#C8A165] transition-colors">
+        <button className="flex items-center gap-2 text-[13px] text-[#666] hover:text-[#D97706] transition-colors">
           <svg
             width="18"
             height="18"
@@ -344,7 +344,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <span className="font-semibold text-[#555] uppercase tracking-wider">
             Category:
           </span>{" "}
-          <span className="text-[#C8A165] hover:underline cursor-pointer">
+          <span className="text-[#D97706] hover:underline cursor-pointer font-medium">
             {product.category}
           </span>
         </p>
@@ -355,7 +355,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             </span>{" "}
             {product.tags.map((tag, i) => (
               <span key={tag}>
-                <span className="text-[#C8A165] hover:underline cursor-pointer">
+                <span className="text-[#D97706] hover:underline cursor-pointer font-medium">
                   {tag}
                 </span>
                 {i < product.tags!.length - 1 ? ", " : ""}
@@ -370,39 +370,43 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {[
           {
             icon: (
-              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
               </svg>
             ),
-            text: "Free Shipping",
+            text: "Free Insured Courier",
+            color: "text-amber-700 bg-amber-50/80 border-amber-200/60",
           },
           {
             icon: (
-              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
               </svg>
             ),
-            text: "30-Day Returns",
+            text: "30-Day Bespoke Returns",
+            color: "text-emerald-700 bg-emerald-50/80 border-emerald-200/60",
           },
           {
             icon: (
-              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
               </svg>
             ),
-            text: "100% Authentic",
+            text: "100% GIA Certified",
+            color: "text-blue-700 bg-blue-50/80 border-blue-200/60",
           },
           {
             icon: (
-              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
               </svg>
             ),
-            text: "Gift Packaging",
+            text: "Luxury Velvet Packaging",
+            color: "text-rose-700 bg-rose-50/80 border-rose-200/60",
           },
         ].map((item, i) => (
-          <div key={i} className="flex items-center gap-2.5 text-[12px] text-[#777]">
-            <span className="text-[#C8A165] shrink-0">{item.icon}</span>
+          <div key={i} className={`flex items-center gap-2.5 text-[12px] font-medium p-2.5 rounded-lg border ${item.color}`}>
+            <span className="shrink-0">{item.icon}</span>
             {item.text}
           </div>
         ))}

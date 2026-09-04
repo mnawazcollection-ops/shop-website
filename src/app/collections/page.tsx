@@ -71,7 +71,7 @@ export default function CollectionsPage() {
 
             {/* Text */}
             <div className="w-full lg:w-1/2 max-w-lg">
-              <span className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold">
+              <span className="text-[12px] uppercase tracking-[3px] text-amber-600 font-bold">
                 {col.subtitle} • {col.count}
               </span>
               <h2 className="font-cormorant text-3xl md:text-4xl font-bold text-[#1A1A1A] mt-2 mb-4">
@@ -82,7 +82,7 @@ export default function CollectionsPage() {
               </p>
               <Link
                 href={col.href}
-                className="inline-flex items-center gap-3 bg-[#1A1A1A] text-white hover:bg-[#C8A165] px-8 py-3.5 text-[12px] uppercase tracking-wider font-medium transition-colors"
+                className="inline-flex items-center gap-3 bg-[#1A1A1A] text-white hover:bg-gradient-to-r hover:from-[#F59E0B] hover:to-[#D97706] px-8 py-3.5 text-[12px] uppercase tracking-wider font-bold transition-all shadow-sm hover:shadow-md rounded-sm"
               >
                 <span>Explore Collection</span>
                 <svg

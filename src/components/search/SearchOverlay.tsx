@@ -91,7 +91,7 @@ export default function SearchOverlay() {
           <button
             type="button"
             onClick={() => setSearchOpen(false)}
-            className="px-5 py-5 text-[12px] uppercase tracking-wider text-[#888] hover:text-[#C8A165] font-medium border-l border-[#eee]"
+            className="px-5 py-5 text-[12px] uppercase tracking-wider text-[#888] hover:text-[#D97706] font-bold border-l border-[#eee] transition-colors"
           >
             Close
           </button>
@@ -102,7 +102,7 @@ export default function SearchOverlay() {
           {query.trim().length < 2 ? (
             /* Popular searches */
             <div className="p-6">
-              <h4 className="text-[12px] uppercase tracking-[2px] text-[#999] font-semibold mb-4">
+              <h4 className="text-[12px] uppercase tracking-[2px] text-amber-700 font-bold mb-4">
                 Popular Searches
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -110,7 +110,7 @@ export default function SearchOverlay() {
                   <button
                     key={term}
                     onClick={() => setQuery(term)}
-                    className="px-4 py-2 border border-[#e5e5e5] text-[13px] text-[#555] hover:border-[#C8A165] hover:text-[#C8A165] transition-colors"
+                    className="px-4 py-2 border border-[#e5e5e5] text-[13px] text-[#555] hover:border-[#D97706] hover:text-[#D97706] hover:bg-amber-50/50 transition-colors rounded-sm"
                   >
                     {term}
                   </button>
@@ -120,7 +120,7 @@ export default function SearchOverlay() {
           ) : results.length > 0 ? (
             /* Search results */
             <div className="p-4">
-              <p className="text-[12px] uppercase tracking-wider text-[#999] font-semibold px-2 mb-3">
+              <p className="text-[12px] uppercase tracking-wider text-amber-600 font-bold px-2 mb-3">
                 {results.length} result{results.length !== 1 ? "s" : ""} found
               </p>
               <div className="space-y-1">
@@ -129,9 +129,9 @@ export default function SearchOverlay() {
                     key={product.id}
                     href={`/product/${product.slug}`}
                     onClick={() => setSearchOpen(false)}
-                    className="flex items-center gap-4 p-3 hover:bg-[#faf8f5] transition-colors group"
+                    className="flex items-center gap-4 p-3 hover:bg-amber-50/40 rounded transition-colors group"
                   >
-                    <div className="relative w-14 h-14 bg-[#F8F6F3] shrink-0 overflow-hidden">
+                    <div className="relative w-14 h-14 bg-[#F8F6F3] shrink-0 overflow-hidden border border-[#eee] rounded-sm">
                       <Image
                         src={product.image}
                         alt={product.name}
@@ -144,7 +144,7 @@ export default function SearchOverlay() {
                       <p className="text-[11px] text-[#999] uppercase tracking-wider">
                         {product.category}
                       </p>
-                      <p className="text-[14px] text-[#1A1A1A] font-medium group-hover:text-[#C8A165] transition-colors truncate">
+                      <p className="text-[14px] text-[#1A1A1A] font-medium group-hover:text-[#D97706] transition-colors truncate">
                         {product.name}
                       </p>
                     </div>
@@ -154,7 +154,7 @@ export default function SearchOverlay() {
                           ${product.originalPrice.toFixed(2)}
                         </span>
                       )}
-                      <span className="text-[14px] font-semibold text-[#C8A165]">
+                      <span className="text-[15px] font-bold text-[#D97706]">
                         ${product.price.toFixed(2)}
                       </span>
                     </div>
@@ -167,7 +167,7 @@ export default function SearchOverlay() {
                     setSearchOpen(false);
                     router.push(`/search?q=${encodeURIComponent(query.trim())}`);
                   }}
-                  className="w-full mt-3 py-3 text-center text-[13px] text-[#C8A165] font-semibold uppercase tracking-wider hover:bg-[#faf8f5] transition-colors border-t border-[#eee]"
+                  className="w-full mt-3 py-3 text-center text-[13px] text-[#D97706] font-bold uppercase tracking-wider hover:bg-amber-50/60 transition-colors border-t border-[#eee]"
                 >
                   View All {results.length} Results →
                 </button>

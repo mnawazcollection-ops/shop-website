@@ -55,44 +55,44 @@ function SearchContent() {
     <div className="bg-[#FCFAF8] min-h-[80vh] py-12">
       <div className="max-w-[1400px] mx-auto px-4 md:px-6">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-[12px] text-[#888] uppercase tracking-wider mb-8">
-          <Link href="/" className="hover:text-[#C8A165] transition-colors">
+        <nav className="flex items-center gap-2 text-[12px] text-slate-500 uppercase tracking-wider mb-8">
+          <Link href="/" className="hover:text-amber-600 transition-colors">
             Home
           </Link>
           <span>/</span>
-          <span className="text-[#1A1A1A] font-semibold">Search Results</span>
+          <span className="text-slate-900 font-semibold">Search Results</span>
           {query && (
             <>
               <span>/</span>
-              <span className="text-[#C8A165] truncate max-w-[200px]">&ldquo;{query}&rdquo;</span>
+              <span className="text-amber-600 font-bold truncate max-w-[200px]">&ldquo;{query}&rdquo;</span>
             </>
           )}
         </nav>
 
         {/* Search Header Banner */}
         <div className="max-w-2xl mx-auto text-center mb-10">
-          <p className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold mb-2">
+          <p className="text-[12px] uppercase tracking-[3px] text-amber-600 font-bold mb-2">
             Search Boutique
           </p>
-          <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-4">
+          <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-slate-900 mb-4">
             {query ? `Results for “${query}”` : "Search Our Collections"}
           </h1>
-          <p className="text-[#777] text-[14px]">
-            {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"} found
+          <p className="text-slate-600 text-[14px]">
+            <span className="font-bold text-amber-600">{filteredProducts.length}</span> {filteredProducts.length === 1 ? "product" : "products"} found
           </p>
 
           {/* Search Bar Input */}
-          <form onSubmit={handleSearchSubmit} className="mt-6 flex max-w-xl mx-auto shadow-sm border border-[#ddd] bg-white">
+          <form onSubmit={handleSearchSubmit} className="mt-6 flex max-w-xl mx-auto shadow-md shadow-amber-500/10 border border-amber-200/70 bg-white rounded-sm overflow-hidden">
             <input
               type="text"
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder="Search for gold, diamond, rings, necklaces..."
-              className="flex-1 px-4 py-3 text-[14px] outline-none text-[#1A1A1A]"
+              className="flex-1 px-4 py-3 text-[14px] outline-none text-slate-900 focus:ring-1 focus:ring-amber-400"
             />
             <button
               type="submit"
-              className="bg-[#1A1A1A] hover:bg-[#C8A165] text-white px-6 text-[12px] uppercase tracking-[1.5px] font-bold transition-colors"
+              className="bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#FBBF24] hover:via-[#F59E0B] hover:to-[#D97706] text-white px-7 text-[12px] uppercase tracking-[1.5px] font-bold transition-all shadow-md shadow-amber-500/25"
             >
               Search
             </button>
@@ -100,7 +100,7 @@ function SearchContent() {
 
           {/* Popular Tag Pills */}
           <div className="flex flex-wrap justify-center items-center gap-2 mt-4">
-            <span className="text-[12px] text-[#888]">Popular:</span>
+            <span className="text-[12px] text-slate-500 font-medium">Popular:</span>
             {popularSearches.map((tag) => (
               <button
                 key={tag}
@@ -108,7 +108,7 @@ function SearchContent() {
                   setInputQuery(tag);
                   router.push(`/search?q=${encodeURIComponent(tag)}`);
                 }}
-                className="text-[12px] text-[#666] hover:text-[#C8A165] hover:underline"
+                className="text-[12px] font-semibold text-slate-600 hover:text-amber-600 hover:underline px-2 py-0.5 rounded-full hover:bg-amber-50 transition-colors"
               >
                 {tag}
               </button>
@@ -118,18 +118,18 @@ function SearchContent() {
 
         {/* Filter and Sort Bar */}
         {filteredProducts.length > 0 && (
-          <div className="flex flex-wrap items-center justify-between gap-4 py-4 px-6 bg-white border border-[#eee] mb-8 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-4 py-4 px-6 bg-white border border-amber-100/60 mb-8 shadow-sm rounded-sm">
             {/* Category tabs */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[12px] uppercase tracking-wider font-semibold text-[#888] mr-2">
+              <span className="text-[12px] uppercase tracking-wider font-bold text-slate-500 mr-2">
                 Filter:
               </span>
               <button
                 onClick={() => setSelectedCategory("all")}
-                className={`px-3 py-1 text-[12px] uppercase tracking-wider transition-colors ${
+                className={`px-3.5 py-1.5 rounded-sm text-[12px] uppercase tracking-wider font-bold transition-all ${
                   selectedCategory === "all"
-                    ? "bg-[#1A1A1A] text-white font-semibold"
-                    : "bg-[#FAF7F4] text-[#555] hover:bg-[#f0ece5]"
+                    ? "bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white shadow-sm shadow-amber-500/30"
+                    : "bg-[#FAF7F4] text-slate-700 hover:bg-amber-50 hover:text-amber-700"
                 }`}
               >
                 All
@@ -138,10 +138,10 @@ function SearchContent() {
                 <button
                   key={c.id}
                   onClick={() => setSelectedCategory(c.name)}
-                  className={`px-3 py-1 text-[12px] uppercase tracking-wider transition-colors ${
+                  className={`px-3.5 py-1.5 rounded-sm text-[12px] uppercase tracking-wider font-bold transition-all ${
                     selectedCategory.toLowerCase() === c.name.toLowerCase()
-                      ? "bg-[#1A1A1A] text-white font-semibold"
-                      : "bg-[#FAF7F4] text-[#555] hover:bg-[#f0ece5]"
+                      ? "bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white shadow-sm shadow-amber-500/30"
+                      : "bg-[#FAF7F4] text-slate-700 hover:bg-amber-50 hover:text-amber-700"
                   }`}
                 >
                   {c.name}
@@ -151,13 +151,13 @@ function SearchContent() {
 
             {/* Sort options */}
             <div className="flex items-center gap-2 ml-auto">
-              <span className="text-[12px] uppercase tracking-wider font-semibold text-[#888]">
+              <span className="text-[12px] uppercase tracking-wider font-bold text-slate-500">
                 Sort:
               </span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-[13px] border border-[#ddd] bg-white px-3 py-1.5 outline-none text-[#555]"
+                className="text-[13px] border border-slate-200 bg-white px-3 py-1.5 outline-none text-slate-700 font-medium rounded-sm focus:border-amber-500"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -170,30 +170,30 @@ function SearchContent() {
 
         {/* Results Grid or Empty State */}
         {filteredProducts.length === 0 ? (
-          <div className="max-w-2xl mx-auto bg-white p-12 text-center border border-[#eee] shadow-sm">
-            <div className="w-16 h-16 bg-[#FAF7F4] text-[#999] rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="max-w-2xl mx-auto bg-white p-12 text-center border border-amber-100 shadow-md shadow-amber-500/5 rounded-sm">
+            <div className="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
               <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
               </svg>
             </div>
-            <h2 className="font-cormorant text-3xl font-bold text-[#1A1A1A] mb-2">
+            <h2 className="font-cormorant text-3xl font-bold text-slate-900 mb-2">
               No matching jewelry found
             </h2>
-            <p className="text-[14px] text-[#777] mb-8">
+            <p className="text-[14px] text-slate-600 mb-8">
               We couldn&apos;t find any items matching &ldquo;{query}&rdquo;. Check your spelling or browse our bestselling collections below.
             </p>
             <div className="flex justify-center gap-4">
               <Link
                 href="/shop"
-                className="bg-[#1A1A1A] hover:bg-[#C8A165] text-white px-8 py-3.5 text-[12px] uppercase tracking-[2px] font-bold transition-colors"
+                className="bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white px-8 py-3.5 text-[12px] uppercase tracking-[2px] font-bold rounded-sm shadow-md shadow-amber-500/25 hover:shadow-lg transition-all"
               >
                 View All Products
               </Link>
             </div>
 
             {/* Popular categories */}
-            <div className="mt-12 pt-8 border-t border-[#eee]">
-              <p className="text-[12px] uppercase tracking-[2px] text-[#999] font-semibold mb-4">
+            <div className="mt-12 pt-8 border-t border-slate-100">
+              <p className="text-[12px] uppercase tracking-[2px] text-amber-700 font-bold mb-4">
                 Popular Collections
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -201,7 +201,7 @@ function SearchContent() {
                   <Link
                     key={cat.id}
                     href={`/category/${cat.name.toLowerCase()}`}
-                    className="p-3 bg-[#FAF7F4] hover:bg-[#f0ece5] text-center font-cormorant text-[16px] font-bold text-[#1A1A1A] hover:text-[#C8A165] transition-colors"
+                    className="p-3 bg-[#FAF7F4] hover:bg-amber-50 text-center font-cormorant text-[16px] font-bold text-slate-800 hover:text-amber-700 rounded-sm border border-transparent hover:border-amber-200 transition-all"
                   >
                     {cat.name}
                   </Link>

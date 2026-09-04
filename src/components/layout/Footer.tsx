@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div>
             <Link href="/">
-              <h3 className="font-cormorant text-[26px] font-bold tracking-[3px] text-white uppercase mb-5">
+              <h3 className="font-cormorant text-[26px] font-bold tracking-[3px] text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#FBBF24] uppercase mb-5 drop-shadow-sm">
                 Sir Ihsan
               </h3>
             </Link>
@@ -24,7 +24,7 @@ export default function Footer() {
                   <Link
                     key={social}
                     href="#"
-                    className="w-9 h-9 border border-white/20 flex items-center justify-center hover:bg-[#C8A165] hover:border-[#C8A165] transition-all duration-300"
+                    className="w-9 h-9 border border-white/20 flex items-center justify-center hover:bg-gradient-to-r hover:from-[#F59E0B] hover:to-[#D97706] hover:border-transparent hover:text-white hover:shadow-lg hover:shadow-amber-500/30 transition-all duration-300 rounded-sm"
                     aria-label={social}
                   >
                     <SocialIcon name={social} />
@@ -51,15 +51,16 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-white/60 hover:text-[#C8A165] transition-colors duration-200 flex items-center gap-2"
+                    className="text-[14px] text-white/70 hover:text-amber-400 transition-colors duration-200 flex items-center gap-2 font-medium"
                   >
                     <svg
                       width="12"
                       height="12"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="2"
+                      strokeWidth="2.5"
                       viewBox="0 0 24 24"
+                      className="text-amber-500/80"
                     >
                       <path d="M9 5l7 7-7 7" />
                     </svg>
@@ -78,24 +79,25 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "My Account", href: "/account" },
-                { label: "Order Tracking", href: "/tracking" },
+                { label: "Order Tracking", href: "/account" },
                 { label: "Wishlist", href: "/wishlist" },
-                { label: "Shipping Info", href: "/shipping" },
-                { label: "Returns & Exchanges", href: "/returns" },
-                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Shipping Info", href: "/checkout" },
+                { label: "Returns & Exchanges", href: "/about" },
+                { label: "Privacy Policy", href: "/about" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-white/60 hover:text-[#C8A165] transition-colors duration-200 flex items-center gap-2"
+                    className="text-[14px] text-white/70 hover:text-amber-400 transition-colors duration-200 flex items-center gap-2 font-medium"
                   >
                     <svg
                       width="12"
                       height="12"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="2"
+                      strokeWidth="2.5"
                       viewBox="0 0 24 24"
+                      className="text-amber-500/80"
                     >
                       <path d="M9 5l7 7-7 7" />
                     </svg>
@@ -117,7 +119,7 @@ export default function Footer() {
                   width="18"
                   height="18"
                   fill="none"
-                  stroke="#C8A165"
+                  stroke="#F59E0B"
                   strokeWidth="1.5"
                   viewBox="0 0 24 24"
                   className="mt-0.5 flex-shrink-0"
@@ -125,7 +127,7 @@ export default function Footer() {
                   <path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
-                <span className="text-[14px] text-white/60 leading-relaxed">
+                <span className="text-[14px] text-white/70 leading-relaxed">
                   123 Luxury Avenue, Diamond District, New York, NY 10036
                 </span>
               </li>
@@ -134,7 +136,7 @@ export default function Footer() {
                   width="18"
                   height="18"
                   fill="none"
-                  stroke="#C8A165"
+                  stroke="#F59E0B"
                   strokeWidth="1.5"
                   viewBox="0 0 24 24"
                   className="flex-shrink-0"
@@ -143,7 +145,7 @@ export default function Footer() {
                 </svg>
                 <a
                   href="tel:+1234567890"
-                  className="text-[14px] text-white/60 hover:text-[#C8A165] transition-colors"
+                  className="text-[14px] text-white/70 hover:text-amber-400 transition-colors"
                 >
                   +1 (234) 567-890
                 </a>
@@ -153,7 +155,7 @@ export default function Footer() {
                   width="18"
                   height="18"
                   fill="none"
-                  stroke="#C8A165"
+                  stroke="#F59E0B"
                   strokeWidth="1.5"
                   viewBox="0 0 24 24"
                   className="flex-shrink-0"
@@ -162,7 +164,7 @@ export default function Footer() {
                 </svg>
                 <a
                   href="mailto:info@sirhisan.com"
-                  className="text-[14px] text-white/60 hover:text-[#C8A165] transition-colors"
+                  className="text-[14px] text-white/70 hover:text-amber-400 transition-colors"
                 >
                   info@sirhisan.com
                 </a>
@@ -172,14 +174,14 @@ export default function Footer() {
                   width="18"
                   height="18"
                   fill="none"
-                  stroke="#C8A165"
+                  stroke="#F59E0B"
                   strokeWidth="1.5"
                   viewBox="0 0 24 24"
                   className="flex-shrink-0"
                 >
                   <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="text-[14px] text-white/60">
+                <span className="text-[14px] text-white/70">
                   Mon - Sat: 10:00 AM - 8:00 PM
                 </span>
               </li>

@@ -25,7 +25,7 @@ export default function Testimonials() {
                 (_, i) => (
                   <svg
                     key={i}
-                    className="w-5 h-5 text-[#C8A165]"
+                    className="w-5 h-5 text-[#F59E0B] drop-shadow-sm"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -36,13 +36,13 @@ export default function Testimonials() {
             </div>
 
             {/* Quote */}
-            <p className="text-[17px] md:text-[19px] text-[#555] leading-relaxed italic mb-8 font-light">
+            <p className="text-[17px] md:text-[19px] text-[#444] leading-relaxed italic mb-8 font-light">
               &ldquo;{testimonials[activeIndex].content}&rdquo;
             </p>
 
             {/* Author */}
             <div className="flex items-center justify-center gap-4">
-              <div className="w-14 h-14 rounded-full overflow-hidden relative">
+              <div className="w-14 h-14 rounded-full overflow-hidden relative ring-2 ring-amber-400/40 shadow-sm">
                 <Image
                   src={testimonials[activeIndex].avatar}
                   alt={testimonials[activeIndex].name}
@@ -52,10 +52,10 @@ export default function Testimonials() {
                 />
               </div>
               <div className="text-left">
-                <h4 className="text-[15px] font-semibold text-[#1A1A1A]">
+                <h4 className="text-[15px] font-bold text-[#1A1A1A]">
                   {testimonials[activeIndex].name}
                 </h4>
-                <p className="text-[13px] text-[#999]">
+                <p className="text-[13px] text-amber-700 font-medium">
                   {testimonials[activeIndex].role}
                 </p>
               </div>
@@ -70,8 +70,8 @@ export default function Testimonials() {
                 onClick={() => setActiveIndex(index)}
                 className={`transition-all duration-300 ${
                   index === activeIndex
-                    ? "w-8 h-2 bg-[#C8A165] rounded-full"
-                    : "w-2 h-2 bg-[#ddd] rounded-full hover:bg-[#C8A165]"
+                    ? "w-8 h-2.5 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] rounded-full shadow-md shadow-amber-500/30"
+                    : "w-2.5 h-2.5 bg-[#ddd] rounded-full hover:bg-amber-400"
                 }`}
                 aria-label={`View testimonial ${index + 1}`}
               />

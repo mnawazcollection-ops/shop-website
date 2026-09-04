@@ -23,8 +23,8 @@ export default function SectionHeading({
     <div className={`${alignment[align]} mb-10 ${className}`}>
       {subtitle && (
         <p
-          className={`text-[13px] tracking-[3px] uppercase mb-3 font-medium ${
-            light ? "text-[#C8A165]" : "text-[#C8A165]"
+          className={`text-[13px] tracking-[3px] uppercase mb-3 font-semibold ${
+            light ? "text-amber-400 drop-shadow-sm" : "text-amber-600 font-bold"
           }`}
         >
           {subtitle}
@@ -37,8 +37,8 @@ export default function SectionHeading({
       >
         {title}
       </h2>
-      <div className="flex justify-center mt-4">
-        <div className="w-12 h-[1px] bg-[#C8A165]"></div>
+      <div className={`flex mt-4 ${align === "left" ? "justify-start" : align === "right" ? "justify-end" : "justify-center"}`}>
+        <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
       </div>
     </div>
   );

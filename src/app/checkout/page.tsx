@@ -217,7 +217,7 @@ export default function CheckoutPage() {
             </span>
             <Link
               href="/cart"
-              className="text-[#C8A165] hover:underline font-semibold flex items-center gap-1"
+              className="text-[#D97706] hover:underline font-bold flex items-center gap-1"
             >
               ← Back to Bag
             </Link>
@@ -230,7 +230,7 @@ export default function CheckoutPage() {
         <div className="max-w-[1400px] mx-auto flex items-center justify-between">
           <button
             onClick={() => setMobileSummaryOpen(!mobileSummaryOpen)}
-            className="flex items-center gap-2 text-[13px] text-[#C8A165] font-semibold"
+            className="flex items-center gap-2 text-[13px] text-[#D97706] font-bold"
           >
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
               <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -246,7 +246,7 @@ export default function CheckoutPage() {
               <path d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <span className="font-cormorant text-xl font-bold text-[#1A1A1A]">
+          <span className="font-cormorant text-xl font-bold text-[#D97706]">
             ${total.toFixed(2)}
           </span>
         </div>
@@ -258,7 +258,7 @@ export default function CheckoutPage() {
               <div key={product.id} className="flex items-center gap-3">
                 <div className="relative w-14 h-14 bg-white border border-[#eee] shrink-0 overflow-hidden">
                   <Image src={product.image} alt={product.name} fill className="object-cover" sizes="56px" />
-                  <span className="absolute top-0 right-0 w-4 h-4 bg-[#C8A165] text-white text-[9px] font-bold flex items-center justify-center rounded-bl">
+                  <span className="absolute top-0 right-0 w-4 h-4 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white text-[9px] font-bold flex items-center justify-center rounded-bl">
                     {quantity}
                   </span>
                 </div>
@@ -286,9 +286,9 @@ export default function CheckoutPage() {
           <div className="lg:col-span-7 space-y-10">
             {/* Step Progress */}
             <nav className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#888] overflow-x-auto pb-2">
-              <Link href="/cart" className="hover:text-[#C8A165]">Bag</Link>
+              <Link href="/cart" className="hover:text-[#D97706]">Bag</Link>
               <span>›</span>
-              <span className="text-[#C8A165] font-bold">Checkout</span>
+              <span className="text-[#D97706] font-bold">Checkout</span>
               <span>›</span>
               <span>Confirmation</span>
             </nav>
@@ -347,7 +347,7 @@ export default function CheckoutPage() {
                 <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A]">
                   1. Contact Information
                 </h2>
-                <span className="text-[12px] text-[#888]">Already a client? <Link href="/account" className="text-[#C8A165] hover:underline">Sign In</Link></span>
+                <span className="text-[12px] text-[#888]">Already a client? <Link href="/account" className="text-amber-600 font-bold hover:underline">Sign In</Link></span>
               </div>
 
               <div className="space-y-4">
@@ -361,7 +361,7 @@ export default function CheckoutPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="client@luxury.com"
-                    className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                    className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                   />
                 </div>
 
@@ -375,7 +375,7 @@ export default function CheckoutPage() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+1 (555) 000-0000"
-                    className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                    className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                   />
                 </div>
 
@@ -384,7 +384,7 @@ export default function CheckoutPage() {
                     type="checkbox"
                     checked={newsletter}
                     onChange={(e) => setNewsletter(e.target.checked)}
-                    className="w-4 h-4 accent-[#C8A165]"
+                    className="w-4 h-4 accent-amber-600 rounded"
                   />
                   <span>Receive bespoke jewellery collection launches & VIP salon invitations</span>
                 </label>
@@ -405,7 +405,7 @@ export default function CheckoutPage() {
                   <select
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] bg-white transition-colors"
+                    className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 bg-white transition-all rounded-sm"
                   >
                     <option value="United States">United States</option>
                     <option value="United Kingdom">United Kingdom</option>
@@ -430,7 +430,7 @@ export default function CheckoutPage() {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Jane"
-                      className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                      className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                     />
                   </div>
                   <div>
@@ -443,7 +443,7 @@ export default function CheckoutPage() {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="Doe"
-                      className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                      className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                     />
                   </div>
                 </div>
@@ -458,7 +458,7 @@ export default function CheckoutPage() {
                     value={address1}
                     onChange={(e) => setAddress1(e.target.value)}
                     placeholder="742 Evergreen Terrace"
-                    className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                    className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                   />
                 </div>
 
@@ -471,7 +471,7 @@ export default function CheckoutPage() {
                     value={address2}
                     onChange={(e) => setAddress2(e.target.value)}
                     placeholder="Penthouse 4B"
-                    className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                    className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                   />
                 </div>
 
@@ -486,7 +486,7 @@ export default function CheckoutPage() {
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="New York"
-                      className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                      className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                     />
                   </div>
                   <div>
@@ -498,7 +498,7 @@ export default function CheckoutPage() {
                       value={state}
                       onChange={(e) => setState(e.target.value)}
                       placeholder="NY"
-                      className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                      className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                     />
                   </div>
                   <div>
@@ -511,7 +511,7 @@ export default function CheckoutPage() {
                       value={zip}
                       onChange={(e) => setZip(e.target.value)}
                       placeholder="10001"
-                      className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                      className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                     />
                   </div>
                 </div>
@@ -528,10 +528,10 @@ export default function CheckoutPage() {
                 {SHIPPING_OPTIONS.map((opt) => (
                   <label
                     key={opt.id}
-                    className={`flex items-center justify-between p-4 border cursor-pointer transition-all ${
+                    className={`flex items-center justify-between p-4 border cursor-pointer transition-all rounded-sm ${
                       shippingMethod === opt.id
-                        ? "border-[#C8A165] bg-[#FAF7F4] shadow-sm"
-                        : "border-[#eee] hover:border-[#ddd]"
+                        ? "border-[#D97706] bg-amber-50/40 shadow-sm shadow-amber-500/10 ring-1 ring-amber-400/30"
+                        : "border-[#eee] hover:border-amber-300"
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -540,18 +540,18 @@ export default function CheckoutPage() {
                         name="shipping"
                         checked={shippingMethod === opt.id}
                         onChange={() => setShippingMethod(opt.id)}
-                        className="mt-1 w-4 h-4 accent-[#C8A165]"
+                        className="mt-1 w-4 h-4 accent-amber-600"
                       />
                       <div>
                         <p className="font-semibold text-[14px] text-[#1A1A1A]">{opt.name}</p>
                         <p className="text-[12px] text-[#777] mt-0.5">{opt.desc}</p>
-                        <p className="text-[11px] text-[#C8A165] font-medium mt-1">
+                        <p className="text-[11px] text-[#D97706] font-bold mt-1">
                           Est. Transit: {opt.eta}
                         </p>
                       </div>
                     </div>
-                    <span className="font-semibold text-[14px] text-[#1A1A1A]">
-                      {opt.price === 0 ? "FREE" : `$${opt.price.toFixed(2)}`}
+                    <span className="font-bold text-[14px] text-[#1A1A1A]">
+                      {opt.price === 0 ? <span className="text-emerald-600 font-bold">FREE</span> : `$${opt.price.toFixed(2)}`}
                     </span>
                   </label>
                 ))}
@@ -575,9 +575,9 @@ export default function CheckoutPage() {
                     key={p.id}
                     type="button"
                     onClick={() => setPaymentMethod(p.id as any)}
-                    className={`py-2 text-[12px] uppercase tracking-wider font-semibold border-b-2 transition-all ${
+                    className={`py-2 text-[12px] uppercase tracking-wider font-bold border-b-2 transition-all ${
                       paymentMethod === p.id
-                        ? "border-[#C8A165] text-[#1A1A1A]"
+                        ? "border-[#D97706] text-amber-700 font-bold"
                         : "border-transparent text-[#999] hover:text-[#555]"
                     }`}
                   >
@@ -606,7 +606,7 @@ export default function CheckoutPage() {
                           setCardNumber(formatted);
                         }}
                         placeholder="4532 •••• •••• 8921"
-                        className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                        className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                       />
                       <span className="absolute right-3 top-3.5 text-xs text-[#999]">💳</span>
                     </div>
@@ -622,7 +622,7 @@ export default function CheckoutPage() {
                       value={cardName}
                       onChange={(e) => setCardName(e.target.value)}
                       placeholder="Jane Doe"
-                      className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors uppercase"
+                      className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all uppercase rounded-sm"
                     />
                   </div>
 
@@ -644,7 +644,7 @@ export default function CheckoutPage() {
                           }
                         }}
                         placeholder="MM/YY"
-                        className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                        className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                       />
                     </div>
                     <div>
@@ -658,7 +658,7 @@ export default function CheckoutPage() {
                         value={cardCvv}
                         onChange={(e) => setCardCvv(e.target.value.replace(/\D/g, ""))}
                         placeholder="•••"
-                        className="w-full px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors"
+                        className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                       />
                     </div>
                   </div>
@@ -693,7 +693,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isProcessing || items.length === 0}
-                className="w-full bg-[#C8A165] hover:bg-[#b8914f] disabled:bg-[#ddd] text-white py-4 uppercase text-[12px] tracking-[2px] font-bold transition-all shadow-md flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] disabled:from-gray-300 disabled:to-gray-400 text-white py-4 uppercase text-[12px] tracking-[2px] font-bold transition-all shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 rounded-sm"
               >
                 {isProcessing ? (
                   <>
@@ -721,12 +721,12 @@ export default function CheckoutPage() {
               <div className="divide-y divide-[#eee] max-h-[340px] overflow-y-auto pr-1 mb-6">
                 {items.length === 0 ? (
                   <p className="text-[13px] text-[#888] py-4 text-center">
-                    No items in cart. <Link href="/shop" className="text-[#C8A165] underline">Discover Pieces</Link>
+                    No items in cart. <Link href="/shop" className="text-amber-600 font-bold underline">Discover Pieces</Link>
                   </p>
                 ) : (
                   items.map(({ product, quantity, selectedVariants }) => (
                     <div key={product.id} className="py-3 flex items-center gap-4">
-                      <div className="relative w-16 h-16 bg-[#F8F6F3] shrink-0 border border-[#eee] overflow-hidden">
+                      <div className="relative w-16 h-16 bg-[#F8F6F3] shrink-0 border border-slate-200 overflow-hidden rounded-sm">
                         <Image
                           src={product.image}
                           alt={product.name}
@@ -734,7 +734,7 @@ export default function CheckoutPage() {
                           className="object-cover"
                           sizes="64px"
                         />
-                        <span className="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 bg-[#C8A165] text-white text-[10px] font-bold flex items-center justify-center rounded-bl">
+                        <span className="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-bold flex items-center justify-center rounded-bl shadow-sm">
                           {quantity}
                         </span>
                       </div>
@@ -745,11 +745,11 @@ export default function CheckoutPage() {
                             {Object.entries(selectedVariants).map(([k, v]) => `${v}`).join(" • ")}
                           </p>
                         )}
-                        <p className="text-[12px] text-[#C8A165] font-semibold mt-0.5">
+                        <p className="text-[12px] text-amber-600 font-bold mt-0.5">
                           ${product.price.toFixed(2)}
                         </p>
                       </div>
-                      <span className="font-semibold text-[14px] text-[#1A1A1A]">
+                      <span className="font-bold text-[14px] text-[#1A1A1A]">
                         ${(product.price * quantity).toFixed(2)}
                       </span>
                     </div>
@@ -765,18 +765,18 @@ export default function CheckoutPage() {
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                     placeholder="Discount code (e.g. LUXURY10)"
-                    className="flex-1 px-3 py-2.5 text-[13px] border border-[#ddd] outline-none focus:border-[#C8A165] uppercase transition-colors"
+                    className="flex-1 px-3 py-2.5 text-[13px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 uppercase transition-all rounded-sm"
                   />
                   <button
                     type="button"
                     onClick={handleApplyCoupon}
-                    className="px-4 py-2.5 bg-[#1A1A1A] hover:bg-[#C8A165] text-white text-[11px] font-bold uppercase tracking-wider transition-colors"
+                    className="px-4 py-2.5 bg-[#1A1A1A] hover:bg-gradient-to-r hover:from-[#F59E0B] hover:to-[#D97706] text-white text-[11px] font-bold uppercase tracking-wider transition-all"
                   >
                     Apply
                   </button>
                 </div>
                 {couponError && <p className="text-red-500 text-[11px] mt-1.5">{couponError}</p>}
-                {couponSuccess && <p className="text-green-600 text-[11px] mt-1.5">{couponSuccess}</p>}
+                {couponSuccess && <p className="text-emerald-600 font-semibold text-[11px] mt-1.5">{couponSuccess}</p>}
               </div>
 
               {/* Cost Summary Breakdown */}
@@ -787,9 +787,9 @@ export default function CheckoutPage() {
                 </div>
 
                 {appliedDiscount && (
-                  <div className="flex justify-between text-green-700">
+                  <div className="flex justify-between text-emerald-600 font-semibold">
                     <span>Discount ({appliedDiscount.code})</span>
-                    <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
+                    <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
 
@@ -797,7 +797,7 @@ export default function CheckoutPage() {
                   <span>Transit Insurance & Delivery</span>
                   <span className="font-semibold">
                     {selectedShipping.price === 0 ? (
-                      <span className="text-green-700">COMPLIMENTARY</span>
+                      <span className="text-emerald-600 font-bold tracking-wide">COMPLIMENTARY</span>
                     ) : (
                       `$${selectedShipping.price.toFixed(2)}`
                     )}
@@ -806,7 +806,7 @@ export default function CheckoutPage() {
 
                 <div className="flex justify-between">
                   <span>Taxes & Duties</span>
-                  <span className="font-semibold text-[#1A1A1A]">Included</span>
+                  <span className="font-semibold text-emerald-600">Complimentary Included</span>
                 </div>
               </div>
 
@@ -814,11 +814,11 @@ export default function CheckoutPage() {
               <div className="pt-4 border-t border-[#eee] mb-6">
                 <div className="flex justify-between items-baseline">
                   <span className="font-bold text-lg text-[#1A1A1A]">Total</span>
-                  <span className="font-cormorant text-3xl font-bold text-[#C8A165]">
+                  <span className="font-cormorant text-3xl font-bold text-[#D97706]">
                     ${total.toFixed(2)}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#999] mt-1">
+                <p className="text-[11px] text-[#888] mt-1">
                   Includes GIA certification certificate & wax-sealed luxury presentation box.
                 </p>
               </div>
@@ -828,7 +828,7 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={isProcessing || items.length === 0}
-                  className="w-full bg-[#C8A165] hover:bg-[#b8914f] disabled:bg-[#ddd] text-white py-4 uppercase text-[12px] tracking-[2px] font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] disabled:from-gray-300 disabled:to-gray-400 text-white py-4 uppercase text-[12px] tracking-[2px] font-bold transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer rounded-sm"
                 >
                   {isProcessing ? (
                     <>
@@ -845,17 +845,17 @@ export default function CheckoutPage() {
               </div>
 
               {/* Luxury Guarantee List */}
-              <div className="mt-6 pt-6 border-t border-[#eee] space-y-2.5 text-[11px] text-[#777]">
+              <div className="mt-6 pt-6 border-t border-[#eee] space-y-2.5 text-[11px] text-[#666]">
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C8A165]">✦</span>
+                  <span className="text-[#D97706] font-bold">✦</span>
                   <span>100% Genuine Handcrafted Ethical Gold & Natural Diamonds</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C8A165]">✦</span>
+                  <span className="text-emerald-600 font-bold">✦</span>
                   <span>Armored Insured Delivery with Real-time GPS Tracker</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[#C8A165]">✦</span>
+                  <span className="text-blue-600 font-bold">✦</span>
                   <span>30-Day Complimentary Exchange & Return Guarantee</span>
                 </div>
               </div>

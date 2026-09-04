@@ -24,12 +24,12 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-[#C8A165] text-white hover:bg-[#b8914f] border border-[#C8A165]",
+      "bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white hover:from-[#FBBF24] hover:to-[#D97706] shadow-md shadow-amber-500/25 hover:shadow-amber-500/40 border border-amber-400/40 font-semibold active:scale-95",
     outline:
-      "bg-transparent text-[#C8A165] border border-[#C8A165] hover:bg-[#C8A165] hover:text-white",
-    dark: "bg-[#1A1A1A] text-white hover:bg-[#333] border border-[#1A1A1A]",
+      "bg-transparent text-[#D97706] border-2 border-[#D97706] hover:bg-gradient-to-r hover:from-[#F59E0B] hover:to-[#D97706] hover:text-white hover:border-transparent font-semibold active:scale-95",
+    dark: "bg-slate-900 text-white hover:bg-slate-800 border border-slate-700 shadow-md font-semibold active:scale-95",
     white:
-      "bg-white text-[#1A1A1A] hover:bg-[#f5f5f5] border border-white",
+      "bg-white text-slate-900 hover:bg-amber-50 border border-amber-200/60 shadow-md font-semibold active:scale-95",
   };
 
   const sizes = {

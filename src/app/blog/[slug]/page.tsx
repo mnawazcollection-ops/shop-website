@@ -28,14 +28,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <article className="max-w-[900px] mx-auto px-6 py-12">
       <nav className="text-[13px] text-[#888] mb-8 flex items-center gap-2">
-        <Link href="/" className="hover:text-[#C8A165]">Home</Link>
+        <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
         <span>/</span>
-        <Link href="/blog" className="hover:text-[#C8A165]">Journals</Link>
+        <Link href="/blog" className="hover:text-amber-600 transition-colors">Journals</Link>
         <span>/</span>
         <span className="text-[#1A1A1A] font-medium">{post.title}</span>
       </nav>
 
-      <span className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold">
+      <span className="text-[12px] uppercase tracking-[3px] text-amber-600 font-bold">
         {post.category}
       </span>
       <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A] mt-2 mb-4 leading-tight">
@@ -48,7 +48,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         <span>Published on {post.date}</span>
       </div>
 
-      <div className="relative aspect-[16/9] mb-10 overflow-hidden">
+      <div className="relative aspect-[16/9] mb-10 overflow-hidden rounded-sm shadow-md shadow-amber-500/5">
         <Image
           src={post.image}
           alt={post.title}
@@ -59,7 +59,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       </div>
 
       <div className="text-[#444] leading-relaxed text-[16px] space-y-6 font-light">
-        <p className="text-lg leading-relaxed text-[#222] font-normal italic">
+        <p className="text-lg leading-relaxed text-[#222] font-normal italic border-l-2 border-amber-500 pl-4 bg-amber-50/30 py-2">
           &ldquo;{post.excerpt}&rdquo;
         </p>
         <p>
@@ -73,7 +73,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="mt-12 pt-8 border-t border-[#f0f0f0]">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-[13px] uppercase tracking-wider text-[#1A1A1A] hover:text-[#C8A165] font-semibold"
+          className="inline-flex items-center gap-2 text-[13px] uppercase tracking-wider text-[#1A1A1A] hover:text-amber-600 font-bold transition-colors"
         >
           ← Back to All Articles
         </Link>

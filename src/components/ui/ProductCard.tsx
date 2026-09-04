@@ -33,9 +33,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const badgeColors = {
-    new: "bg-[#C8A165] text-white",
-    sale: "bg-[#E74C3C] text-white",
-    hot: "bg-[#1A1A1A] text-white",
+    new: "bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-md shadow-emerald-500/25 rounded-xs",
+    sale: "bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 text-white font-bold shadow-md shadow-red-500/25 rounded-xs",
+    hot: "bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold shadow-md shadow-orange-500/25 rounded-xs",
   };
 
   return (
@@ -106,7 +106,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               e.stopPropagation();
               window.location.href = `/product/${product.slug}`;
             }}
-            className="w-9 h-9 flex items-center justify-center border border-[#e5e5e5] hover:bg-[#C8A165] hover:border-[#C8A165] hover:text-white transition-colors duration-200"
+            className="w-9 h-9 flex items-center justify-center border border-[#e5e5e5] hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 hover:border-amber-600 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-amber-500/25"
             title="View Details"
           >
             <svg
@@ -123,10 +123,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>
           <button
             onClick={handleWishlistClick}
-            className={`w-9 h-9 flex items-center justify-center border transition-colors duration-200 ${
+            className={`w-9 h-9 flex items-center justify-center border transition-all duration-200 shadow-sm ${
               isWishlisted
-                ? "border-[#E74C3C] bg-[#E74C3C] text-white"
-                : "border-[#e5e5e5] hover:bg-[#C8A165] hover:border-[#C8A165] hover:text-white text-[#1A1A1A]"
+                ? "border-rose-500 bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/30"
+                : "border-[#e5e5e5] hover:bg-gradient-to-r hover:from-rose-500 hover:to-rose-600 hover:border-rose-600 hover:text-white text-[#1A1A1A] hover:shadow-md hover:shadow-rose-500/25"
             }`}
             title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
           >
@@ -143,10 +143,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>
           <button
             onClick={handleAddToCartClick}
-            className={`w-9 h-9 flex items-center justify-center border transition-colors duration-200 ${
+            className={`w-9 h-9 flex items-center justify-center border transition-all duration-200 shadow-sm ${
               added
-                ? "border-green-600 bg-green-600 text-white"
-                : "border-[#e5e5e5] hover:bg-[#C8A165] hover:border-[#C8A165] hover:text-white text-[#1A1A1A]"
+                ? "border-emerald-600 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/30"
+                : "border-[#e5e5e5] hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 hover:border-amber-600 hover:text-white text-[#1A1A1A] hover:shadow-md hover:shadow-amber-500/25"
             }`}
             title="Add to Cart"
           >
@@ -178,20 +178,20 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <div className="text-center">
-        <p className="text-[11px] text-[#999] uppercase tracking-[2px] mb-1">
+      <div className="text-center pt-1">
+        <p className="text-[11px] text-[#999] uppercase tracking-[2px] mb-1 font-medium">
           {product.category}
         </p>
-        <h3 className="font-medium text-[15px] text-[#1A1A1A] mb-2 group-hover:text-[#C8A165] transition-colors duration-200">
+        <h3 className="font-semibold text-[15px] text-[#1A1A1A] mb-2 group-hover:text-[#D97706] transition-colors duration-200 line-clamp-1">
           {product.name}
         </h3>
         <div className="flex items-center justify-center gap-2">
           {product.originalPrice && (
-            <span className="text-[14px] text-[#999] line-through">
+            <span className="text-[13px] text-[#999] line-through">
               ${product.originalPrice.toFixed(2)}
             </span>
           )}
-          <span className="text-[15px] font-semibold text-[#C8A165]">
+          <span className="text-[16px] font-bold text-[#D97706]">
             ${product.price.toFixed(2)}
           </span>
         </div>
@@ -202,7 +202,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <svg
                 key={i}
                 className={`w-3.5 h-3.5 ${
-                  i < product.rating! ? "text-[#C8A165]" : "text-[#ddd]"
+                  i < product.rating! ? "text-[#F59E0B]" : "text-[#E5E7EB]"
                 }`}
                 fill="currentColor"
                 viewBox="0 0 20 20"

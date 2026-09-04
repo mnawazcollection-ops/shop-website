@@ -38,7 +38,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
             >
               {tab.label}
               {activeTab === tab.key && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8A165]" />
+                <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309]" />
               )}
             </button>
           ))}
@@ -102,13 +102,13 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
         {activeTab === "shipping" && (
           <div className="max-w-3xl space-y-6">
             <div className="flex gap-4">
-              <div className="text-[#C8A165] shrink-0 mt-0.5">
-                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <div className="text-[#D97706] shrink-0 mt-0.5">
+                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                 </svg>
               </div>
               <div>
-                <h4 className="text-[15px] font-semibold text-[#1A1A1A] mb-1.5">
+                <h4 className="text-[15px] font-bold text-[#1A1A1A] mb-1.5">
                   Free Express Shipping
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
@@ -118,13 +118,13 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
             </div>
 
             <div className="flex gap-4">
-              <div className="text-[#C8A165] shrink-0 mt-0.5">
-                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <div className="text-[#D97706] shrink-0 mt-0.5">
+                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
                 </svg>
               </div>
               <div>
-                <h4 className="text-[15px] font-semibold text-[#1A1A1A] mb-1.5">
+                <h4 className="text-[15px] font-bold text-[#1A1A1A] mb-1.5">
                   Returns & Exchanges
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
@@ -134,13 +134,13 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
             </div>
 
             <div className="flex gap-4">
-              <div className="text-[#C8A165] shrink-0 mt-0.5">
-                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
+              <div className="text-[#D97706] shrink-0 mt-0.5">
+                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                 </svg>
               </div>
               <div>
-                <h4 className="text-[15px] font-semibold text-[#1A1A1A] mb-1.5">
+                <h4 className="text-[15px] font-bold text-[#1A1A1A] mb-1.5">
                   Lifetime Warranty
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
@@ -163,7 +163,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                   >
                     <div className="flex items-start gap-4">
                       {/* Avatar */}
-                      <div className="w-12 h-12 rounded-full bg-[#F0ECE5] overflow-hidden shrink-0 relative">
+                      <div className="w-12 h-12 rounded-full bg-[#F0ECE5] overflow-hidden shrink-0 relative ring-2 ring-amber-400/40">
                         {review.avatar ? (
                           <Image
                             src={review.avatar}
@@ -173,7 +173,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                             sizes="48px"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-[#C8A165] font-semibold text-lg">
+                          <div className="w-full h-full flex items-center justify-center text-[#D97706] font-bold text-lg">
                             {review.author.charAt(0)}
                           </div>
                         )}
@@ -188,7 +188,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                                 key={i}
                                 className={`w-[14px] h-[14px] ${
                                   i < review.rating
-                                    ? "text-[#C8A165]"
+                                    ? "text-[#F59E0B] drop-shadow-sm"
                                     : "text-[#ddd]"
                                 }`}
                                 fill="currentColor"
@@ -202,7 +202,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                             {review.date}
                           </span>
                           {review.verified && (
-                            <span className="text-[11px] text-green-700 bg-green-50 px-2 py-0.5 font-medium">
+                            <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 font-bold rounded">
                               ✓ Verified Purchase
                             </span>
                           )}
@@ -210,7 +210,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
 
                         {/* Author + Title */}
                         <div className="mb-2">
-                          <span className="font-semibold text-[14px] text-[#1A1A1A]">
+                          <span className="font-bold text-[14px] text-[#1A1A1A]">
                             {review.author}
                           </span>
                           {review.title && (
@@ -231,11 +231,11 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 bg-[#faf8f5] border border-[#f0f0f0]">
+              <div className="text-center py-12 bg-[#faf8f5] border border-[#f0f0f0] rounded">
                 <p className="text-[#888] text-[15px] mb-4">
                   No reviews yet. Be the first to review this product.
                 </p>
-                <button className="inline-flex items-center gap-2 bg-[#C8A165] text-white px-6 py-2.5 text-[12px] uppercase tracking-wider font-semibold hover:bg-[#b8914f] transition-colors">
+                <button className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] text-white px-6 py-2.5 text-[12px] uppercase tracking-wider font-bold shadow-md shadow-amber-500/25 transition-all rounded-sm">
                   Write a Review
                 </button>
               </div>

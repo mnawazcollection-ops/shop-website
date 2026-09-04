@@ -80,7 +80,7 @@ export default function CartPage() {
       <div className="max-w-[1400px] mx-auto px-4 md:px-6">
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-[12px] text-[#888] uppercase tracking-wider mb-8">
-          <Link href="/" className="hover:text-[#C8A165] transition-colors">
+          <Link href="/" className="hover:text-amber-600 transition-colors">
             Home
           </Link>
           <span>/</span>
@@ -89,7 +89,7 @@ export default function CartPage() {
 
         {/* Page Title */}
         <div className="text-center mb-10">
-          <p className="text-[12px] uppercase tracking-[3px] text-[#C8A165] font-semibold mb-2">
+          <p className="text-[12px] uppercase tracking-[3px] text-amber-600 font-bold mb-2">
             Your Selection
           </p>
           <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A]">
@@ -98,8 +98,8 @@ export default function CartPage() {
         </div>
 
         {checkoutSuccess ? (
-          <div className="max-w-2xl mx-auto bg-white p-12 text-center border border-[#eee] shadow-sm">
-            <div className="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-5">
+          <div className="max-w-2xl mx-auto bg-white p-12 text-center border border-[#eee] shadow-sm rounded-sm">
+            <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm shadow-emerald-500/20">
               <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M4.5 12.75l6 6 9-13.5" />
               </svg>
@@ -113,7 +113,7 @@ export default function CartPage() {
             <div className="flex justify-center gap-4">
               <Link
                 href="/shop"
-                className="bg-[#1A1A1A] hover:bg-[#C8A165] text-white px-8 py-3.5 text-[12px] uppercase tracking-[2px] font-bold transition-colors"
+                className="bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white px-8 py-3.5 text-[12px] uppercase tracking-[2px] font-bold transition-all shadow-md shadow-amber-500/25 rounded-sm"
               >
                 Continue Shopping
               </Link>
@@ -121,8 +121,8 @@ export default function CartPage() {
           </div>
         ) : items.length === 0 ? (
           /* Empty Cart State */
-          <div className="max-w-3xl mx-auto bg-white p-12 text-center border border-[#eee] shadow-sm">
-            <div className="w-20 h-20 bg-[#FAF7F4] text-[#C8A165] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="max-w-3xl mx-auto bg-white p-12 text-center border border-amber-100/60 shadow-md shadow-amber-500/5 rounded-sm">
+            <div className="w-20 h-20 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
               <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
@@ -135,14 +135,14 @@ export default function CartPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-block bg-[#1A1A1A] hover:bg-[#C8A165] text-white px-10 py-4 text-[12px] uppercase tracking-[2px] font-bold transition-colors mb-12"
+              className="inline-block bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white px-10 py-4 text-[12px] uppercase tracking-[2px] font-bold transition-all shadow-md shadow-amber-500/25 rounded-sm mb-12"
             >
               Start Shopping
             </Link>
 
             {/* Featured Categories in Empty State */}
             <div className="pt-10 border-t border-[#eee]">
-              <p className="text-[12px] uppercase tracking-[2px] text-[#999] font-semibold mb-6">
+              <p className="text-[12px] uppercase tracking-[2px] text-amber-700 font-bold mb-6">
                 Featured Categories
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -150,9 +150,9 @@ export default function CartPage() {
                   <Link
                     key={cat.id}
                     href={`/category/${cat.name.toLowerCase()}`}
-                    className="p-4 bg-[#FAF7F4] hover:bg-[#f3ede3] transition-colors border border-[#eee] text-center group"
+                    className="p-4 bg-[#FAF7F4] hover:bg-amber-50/60 transition-all border border-[#eee] hover:border-amber-200 text-center group rounded-sm"
                   >
-                    <p className="font-cormorant text-lg font-bold text-[#1A1A1A] group-hover:text-[#C8A165] transition-colors">
+                    <p className="font-cormorant text-lg font-bold text-[#1A1A1A] group-hover:text-amber-600 transition-colors">
                       {cat.name}
                     </p>
                     <p className="text-[11px] text-[#888] mt-1">{cat.productCount} Items</p>
@@ -172,10 +172,10 @@ export default function CartPage() {
                   <span className="text-[13px] text-[#555] font-medium">
                     {remainingForFreeShipping > 0 ? (
                       <>
-                        Add <strong className="text-[#C8A165]">${remainingForFreeShipping.toFixed(2)}</strong> more for <strong>Free Express Insured Shipping</strong>
+                        Add <strong className="text-[#D97706] font-bold">${remainingForFreeShipping.toFixed(2)}</strong> more for <strong>Free Express Insured Shipping</strong>
                       </>
                     ) : (
-                      <span className="text-green-700 font-semibold flex items-center gap-1.5">
+                      <span className="text-emerald-700 font-bold flex items-center gap-1.5">
                         <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                           <path d="M4.5 12.75l6 6 9-13.5" />
                         </svg>
@@ -183,11 +183,11 @@ export default function CartPage() {
                       </span>
                     )}
                   </span>
-                  <span className="text-[12px] text-[#888]">{Math.round(freeShippingProgress)}%</span>
+                  <span className="text-[12px] text-amber-700 font-bold">{Math.round(freeShippingProgress)}%</span>
                 </div>
-                <div className="w-full bg-[#f0ede8] h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-[#f0ede8] h-2.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-[#C8A165] h-full transition-all duration-500 rounded-full"
+                    className="bg-gradient-to-r from-emerald-500 via-amber-400 to-[#F59E0B] shadow-sm shadow-amber-500/50 h-full transition-all duration-500 rounded-full"
                     style={{ width: `${freeShippingProgress}%` }}
                   />
                 </div>
@@ -212,7 +212,7 @@ export default function CartPage() {
                       <div className="col-span-6 flex items-center gap-4">
                         <Link
                           href={`/product/${product.slug}`}
-                          className="relative w-20 h-20 bg-[#F8F6F3] shrink-0 border border-[#eee] overflow-hidden"
+                          className="relative w-20 h-20 bg-[#F8F6F3] shrink-0 border border-[#eee] overflow-hidden rounded-sm"
                         >
                           <Image
                             src={product.image}
@@ -228,7 +228,7 @@ export default function CartPage() {
                           </p>
                           <Link
                             href={`/product/${product.slug}`}
-                            className="font-cormorant text-lg font-bold text-[#1A1A1A] hover:text-[#C8A165] transition-colors line-clamp-1"
+                            className="font-cormorant text-lg font-bold text-[#1A1A1A] hover:text-[#D97706] transition-colors line-clamp-1"
                           >
                             {product.name}
                           </Link>
@@ -241,7 +241,7 @@ export default function CartPage() {
                           )}
                           <button
                             onClick={() => removeFromCart(product.id)}
-                            className="text-[11px] text-[#999] hover:text-red-500 uppercase tracking-wider underline mt-2 block transition-colors"
+                            className="text-[11px] text-rose-500 hover:text-rose-700 uppercase tracking-wider underline mt-2 block transition-colors font-medium"
                           >
                             Remove
                           </button>
@@ -249,17 +249,17 @@ export default function CartPage() {
                       </div>
 
                       {/* Price */}
-                      <div className="col-span-2 text-left md:text-center text-[14px] text-[#555] font-medium">
+                      <div className="col-span-2 text-left md:text-center text-[14px] text-amber-700 font-bold">
                         <span className="md:hidden text-[12px] text-[#888] mr-2">Price:</span>
                         ${product.price.toFixed(2)}
                       </div>
 
                       {/* Quantity */}
                       <div className="col-span-2 flex items-center md:justify-center">
-                        <div className="flex items-center border border-[#ddd]">
+                        <div className="flex items-center border border-[#ddd] rounded-sm">
                           <button
                             onClick={() => updateQuantity(product.id, quantity - 1)}
-                            className="w-8 h-8 flex items-center justify-center text-sm text-[#555] hover:bg-[#FAF7F4] transition-colors"
+                            className="w-8 h-8 flex items-center justify-center text-sm text-[#555] hover:bg-amber-50 transition-colors"
                             aria-label="Decrease quantity"
                           >
                             −
@@ -274,11 +274,11 @@ export default function CartPage() {
                                 Math.max(1, parseInt(e.target.value) || 1)
                               )
                             }
-                            className="w-10 h-8 text-center text-[13px] font-semibold text-[#1A1A1A] border-x border-[#ddd] outline-none"
+                            className="w-10 h-8 text-center text-[13px] font-bold text-[#1A1A1A] border-x border-[#ddd] outline-none"
                           />
                           <button
                             onClick={() => updateQuantity(product.id, quantity + 1)}
-                            className="w-8 h-8 flex items-center justify-center text-sm text-[#555] hover:bg-[#FAF7F4] transition-colors"
+                            className="w-8 h-8 flex items-center justify-center text-sm text-[#555] hover:bg-amber-50 transition-colors"
                             aria-label="Increase quantity"
                           >
                             +
@@ -287,7 +287,7 @@ export default function CartPage() {
                       </div>
 
                       {/* Subtotal */}
-                      <div className="col-span-2 text-left md:text-right font-semibold text-[15px] text-[#1A1A1A]">
+                      <div className="col-span-2 text-left md:text-right font-bold text-[15px] text-[#1A1A1A]">
                         <span className="md:hidden text-[12px] text-[#888] mr-2">Subtotal:</span>
                         ${(product.price * quantity).toFixed(2)}
                       </div>
@@ -299,13 +299,13 @@ export default function CartPage() {
                 <div className="p-6 bg-[#FAF7F4] border-t border-[#eee] flex flex-wrap items-center justify-between gap-4">
                   <Link
                     href="/shop"
-                    className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[1.5px] font-semibold text-[#1A1A1A] hover:text-[#C8A165] transition-colors"
+                    className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[1.5px] font-bold text-[#1A1A1A] hover:text-[#D97706] transition-colors"
                   >
                     ← Continue Shopping
                   </Link>
                   <button
                     onClick={clearCart}
-                    className="text-[12px] uppercase tracking-[1.5px] font-semibold text-[#999] hover:text-red-500 transition-colors"
+                    className="text-[12px] uppercase tracking-[1.5px] font-semibold text-[#999] hover:text-rose-600 transition-colors"
                   >
                     Clear Cart
                   </button>
@@ -313,7 +313,7 @@ export default function CartPage() {
               </div>
 
               {/* Order Notes Field */}
-              <div className="bg-white p-6 border border-[#eee] shadow-sm">
+              <div className="bg-white p-6 border border-[#eee] shadow-sm rounded-sm">
                 <label className="block text-[12px] uppercase tracking-[1.5px] font-semibold text-[#1A1A1A] mb-2">
                   Special Instructions / Gift Message
                 </label>
@@ -322,7 +322,7 @@ export default function CartPage() {
                   onChange={(e) => setOrderNotes(e.target.value)}
                   placeholder="Add custom ring sizing, bespoke engraving requests, or luxury gift card messages..."
                   rows={3}
-                  className="w-full p-3 text-[13px] border border-[#ddd] outline-none focus:border-[#C8A165] transition-colors resize-none"
+                  className="w-full p-3 text-[13px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm resize-none"
                 />
               </div>
             </div>
@@ -330,7 +330,7 @@ export default function CartPage() {
             {/* Right Column: Order Summary & Checkout */}
             <div className="space-y-6">
               {/* Summary Card */}
-              <div className="bg-white p-8 border border-[#eee] shadow-sm">
+              <div className="bg-white p-8 border border-[#eee] shadow-sm rounded-sm">
                 <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] pb-4 border-b border-[#eee] mb-6">
                   Order Summary
                 </h2>
@@ -344,9 +344,9 @@ export default function CartPage() {
                   </div>
 
                   {appliedDiscount && (
-                    <div className="flex justify-between text-green-700">
+                    <div className="flex justify-between text-emerald-600 font-bold">
                       <span>Discount ({appliedDiscount.code})</span>
-                      <span className="font-semibold">
+                      <span className="font-bold">
                         -${discountAmount.toFixed(2)}
                       </span>
                     </div>
@@ -356,7 +356,7 @@ export default function CartPage() {
                     <span>Insured Shipping</span>
                     <span className="font-semibold">
                       {shipping === 0 ? (
-                        <span className="text-green-700">FREE</span>
+                        <span className="text-emerald-600 font-bold">FREE</span>
                       ) : (
                         `$${shipping.toFixed(2)}`
                       )}
@@ -365,7 +365,7 @@ export default function CartPage() {
 
                   <div className="flex justify-between">
                     <span>Tax & Duties</span>
-                    <span className="font-semibold text-[#1A1A1A]">Included</span>
+                    <span className="font-semibold text-emerald-600">Included</span>
                   </div>
                 </div>
 
@@ -380,11 +380,11 @@ export default function CartPage() {
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
                       placeholder="e.g. LUXURY10"
-                      className="flex-1 px-3 py-2.5 text-[13px] border border-[#ddd] outline-none focus:border-[#C8A165] uppercase"
+                      className="flex-1 px-3 py-2.5 text-[13px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 uppercase rounded-sm"
                     />
                     <button
                       type="submit"
-                      className="px-4 py-2.5 bg-[#1A1A1A] hover:bg-[#C8A165] text-white text-[11px] font-semibold uppercase tracking-wider transition-colors"
+                      className="px-4 py-2.5 bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white text-[11px] font-bold uppercase tracking-wider transition-all shadow-sm rounded-sm"
                     >
                       Apply
                     </button>
@@ -401,7 +401,7 @@ export default function CartPage() {
                 <div className="pt-4 border-t border-[#eee] mb-8">
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="font-bold text-[#1A1A1A] text-lg">Estimated Total</span>
-                    <span className="font-cormorant text-3xl font-bold text-[#C8A165]">
+                    <span className="font-cormorant text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600">
                       ${estimatedTotal.toFixed(2)}
                     </span>
                   </div>
@@ -413,20 +413,9 @@ export default function CartPage() {
                 {/* Checkout Button */}
                 <button
                   onClick={handleCheckout}
-                  disabled={isCheckingOut}
-                  className="w-full bg-[#C8A165] hover:bg-[#b8914f] disabled:bg-[#ddd] text-white py-4 uppercase text-[12px] tracking-[2px] font-bold transition-colors shadow-sm flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#FBBF24] hover:to-[#D97706] text-white py-4 uppercase text-[12px] tracking-[2px] font-bold transition-all shadow-lg shadow-amber-500/25 active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {isCheckingOut ? (
-                    <>
-                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                      </svg>
-                      Securing Order...
-                    </>
-                  ) : (
-                    "Proceed to Checkout"
-                  )}
+                  Proceed to Checkout →
                 </button>
 
                 {/* Trust Badges */}

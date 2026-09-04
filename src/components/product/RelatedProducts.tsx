@@ -17,14 +17,14 @@ export default function RelatedProducts({
   return (
     <section className="mt-16 lg:mt-24 pt-12 lg:pt-16 border-t border-[#eee]">
       <div className="text-center mb-10">
-        <p className="text-[12px] tracking-[3px] uppercase text-[#C8A165] font-medium mb-2">
+        <p className="text-[12px] tracking-[3px] uppercase text-amber-600 font-bold mb-2">
           {subtitle}
         </p>
         <h2 className="font-cormorant text-[28px] md:text-[34px] font-bold text-[#1A1A1A]">
           {title}
         </h2>
         <div className="flex justify-center mt-3">
-          <div className="w-12 h-[1px] bg-[#C8A165]" />
+          <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
         </div>
       </div>
 

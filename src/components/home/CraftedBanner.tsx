@@ -19,7 +19,7 @@ export default function CraftedBanner() {
         {/* Right — Content */}
         <div className="bg-[#1A1A1A] flex items-center justify-center p-10 lg:p-16 xl:p-20">
           <div className="max-w-md">
-            <p className="text-[12px] tracking-[4px] uppercase text-[#C8A165] mb-4 font-medium">
+            <p className="text-[12px] tracking-[4px] uppercase text-amber-400 mb-4 font-bold">
               Handcrafted Excellence
             </p>
             <h2 className="font-cormorant text-3xl md:text-4xl lg:text-[42px] font-semibold text-white leading-tight mb-6">
@@ -33,27 +33,27 @@ export default function CraftedBanner() {
             </p>
             <div className="flex flex-wrap gap-8 mb-10">
               <div>
-                <span className="font-cormorant text-4xl font-bold text-[#C8A165]">
+                <span className="font-cormorant text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400 drop-shadow-sm">
                   25+
                 </span>
-                <p className="text-[12px] text-white/50 uppercase tracking-wider mt-1">
+                <p className="text-[12px] text-white/70 uppercase tracking-wider mt-1">
                   Years Experience
                 </p>
               </div>
               <div>
-                <span className="font-cormorant text-4xl font-bold text-[#C8A165]">
+                <span className="font-cormorant text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400 drop-shadow-sm">
                   5K+
                 </span>
-                <p className="text-[12px] text-white/50 uppercase tracking-wider mt-1">
-                  Happy Customers
+                <p className="text-[12px] text-white/70 uppercase tracking-wider mt-1">
+                  Happy Clients
                 </p>
               </div>
               <div>
-                <span className="font-cormorant text-4xl font-bold text-[#C8A165]">
+                <span className="font-cormorant text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400 drop-shadow-sm">
                   100%
                 </span>
-                <p className="text-[12px] text-white/50 uppercase tracking-wider mt-1">
-                  Certified Gold
+                <p className="text-[12px] text-white/70 uppercase tracking-wider mt-1">
+                  Certified Solid Gold
                 </p>
               </div>
             </div>

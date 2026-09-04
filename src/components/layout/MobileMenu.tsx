@@ -49,7 +49,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           </span>
           <button
             onClick={onClose}
-            className="text-[#1A1A1A] hover:text-[#C8A165] transition-colors p-1"
+            className="text-[#1A1A1A] hover:text-amber-600 transition-colors p-1"
             aria-label="Close menu"
           >
             <svg
@@ -69,7 +69,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         <div className="p-4 border-b border-[#f5f5f5] shrink-0">
           <button
             onClick={handleOpenSearch}
-            className="w-full flex items-center justify-between px-4 py-2.5 bg-[#FAF7F4] border border-[#eee] text-[#888] text-[13px] hover:border-[#C8A165] transition-colors"
+            className="w-full flex items-center justify-between px-4 py-2.5 bg-[#FAF7F4] border border-[#eee] text-[#888] text-[13px] hover:border-amber-500 hover:text-amber-600 transition-colors rounded-sm"
           >
             <span>Search jewelry...</span>
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex-1 px-6 py-3.5 text-[14px] font-medium tracking-[1px] uppercase text-[#1A1A1A] hover:text-[#C8A165] transition-colors"
+                  className="flex-1 px-6 py-3.5 text-[14px] font-medium tracking-[1px] uppercase text-[#1A1A1A] hover:text-amber-600 transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -97,7 +97,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         expandedItem === item.label ? null : item.label
                       )
                     }
-                    className="px-6 py-3.5 text-[#999] hover:text-[#C8A165] transition-colors"
+                    className="px-6 py-3.5 text-[#999] hover:text-amber-600 transition-colors"
                     aria-label="Expand submenu"
                   >
                     <svg
@@ -123,7 +123,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       key={child.label}
                       href={child.href}
                       onClick={onClose}
-                      className="block px-10 py-2.5 text-[13px] text-[#666] hover:text-[#C8A165] transition-colors"
+                      className="block px-10 py-2.5 text-[13px] text-[#666] hover:text-amber-600 transition-colors"
                     >
                       {child.label}
                     </Link>
@@ -138,7 +138,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <Link
               href="/checkout"
               onClick={onClose}
-              className="block py-1 hover:text-[#C8A165] uppercase tracking-wider text-[12px] font-semibold"
+              className="block py-1 hover:text-amber-600 uppercase tracking-wider text-[12px] font-semibold"
             >
               Express Checkout
             </Link>
@@ -155,7 +155,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <Link
               href="/account"
               onClick={onClose}
-              className="text-[#555] hover:text-[#C8A165] transition-colors p-2"
+              className="text-[#555] hover:text-amber-600 transition-colors p-2"
               aria-label="Account"
             >
               <svg
@@ -173,7 +173,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <Link
               href="/wishlist"
               onClick={onClose}
-              className="text-[#555] hover:text-[#C8A165] transition-colors p-2 relative"
+              className="text-[#555] hover:text-amber-600 transition-colors p-2 relative"
               aria-label="Wishlist"
             >
               <svg
@@ -187,7 +187,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
               </svg>
               {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 min-w-[16px] h-[16px] bg-[#C8A165] text-white text-[9px] font-bold flex items-center justify-center rounded-full">
+                <span className="absolute top-0 right-0 min-w-[16px] h-[16px] bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white text-[9px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/40">
                   {wishlistCount}
                 </span>
               )}
@@ -195,7 +195,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
             <button
               onClick={handleOpenCart}
-              className="text-[#555] hover:text-[#C8A165] transition-colors p-2 relative"
+              className="text-[#555] hover:text-[#D97706] transition-colors p-2 relative"
               aria-label="Cart"
             >
               <svg
@@ -209,7 +209,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 min-w-[16px] h-[16px] bg-[#C8A165] text-white text-[9px] font-bold flex items-center justify-center rounded-full">
+                <span className="absolute top-0 right-0 min-w-[16px] h-[16px] bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] text-white text-[9px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/40">
                   {cartCount}
                 </span>
               )}
