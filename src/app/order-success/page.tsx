@@ -77,7 +77,7 @@ function OrderSuccessContent() {
     orderId,
     createdAt: new Date().toISOString(),
     customer: {
-      email: "client@sirihsan.com",
+      email: "client@mnawazjewelry.com",
       phone: "+1 (555) 234-5678",
       firstName: "Victoria",
       lastName: "Sterling",

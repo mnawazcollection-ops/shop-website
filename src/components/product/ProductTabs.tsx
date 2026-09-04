@@ -144,7 +144,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                   Lifetime Warranty
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
-                  Every Sir Ihsan piece is backed by our lifetime authenticity guarantee. We also offer complimentary professional cleaning and inspection services for all purchased items.
+                  Every M. Nawaz Jewelry Collection piece is backed by our lifetime authenticity guarantee. We also offer complimentary professional cleaning and inspection services for all purchased items.
                 </p>
               </div>
             </div>

@@ -53,14 +53,14 @@ export default function AdminLoginPage() {
           <div className="relative w-16 h-16 rounded-2xl bg-white p-2.5 flex items-center justify-center shadow-xl shadow-amber-500/20 mb-4 border border-amber-300/40 overflow-hidden">
             <Image
               src="/images/logo.png"
-              alt="Sir Ihsan Atelier"
+              alt="M. Nawaz Jewelry Collection"
               fill
               className="object-contain p-1"
               priority
             />
           </div>
           <h1 className="font-cormorant text-3xl font-bold tracking-[3px] uppercase text-white">
-            Sir Ihsan
+            M. Nawaz
           </h1>
           <p className="text-xs uppercase tracking-[3px] font-semibold text-amber-400 mt-1">
             Private Atelier • Management Console
@@ -184,7 +184,7 @@ export default function AdminLoginPage() {
             href="/"
             className="text-xs text-slate-400 hover:text-amber-400 transition-colors"
           >
-            ← Return to Sir Ihsan Luxury Storefront
+            ← Return to M. Nawaz Luxury Storefront
           </Link>
         </div>
       </div>

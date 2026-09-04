@@ -234,7 +234,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         shortDescription: shortDescription.trim() || `${name} handcrafted with exceptional master artisanal detail.`,
         description:
           description.trim() ||
-          `Sir Ihsan High Jewelry proudly introduces this masterwork. Flawlessly cut, hand-set in recycled precious metals with certified ethical provenance.`,
+          `M. Nawaz Jewelry Collection proudly introduces this masterwork. Flawlessly cut, hand-set in recycled precious metals with certified ethical provenance.`,
         tags: parsedTags.length > 0 ? parsedTags : ["Handmade", "18K Gold", "Fine Jewelry"],
         badge,
         status,

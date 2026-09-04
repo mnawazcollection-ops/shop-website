@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     status: "ok",
-    service: "Cloudinary Upload API for Sir Ihsan Jewelry",
+    service: "Cloudinary Upload API for M. Nawaz Jewelry Collection",
     isConfigured: isCloudinaryConfigured,
   });
 }

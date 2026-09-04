@@ -45,18 +45,23 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 h-[70px] border-b border-[#f0f0f0] shrink-0">
-          <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
-            <div className="relative w-8 h-8 shrink-0">
+          <Link href="/" onClick={onClose} className="flex items-center gap-3">
+            <div className="relative w-9 h-9 shrink-0">
               <Image
                 src="/images/logo.png"
-                alt="Sir Ihsan Jewelry Logo"
+                alt="M. Nawaz Jewelry Collection Logo"
                 fill
                 className="object-contain"
               />
             </div>
-            <span className="font-cormorant text-[22px] font-bold tracking-[2px] uppercase text-[#1A1A1A]">
-              Sir Ihsan
-            </span>
+            <div className="flex flex-col">
+              <span className="font-cormorant text-[19px] font-bold tracking-[1.5px] uppercase text-[#1A1A1A] leading-tight">
+                M. Nawaz
+              </span>
+              <span className="text-[9px] uppercase tracking-[2px] text-amber-700 font-semibold">
+                Jewelry Collection
+              </span>
+            </div>
           </Link>
           <button
             onClick={onClose}
@@ -155,7 +160,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </Link>
             <div className="pt-2 border-t border-[#f0f0f0] text-[12px] text-[#888] space-y-1">
               <p>📞 +1 (234) 567-890</p>
-              <p>✉️ concierge@sirihsan.com</p>
+              <p>✉️ concierge@mnawazjewelry.com</p>
             </div>
           </div>
         </nav>

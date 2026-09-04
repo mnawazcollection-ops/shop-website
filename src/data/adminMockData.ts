@@ -12,8 +12,8 @@ import {
 
 export const initialAdminUser: AdminUser = {
   id: "admin-1",
-  email: "admin@sirihsan.com",
-  name: "Ihsan Al-Mansoor",
+  email: "admin@mnawazjewelry.com",
+  name: "M. Nawaz",
   role: "Super Admin",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces",
   createdAt: "2024-01-15T09:00:00Z",
@@ -39,7 +39,7 @@ export const initialAdminProducts: AdminProduct[] = [
       "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&h=800&fit=crop",
     ],
     shortDescription: "Delicately crafted 18K gold earrings inspired by nature's most exquisite blooms.",
-    description: "The Golden Bloom Earrings are a testament to Sir Ihsan's artisanal excellence. Hand-sculpted in solid 18K gold with light-catching filigree petals.",
+    description: "The Golden Bloom Earrings are a testament to M. Nawaz Jewelry Collection's artisanal excellence. Hand-sculpted in solid 18K gold with light-catching filigree petals.",
     tags: ["Gold", "Earrings", "Floral", "Handcrafted"],
     badge: "new",
     status: "active",
@@ -812,10 +812,10 @@ export const initialAdminReviews: AdminReview[] = [
 ];
 
 export const initialAdminSettings: AdminSettings = {
-  storeName: "Sir Ihsan Luxury Jewelry",
+  storeName: "M. Nawaz Jewelry Collection",
   tagline: "Fine Jewelry & High Diamond Atelier",
   logoUrl: "/images/logo.png",
-  email: "concierge@sirihsan.com",
+  email: "concierge@mnawazjewelry.com",
   phone: "+1 (234) 567-890",
   address: "123 Luxury Avenue, Diamond District, New York, NY 10036",
   currency: "USD",
@@ -826,9 +826,9 @@ export const initialAdminSettings: AdminSettings = {
   standardShippingRate: 0,
   expressShippingRate: 35,
   whiteGloveShippingRate: 75,
-  orderPrefix: "SIJ-2026-",
+  orderPrefix: "MNJ-2026-",
   lowStockNotification: true,
   orderEmailNotification: true,
   firebaseConnected: false,
-  firebaseProjectId: "sir-ihsan-jewelry-prod",
+  firebaseProjectId: "mnawaz-jewelry-prod",
 };

@@ -21,7 +21,7 @@ export default function ErrorBoundary({
       <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-6 opacity-80">
         <Image
           src="/images/logo.png"
-          alt="Sir Ihsan Jewelry"
+          alt="M. Nawaz Jewelry Collection"
           fill
           className="object-contain"
         />

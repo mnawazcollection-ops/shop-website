@@ -18,7 +18,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 40);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -30,97 +30,125 @@ export default function Header() {
         className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-white/95 backdrop-blur-md shadow-sm"
-            : "bg-white"
+            : "bg-white border-b border-[#f5f2ed]"
         }`}
       >
-        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-[80px]">
-          {/* Left Nav — Desktop */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navItems.slice(0, 3).map((item) => (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => setActiveDropdown(item.label)}
-                onMouseLeave={() => setActiveDropdown(null)}
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[88px] md:h-[100px]">
+          {/* Left: Mobile Hamburger or Desktop Navigation (First 3 Links) */}
+          <div className="flex items-center">
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden p-2 text-[#1A1A1A] hover:text-[#D97706] transition-colors -ml-2"
+              aria-label="Open menu"
+            >
+              <svg
+                width="26"
+                height="26"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                viewBox="0 0 24 24"
               >
+                <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
+
+            {/* Left Nav — Desktop */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+              {navItems.slice(0, 3).map((item) => (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setActiveDropdown(item.label)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  <Link
+                    href={item.href}
+                    className="text-[13px] font-medium tracking-[1.5px] uppercase text-[#1A1A1A] hover:text-[#D97706] transition-colors duration-200 py-2"
+                  >
+                    {item.label}
+                    {item.children && (
+                      <svg
+                        className="inline-block ml-1 w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M19 9l-7 7-7-7" />
+                      </svg>
+                    )}
+                  </Link>
+
+                  {/* Dropdown */}
+                  {item.children && activeDropdown === item.label && (
+                    <div className="absolute top-full left-0 mt-0 bg-white shadow-xl border border-[#f0f0f0] min-w-[220px] py-3 animate-fadeIn rounded-b z-30">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          className="block px-6 py-2.5 text-[13px] text-[#555] hover:text-[#D97706] hover:bg-amber-50/50 transition-all duration-200"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+          </div>
+
+          {/* Center: Large Luxury Centered Logo (Text removed per request) */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-10 pointer-events-auto">
+            <Link
+              href="/"
+              className="group flex items-center justify-center transition-all duration-300 hover:scale-105"
+              title="M. Nawaz Jewelry Collection"
+              aria-label="M. Nawaz Jewelry Collection"
+            >
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-[84px] md:h-[84px]">
+                <Image
+                  src="/images/logo.png"
+                  alt="M. Nawaz Jewelry Collection Logo"
+                  fill
+                  className="object-contain drop-shadow-sm"
+                  priority
+                />
+              </div>
+            </Link>
+          </div>
+
+          {/* Right: Desktop Nav (Last 3 links) & Action Icons */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            {/* Right Nav — Desktop */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+              {navItems.slice(3).map((item) => (
                 <Link
+                  key={item.label}
                   href={item.href}
-                  className="text-[13px] font-medium tracking-[1.5px] uppercase text-[#1A1A1A] hover:text-[#D97706] transition-colors duration-200 py-2"
+                  className="text-[13px] font-medium tracking-[1.5px] uppercase text-[#1A1A1A] hover:text-[#D97706] transition-colors duration-200"
                 >
                   {item.label}
-                  {item.children && (
-                    <svg
-                      className="inline-block ml-1 w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )}
                 </Link>
+              ))}
 
-                {/* Dropdown */}
-                {item.children && activeDropdown === item.label && (
-                  <div className="absolute top-full left-0 mt-0 bg-white shadow-lg border border-[#f0f0f0] min-w-[220px] py-3 animate-fadeIn">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        className="block px-6 py-2.5 text-[13px] text-[#555] hover:text-[#D97706] hover:bg-amber-50/50 transition-all duration-200"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
+              {/* Divider */}
+              <span className="w-px h-5 bg-[#e0deda]"></span>
+            </nav>
 
-          {/* Center — Logo */}
-          <Link href="/" className="flex items-center gap-2.5 md:gap-3 flex-shrink-0 group">
-            <div className="relative w-9 h-9 md:w-10 md:h-10 shrink-0">
-              <Image
-                src="/images/logo.png"
-                alt="Sir Ihsan Jewelry Logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-            <span className="font-cormorant text-[26px] md:text-[30px] font-bold tracking-[2.5px] text-[#1A1A1A] group-hover:text-amber-600 transition-colors uppercase">
-              Sir Ihsan
-            </span>
-          </Link>
-
-          {/* Right Nav — Desktop */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navItems.slice(3).map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="text-[13px] font-medium tracking-[1.5px] uppercase text-[#1A1A1A] hover:text-[#D97706] transition-colors duration-200"
-              >
-                {item.label}
-              </Link>
-            ))}
-
-            {/* Divider */}
-            <span className="w-px h-5 bg-[#ddd]"></span>
-
-            {/* Icons */}
-            <div className="flex items-center gap-4">
+            {/* Action Icons */}
+            <div className="flex items-center gap-3 sm:gap-4">
               {/* Search */}
               <button
                 onClick={() => setSearchOpen(true)}
-                className="text-[#1A1A1A] hover:text-[#D97706] transition-colors"
+                className="p-1.5 text-[#1A1A1A] hover:text-[#D97706] transition-colors cursor-pointer"
                 aria-label="Search"
               >
                 <svg
-                  width="20"
-                  height="20"
+                  width="21"
+                  height="21"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
@@ -130,15 +158,15 @@ export default function Header() {
                 </svg>
               </button>
 
-              {/* User */}
+              {/* User / Account (Desktop) */}
               <Link
                 href="/account"
-                className="text-[#1A1A1A] hover:text-[#D97706] transition-colors"
+                className="hidden lg:block p-1.5 text-[#1A1A1A] hover:text-[#D97706] transition-colors"
                 aria-label="Account"
               >
                 <svg
-                  width="20"
-                  height="20"
+                  width="21"
+                  height="21"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
@@ -151,12 +179,12 @@ export default function Header() {
               {/* Wishlist */}
               <Link
                 href="/wishlist"
-                className="text-[#1A1A1A] hover:text-[#D97706] transition-colors relative"
+                className="p-1.5 text-[#1A1A1A] hover:text-[#D97706] transition-colors relative"
                 aria-label="Wishlist"
               >
                 <svg
-                  width="20"
-                  height="20"
+                  width="21"
+                  height="21"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
@@ -165,7 +193,7 @@ export default function Header() {
                   <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                 </svg>
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/30 animate-in zoom-in-50 duration-200">
+                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/30">
                     {wishlistCount}
                   </span>
                 )}
@@ -174,12 +202,12 @@ export default function Header() {
               {/* Cart */}
               <button
                 onClick={() => setCartOpen(true)}
-                className="text-[#1A1A1A] hover:text-[#D97706] transition-colors relative"
+                className="p-1.5 text-[#1A1A1A] hover:text-[#D97706] transition-colors relative cursor-pointer"
                 aria-label="Cart"
               >
                 <svg
-                  width="20"
-                  height="20"
+                  width="21"
+                  height="21"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
@@ -188,74 +216,12 @@ export default function Header() {
                   <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/30 animate-in zoom-in-50 duration-200">
+                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/30">
                     {cartCount}
                   </span>
                 )}
               </button>
             </div>
-          </div>
-
-          {/* Mobile Controls */}
-          <div className="flex lg:hidden items-center gap-4">
-            {/* Mobile Search */}
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="text-[#1A1A1A] hover:text-[#D97706] transition-colors"
-              aria-label="Search"
-            >
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-              >
-                <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-              </svg>
-            </button>
-
-            {/* Mobile Cart */}
-            <button
-              onClick={() => setCartOpen(true)}
-              className="text-[#1A1A1A] hover:text-[#D97706] transition-colors relative"
-              aria-label="Cart"
-            >
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-              >
-                <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
-              </svg>
-              {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-md shadow-amber-500/30 animate-in zoom-in-50 duration-200">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-
-            {/* Hamburger */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="text-[#1A1A1A] p-1"
-              aria-label="Open menu"
-            >
-              <svg
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-              >
-                <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-            </button>
           </div>
         </div>
       </header>

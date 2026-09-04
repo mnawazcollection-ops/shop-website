@@ -39,7 +39,7 @@ function ShopContent() {
       {/* Breadcrumb / Title */}
       <div className="text-center mb-12">
         <p className="text-[12px] tracking-[3px] uppercase text-amber-600 mb-2 font-bold">
-          Sir Ihsan Collection
+          M. Nawaz Jewelry Collection
         </p>
         <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A]">
           Shop Fine Jewelry

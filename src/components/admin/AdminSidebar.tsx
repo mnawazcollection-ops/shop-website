@@ -147,7 +147,7 @@ export default function AdminSidebar({
           <div className="relative w-9 h-9 rounded-lg bg-white p-1 flex items-center justify-center shrink-0 shadow-md shadow-amber-500/15 border border-amber-400/30 overflow-hidden">
             <Image
               src="/images/logo.png"
-              alt="Sir Ihsan Admin"
+              alt="M. Nawaz Admin"
               fill
               className="object-contain p-0.5"
               priority
@@ -155,11 +155,11 @@ export default function AdminSidebar({
           </div>
           {!isCollapsed && (
             <div className="min-w-0">
-              <h2 className="font-cormorant text-xl font-bold tracking-[2px] uppercase text-white truncate leading-none">
-                Sir Ihsan
+              <h2 className="font-cormorant text-lg font-bold tracking-[1.5px] uppercase text-white truncate leading-none">
+                M. Nawaz
               </h2>
-              <p className="text-[10px] tracking-[1.5px] uppercase font-semibold text-amber-500/90 mt-1">
-                Atelier Admin
+              <p className="text-[9px] tracking-[1.5px] uppercase font-semibold text-amber-500/90 mt-1 truncate">
+                Jewelry Collection
               </p>
             </div>
           )}

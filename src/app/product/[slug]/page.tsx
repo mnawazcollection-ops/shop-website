@@ -104,10 +104,10 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     "name": product.name,
     "image": product.image.startsWith("http") ? product.image : `https://sir-ihsan-jewelry.com${product.image}`,
     "description": product.shortDescription || product.description,
-    "sku": product.sku || `SIJ-${product.id}`,
+    "sku": product.sku || `MNJ-${product.id}`,
     "brand": {
       "@type": "Brand",
-      "name": "Sir Ihsan"
+      "name": "M. Nawaz Jewelry Collection"
     },
     "offers": {
       "@type": "Offer",
@@ -117,7 +117,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
       "availability": product.inStock !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
-        "name": "Sir Ihsan Luxury Jewelry"
+        "name": "M. Nawaz Jewelry Collection"
       }
     },
     ...(product.rating ? {

@@ -10,17 +10,22 @@ export default function Footer() {
           {/* Brand Column */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-5 group">
-              <div className="relative w-11 h-11 bg-white p-1 rounded-xl shrink-0 shadow-md shadow-amber-500/10 border border-amber-400/20">
+              <div className="relative w-12 h-12 bg-white p-1 rounded-xl shrink-0 shadow-md shadow-amber-500/10 border border-amber-400/20">
                 <Image
                   src="/images/logo.png"
-                  alt="Sir Ihsan Jewelry Logo"
+                  alt="M. Nawaz Jewelry Collection Logo"
                   fill
                   className="object-contain p-0.5"
                 />
               </div>
-              <h3 className="font-cormorant text-[26px] font-bold tracking-[3px] text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#FBBF24] uppercase drop-shadow-sm group-hover:opacity-90 transition-opacity">
-                Sir Ihsan
-              </h3>
+              <div className="flex flex-col">
+                <h3 className="font-cormorant text-[22px] md:text-[24px] font-bold tracking-[2px] text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#FBBF24] uppercase drop-shadow-sm group-hover:opacity-90 transition-opacity leading-tight">
+                  M. Nawaz
+                </h3>
+                <span className="text-[10px] uppercase tracking-[3px] text-amber-300/80 font-medium">
+                  Jewelry Collection
+                </span>
+              </div>
             </Link>
             <p className="text-[14px] leading-relaxed mb-6 text-white/60">
               Crafting timeless jewelry pieces that celebrate the beauty of
@@ -203,7 +208,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-[1400px] mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[13px] text-white/40">
-            © 2026 Sir Ihsan Jewelry. All rights reserved.
+            © 2026 M. Nawaz Jewelry Collection. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {["visa", "mastercard", "amex", "paypal"].map((payment) => (

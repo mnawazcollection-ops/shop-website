@@ -84,7 +84,7 @@ export default function AdminOverviewPage() {
             </span>
           </div>
           <h1 className="font-cormorant text-2xl sm:text-3xl font-bold tracking-wide text-white">
-            Welcome back, Sir Ihsan
+            Welcome back, M. Nawaz
           </h1>
           <p className="text-xs text-slate-300 mt-1 max-w-xl">
             Here is your daily executive overview of acquisitions, vault fulfillment, and client activity.

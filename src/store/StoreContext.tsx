@@ -42,7 +42,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const savedCart = localStorage.getItem("sir-ihsan-cart");
+      const savedCart = localStorage.getItem("mnawaz-cart") || localStorage.getItem("sir-ihsan-cart");
       return savedCart ? JSON.parse(savedCart) : [];
     } catch {
       return [];
@@ -53,7 +53,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [wishlistItems, setWishlistItems] = useState<Product[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const savedWishlist = localStorage.getItem("sir-ihsan-wishlist");
+      const savedWishlist = localStorage.getItem("mnawaz-wishlist") || localStorage.getItem("sir-ihsan-wishlist");
       return savedWishlist ? JSON.parse(savedWishlist) : [];
     } catch {
       return [];
@@ -64,7 +64,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   // Persist cart
   useEffect(() => {
     try {
-      localStorage.setItem("sir-ihsan-cart", JSON.stringify(cartItems));
+      localStorage.setItem("mnawaz-cart", JSON.stringify(cartItems));
     } catch {
       /* ignore */
     }
@@ -73,7 +73,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   // Persist wishlist
   useEffect(() => {
     try {
-      localStorage.setItem("sir-ihsan-wishlist", JSON.stringify(wishlistItems));
+      localStorage.setItem("mnawaz-wishlist", JSON.stringify(wishlistItems));
     } catch {
       /* ignore */
     }

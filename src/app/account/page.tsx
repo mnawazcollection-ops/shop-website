@@ -304,7 +304,7 @@ export default function AccountPage() {
               Real-Time Atelier & Courier Tracker
             </h2>
             <p className="text-[13px] text-[#777] text-center mb-6">
-              Enter your official Sir Ihsan Order Number to view master inspection status and armored transit telemetry.
+              Enter your official M. Nawaz Jewelry Collection Order Number to view master inspection status and armored transit telemetry.
             </p>
 
             <form onSubmit={handleTrackSearch} className="flex gap-2 mb-6">
@@ -312,7 +312,7 @@ export default function AccountPage() {
                 type="text"
                 value={trackQuery}
                 onChange={(e) => setTrackQuery(e.target.value)}
-                placeholder="e.g. SIJ-2026-89421"
+                placeholder="e.g. MNJ-2026-89421"
                 className="flex-1 px-4 py-3 text-[14px] border border-[#ddd] outline-none focus:border-[#D97706] uppercase transition-colors rounded-sm"
               />
               <button

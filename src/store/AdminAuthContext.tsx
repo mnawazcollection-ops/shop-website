@@ -37,7 +37,9 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     await new Promise((res) => setTimeout(res, 600));
 
     if (
+      (email.toLowerCase() === "admin@mnawazjewelry.com" && password === "admin123") ||
       (email.toLowerCase() === "admin@sirihsan.com" && password === "admin123") ||
+      (email.toLowerCase() === "demo@mnawazjewelry.com" && password === "demo123") ||
       (email.toLowerCase() === "demo@sirihsan.com" && password === "demo123") ||
       (email.includes("@") && password.length >= 6)
     ) {
@@ -55,7 +57,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     setIsLoading(false);
-    return { success: false, error: "Invalid admin credentials. Please use admin@sirihsan.com / admin123" };
+    return { success: false, error: "Invalid admin credentials. Please use admin@mnawazjewelry.com / admin123" };
   };
 
   const quickDemoLogin = () => {

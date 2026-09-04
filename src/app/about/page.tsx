@@ -12,7 +12,7 @@ export default function AboutPage() {
             Since 2001
           </p>
           <h1 className="font-cormorant text-4xl md:text-6xl font-bold mb-4">
-            The Art of Sir Ihsan
+            The Art of M. Nawaz Jewelry Collection
           </h1>
           <p className="text-white/70 text-[16px] leading-relaxed max-w-lg mx-auto">
             A heritage forged in devotion, uncompromising craftsmanship, and an enduring passion for fine jewelry.
@@ -30,7 +30,7 @@ export default function AboutPage() {
               title="A Legacy of Handcrafted Brilliance"
             />
             <p className="text-[#666] leading-relaxed text-[15px] mb-6">
-              Founded over two decades ago, Sir Ihsan began with a simple yet ambitious vision: to create heirloom jewelry that captures the sacred beauty of life’s most meaningful milestones.
+              Founded over two decades ago, M. Nawaz Jewelry Collection began with a simple yet ambitious vision: to create heirloom jewelry that captures the sacred beauty of life’s most meaningful milestones.
             </p>
             <p className="text-[#666] leading-relaxed text-[15px] mb-6">
               Every ring, pendant, and bracelet begins its journey at the hands of master goldsmiths. From ethically sourced diamonds to 100% certified pure gold alloys, we refuse to compromise on quality or integrity.

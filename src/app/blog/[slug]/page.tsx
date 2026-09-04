@@ -66,7 +66,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           Fine jewelry has always occupied a rare intersection between exquisite artistic expression and permanent material value. Selecting or maintaining jewelry requires understanding the delicate interplay between precious carats, metals, cut geometries, and master settings.
         </p>
         <p>
-          Whether considering 18K solid yellow gold, rose gold nuances, or certified brilliant-cut solitaires, the key lies in balance and provenance. At Sir Ihsan, every piece is sculpted to tell an enduring personal story.
+          Whether considering 18K solid yellow gold, rose gold nuances, or certified brilliant-cut solitaires, the key lies in balance and provenance. At M. Nawaz Jewelry Collection, every piece is sculpted to tell an enduring personal story.
         </p>
       </div>
 

@@ -251,19 +251,24 @@ export default function CheckoutPage() {
       {/* Top Header Bar */}
       <header className="border-b border-[#eee] bg-white sticky top-0 z-30">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 shrink-0">
               <Image
                 src="/images/logo.png"
-                alt="Sir Ihsan Jewelry Logo"
+                alt="M. Nawaz Jewelry Collection Logo"
                 fill
                 className="object-contain"
                 priority
               />
             </div>
-            <span className="font-cormorant text-2xl sm:text-3xl font-bold tracking-[3px] uppercase text-[#1A1A1A] group-hover:text-amber-600 transition-colors">
-              Sir Ihsan
-            </span>
+            <div className="flex flex-col">
+              <span className="font-cormorant text-xl sm:text-2xl font-bold tracking-[2px] uppercase text-[#1A1A1A] group-hover:text-amber-600 transition-colors leading-tight">
+                M. Nawaz
+              </span>
+              <span className="text-[9px] uppercase tracking-[2px] text-amber-700 font-semibold">
+                Jewelry Collection
+              </span>
+            </div>
           </Link>
 
           <div className="flex items-center gap-4 text-[12px] uppercase tracking-wider text-[#777]">
