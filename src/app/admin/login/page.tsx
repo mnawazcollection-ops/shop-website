@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight } from "lucide-react";
 import { useAdminAuth } from "@/store/AdminAuthContext";
@@ -49,8 +50,14 @@ export default function AdminLoginPage() {
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         {/* Brand Monogram */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 via-amber-600 to-amber-800 flex items-center justify-center text-slate-950 font-bold text-2xl shadow-xl shadow-amber-500/20 mb-4 border border-amber-300/40">
-            ✦
+          <div className="relative w-16 h-16 rounded-2xl bg-white p-2.5 flex items-center justify-center shadow-xl shadow-amber-500/20 mb-4 border border-amber-300/40 overflow-hidden">
+            <Image
+              src="/images/logo.png"
+              alt="Sir Ihsan Atelier"
+              fill
+              className="object-contain p-1"
+              priority
+            />
           </div>
           <h1 className="font-cormorant text-3xl font-bold tracking-[3px] uppercase text-white">
             Sir Ihsan

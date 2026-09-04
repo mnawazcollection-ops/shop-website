@@ -24,6 +24,8 @@ import {
 import { AdminProduct, AdminProductVariant } from "@/types/admin";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
+import ImageUploader from "@/components/admin/ImageUploader";
+import { uploadImage } from "@/lib/uploadClient";
 
 interface ProductFormProps {
   initialProduct?: AdminProduct;
@@ -106,10 +108,34 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
   };
 
   // Gallery Helpers
+  const [isUploadingGallery, setIsUploadingGallery] = useState(false);
+
   const addGalleryImage = () => {
     if (newGalleryUrl.trim()) {
       setGallery([...gallery, newGalleryUrl.trim()]);
       setNewGalleryUrl("");
+    }
+  };
+
+  const handleGalleryFileUpload = async (file: File) => {
+    if (!file) return;
+    setIsUploadingGallery(true);
+    try {
+      const res = await uploadImage(file, "sir-ihsan/products");
+      setGallery((prev) => [...prev, res.url]);
+      addToast({
+        title: "Gallery Image Uploaded",
+        message: "Uploaded and optimized via Cloudinary.",
+        type: "success",
+      });
+    } catch (err: any) {
+      addToast({
+        title: "Upload Failed",
+        message: err.message || "Failed to upload image.",
+        type: "error",
+      });
+    } finally {
+      setIsUploadingGallery(false);
     }
   };
 
@@ -535,50 +561,35 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <span className="text-xs text-stone-500">{1 + gallery.length} media assets</span>
             </div>
 
-            {/* Primary Cover Image */}
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                Main Hero Image URL <span className="text-red-500">*</span>
-              </label>
-              <div className="flex flex-col sm:flex-row gap-4 items-start">
-                <div className="relative w-28 h-28 shrink-0 rounded-lg border border-stone-200 bg-stone-50 overflow-hidden">
-                  {mainImage ? (
-                    <Image
-                      src={mainImage}
-                      alt="Primary preview"
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-stone-300">
-                      <ImageIcon className="w-8 h-8" />
-                    </div>
-                  )}
-                </div>
-                <div className="flex-1 w-full space-y-2">
-                  <input
-                    type="url"
-                    value={mainImage}
-                    onChange={(e) => setMainImage(e.target.value)}
-                    placeholder="https://images.unsplash.com/..."
-                    className={`w-full px-3.5 py-2 bg-stone-50 border rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
-                      errors.mainImage ? "border-red-400 bg-red-50/20" : "border-stone-200"
-                    }`}
-                  />
-                  <p className="text-xs text-stone-400">
-                    High-resolution studio photography on neutral or luxury marble backgrounds recommended.
-                  </p>
-                </div>
-              </div>
-              {errors.mainImage && <p className="text-xs text-red-600 mt-1">{errors.mainImage}</p>}
-            </div>
+            {/* Primary Cover Image via ImageUploader */}
+            <ImageUploader
+              label="Primary Masterwork Image"
+              value={mainImage}
+              onChange={(url) => setMainImage(url)}
+              folder="sir-ihsan/products"
+              required={true}
+              aspectRatio="square"
+            />
+            {errors.mainImage && <p className="text-xs text-red-600 -mt-1">{errors.mainImage}</p>}
 
             {/* Gallery Images List */}
-            <div className="pt-3 border-t border-stone-100 space-y-3">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700">
-                Additional Gallery Views
-              </label>
+            <div className="pt-4 border-t border-stone-100 space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700">
+                  Additional Gallery Views ({gallery.length})
+                </label>
+                <label className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-300 rounded-lg text-xs font-semibold hover:bg-amber-100 cursor-pointer transition-colors">
+                  <Upload className="w-3.5 h-3.5 text-amber-700" />
+                  <span>{isUploadingGallery ? "Uploading..." : "Upload to Cloud"}</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    disabled={isUploadingGallery}
+                    onChange={(e) => e.target.files?.[0] && handleGalleryFileUpload(e.target.files[0])}
+                    className="hidden"
+                  />
+                </label>
+              </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {gallery.map((url, idx) => (
@@ -626,13 +637,13 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   </div>
                 ))}
 
-                {/* Add new image placeholder */}
+                {/* Add new image URL or paste placeholder */}
                 <div className="border border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center p-3 text-center aspect-square bg-stone-50/50">
                   <input
                     type="text"
                     value={newGalleryUrl}
                     onChange={(e) => setNewGalleryUrl(e.target.value)}
-                    placeholder="Image URL..."
+                    placeholder="Paste URL..."
                     className="w-full text-xs px-2 py-1 bg-white border border-stone-200 rounded mb-2"
                   />
                   <button

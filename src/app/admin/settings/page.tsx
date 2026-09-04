@@ -15,6 +15,7 @@ import {
   Phone,
   MapPin,
   Database,
+  Cloud,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
@@ -127,7 +128,7 @@ export default function SettingsPage() {
           { id: "shipping", label: "Insured Transit & Logistics", icon: Truck },
           { id: "tax", label: "Taxation & Currency", icon: DollarSign },
           { id: "notifications", label: "Concierge Alerts", icon: Bell },
-          { id: "firebase", label: "Firebase & Cloud Sync", icon: Database },
+          { id: "firebase", label: "Cloudinary & Cloud Storage", icon: Cloud },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -186,14 +187,31 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                Brand Emblem / Logo URL
+                Brand Emblem / Logo
               </label>
-              <input
-                type="url"
-                value={logoUrl}
-                onChange={(e) => setLogoUrl(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
-              />
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16 rounded-xl border border-stone-200 bg-white p-2 shrink-0 shadow-xs flex items-center justify-center">
+                  <Image
+                    src={logoUrl || "/images/logo.png"}
+                    alt="Store Logo"
+                    fill
+                    className="object-contain p-1.5"
+                    unoptimized
+                  />
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    value={logoUrl}
+                    onChange={(e) => setLogoUrl(e.target.value)}
+                    placeholder="/images/logo.png"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
+                  />
+                  <p className="text-[11px] text-stone-400 mt-1">
+                    Static asset: /images/logo.png or Cloudinary secure URL.
+                  </p>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -414,54 +432,109 @@ export default function SettingsPage() {
           </div>
         )}
 
-        {/* TAB 5: FIREBASE INTEGRATION */}
+        {/* TAB 5: CLOUD & MEDIA STORAGE */}
         {activeTab === "firebase" && (
-          <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
-            <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-              <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
-                <Database className="w-4 h-4 text-amber-600" />
-                Firebase Cloud Architecture
-              </h2>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                <ShieldCheck className="w-3.5 h-3.5" /> Architecture Ready
-              </span>
-            </div>
-
-            <p className="text-xs text-stone-600 leading-relaxed">
-              The admin dashboard operates with a dual-mode persistence architecture: local high-performance
-              reactive cache + isolated Firebase Firestore/Storage sync layer.
-            </p>
-
-            <div className="space-y-3">
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Connected Firebase Project ID
-                </label>
-                <input
-                  type="text"
-                  value={firebaseProjectId}
-                  onChange={(e) => setFirebaseProjectId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm font-mono text-stone-900 focus:outline-none"
-                />
+          <div className="space-y-6">
+            {/* Cloudinary Card */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
+              <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+                <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                  <Cloud className="w-4 h-4 text-amber-600" />
+                  Cloudinary Media Storage
+                </h2>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Cloudinary Integration Active
+                </span>
               </div>
 
-              <div className="p-4 bg-stone-50 rounded-lg border border-stone-200 space-y-2 text-xs">
-                <p className="font-bold text-stone-800">Provisioned Cloud Collections:</p>
-                <div className="flex flex-wrap gap-2 font-mono text-[11px] text-amber-900">
-                  {[
-                    "products",
-                    "categories",
-                    "orders",
-                    "customers",
-                    "coupons",
-                    "banners",
-                    "reviews",
-                    "settings",
-                  ].map((col) => (
-                    <span key={col} className="bg-white px-2 py-0.5 rounded border border-stone-200">
-                      /{col}
-                    </span>
-                  ))}
+              <p className="text-xs text-stone-600 leading-relaxed">
+                All fine jewelry photography, gallery views, and promotional banners are processed and delivered via Cloudinary's global image CDN with automated format optimization and lossless high-DPI compression.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
+                    Cloud Name
+                  </label>
+                  <input
+                    type="text"
+                    readOnly
+                    value={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "configured in .env.local"}
+                    className="w-full px-3.5 py-2.5 bg-stone-100 border border-stone-200 rounded-lg text-xs font-mono text-stone-700 select-all"
+                  />
+                  <p className="text-[11px] text-stone-400 mt-1">NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
+                    Cloud Upload Endpoint
+                  </label>
+                  <input
+                    type="text"
+                    readOnly
+                    value="/api/upload (Serverless Route)"
+                    className="w-full px-3.5 py-2.5 bg-stone-100 border border-stone-200 rounded-lg text-xs font-mono text-stone-700"
+                  />
+                  <p className="text-[11px] text-stone-400 mt-1">Handles 10MB multipart uploads & base64 transforms</p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-amber-50/60 rounded-lg border border-amber-200/60 text-xs text-amber-900 space-y-1">
+                <p className="font-bold flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  Cloud Storage Folders:
+                </p>
+                <div className="flex flex-wrap gap-2 pt-1 font-mono text-[11px]">
+                  <span className="bg-white px-2 py-0.5 rounded border border-amber-300/60">/sir-ihsan/products</span>
+                  <span className="bg-white px-2 py-0.5 rounded border border-amber-300/60">/sir-ihsan/categories</span>
+                  <span className="bg-white px-2 py-0.5 rounded border border-amber-300/60">/sir-ihsan/banners</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Firebase Database Card */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
+              <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+                <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                  <Database className="w-4 h-4 text-amber-600" />
+                  Firebase Cloud Architecture
+                </h2>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Architecture Ready
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
+                    Connected Firebase Project ID
+                  </label>
+                  <input
+                    type="text"
+                    value={firebaseProjectId}
+                    onChange={(e) => setFirebaseProjectId(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm font-mono text-stone-900 focus:outline-none"
+                  />
+                </div>
+
+                <div className="p-4 bg-stone-50 rounded-lg border border-stone-200 space-y-2 text-xs">
+                  <p className="font-bold text-stone-800">Provisioned Cloud Collections:</p>
+                  <div className="flex flex-wrap gap-2 font-mono text-[11px] text-amber-900">
+                    {[
+                      "products",
+                      "categories",
+                      "orders",
+                      "customers",
+                      "coupons",
+                      "banners",
+                      "reviews",
+                      "settings",
+                    ].map((col) => (
+                      <span key={col} className="bg-white px-2 py-0.5 rounded border border-stone-200">
+                        /{col}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

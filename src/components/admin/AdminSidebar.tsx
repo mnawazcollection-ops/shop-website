@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -143,9 +144,15 @@ export default function AdminSidebar({
     <div className="flex flex-col h-full bg-slate-950 text-slate-200 border-r border-slate-800 select-none">
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800/80 shrink-0">
-        <Link href="/admin" className="flex items-center gap-3 overflow-hidden">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 via-amber-600 to-amber-800 flex items-center justify-center text-slate-950 font-bold text-lg shadow-md shadow-amber-500/20 shrink-0">
-            ✦
+        <Link href="/admin" className="flex items-center gap-3 overflow-hidden group">
+          <div className="relative w-9 h-9 rounded-lg bg-white p-1 flex items-center justify-center shrink-0 shadow-md shadow-amber-500/15 border border-amber-400/30 overflow-hidden">
+            <Image
+              src="/images/logo.png"
+              alt="Sir Ihsan Admin"
+              fill
+              className="object-contain p-0.5"
+              priority
+            />
           </div>
           {!isCollapsed && (
             <div className="min-w-0">

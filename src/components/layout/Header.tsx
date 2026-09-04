@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { navItems } from "@/data";
 import { useCart, useWishlist, useSearch } from "@/store/StoreContext";
 import MobileMenu from "./MobileMenu";
@@ -79,10 +80,19 @@ export default function Header() {
           </nav>
 
           {/* Center — Logo */}
-          <Link href="/" className="flex-shrink-0">
-            <h1 className="font-cormorant text-[28px] md:text-[32px] font-bold tracking-[3px] text-[#1A1A1A] hover:text-amber-600 transition-colors uppercase">
+          <Link href="/" className="flex items-center gap-2.5 md:gap-3 flex-shrink-0 group">
+            <div className="relative w-9 h-9 md:w-10 md:h-10 shrink-0">
+              <Image
+                src="/images/logo.png"
+                alt="Sir Ihsan Jewelry Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <span className="font-cormorant text-[26px] md:text-[30px] font-bold tracking-[2.5px] text-[#1A1A1A] group-hover:text-amber-600 transition-colors uppercase">
               Sir Ihsan
-            </h1>
+            </span>
           </Link>
 
           {/* Right Nav — Desktop */}

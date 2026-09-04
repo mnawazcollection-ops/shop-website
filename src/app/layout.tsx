@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   title: "Sir Ihsan | Luxury Handcrafted Jewelry",
   description:
     "Discover exquisite handcrafted gold, diamond, and precious gemstone jewelry at Sir Ihsan. Timeless elegance and artisan craftsmanship.",
+  icons: {
+    icon: "/images/logo.png",
+    shortcut: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({

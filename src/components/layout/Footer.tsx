@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,8 +9,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand Column */}
           <div>
-            <Link href="/">
-              <h3 className="font-cormorant text-[26px] font-bold tracking-[3px] text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#FBBF24] uppercase mb-5 drop-shadow-sm">
+            <Link href="/" className="flex items-center gap-3 mb-5 group">
+              <div className="relative w-11 h-11 bg-white p-1 rounded-xl shrink-0 shadow-md shadow-amber-500/10 border border-amber-400/20">
+                <Image
+                  src="/images/logo.png"
+                  alt="Sir Ihsan Jewelry Logo"
+                  fill
+                  className="object-contain p-0.5"
+                />
+              </div>
+              <h3 className="font-cormorant text-[26px] font-bold tracking-[3px] text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#FBBF24] uppercase drop-shadow-sm group-hover:opacity-90 transition-opacity">
                 Sir Ihsan
               </h3>
             </Link>
