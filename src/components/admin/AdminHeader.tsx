@@ -90,12 +90,12 @@ export default function AdminHeader({ onMobileMenuToggle, onOpenSearch }: AdminH
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+    <header className="h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs w-full min-w-0">
       {/* Left: Mobile Toggle & Breadcrumbs */}
-      <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           onClick={onMobileMenuToggle}
-          className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+          className="lg:hidden p-2 rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer"
           aria-label="Open mobile menu"
         >
           <Menu className="w-5 h-5" />
@@ -128,11 +128,11 @@ export default function AdminHeader({ onMobileMenuToggle, onOpenSearch }: AdminH
       </div>
 
       {/* Right: Global Search, Notifications, Profile */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {/* Global Search Button */}
         <button
           onClick={onOpenSearch}
-          className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-800 text-[12px] border border-slate-200/70 transition-colors cursor-pointer"
+          className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-800 text-[12px] border border-slate-200/70 transition-colors cursor-pointer"
         >
           <Search className="w-4 h-4 text-slate-400" />
           <span className="hidden md:inline">Quick search...</span>
@@ -153,7 +153,7 @@ export default function AdminHeader({ onMobileMenuToggle, onOpenSearch }: AdminH
           </button>
 
           {isNotificationsOpen && (
-            <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 animate-in fade-in zoom-in-95 duration-150 z-50">
+            <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] max-w-sm sm:w-96 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 animate-in fade-in zoom-in-95 duration-150 z-50">
               <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
                 <p className="text-[13px] font-bold text-slate-900">Notifications</p>
                 <span className="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">
@@ -224,7 +224,7 @@ export default function AdminHeader({ onMobileMenuToggle, onOpenSearch }: AdminH
           </button>
 
           {isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-200 py-1.5 animate-in fade-in zoom-in-95 duration-150 z-50">
+            <div className="absolute right-0 mt-2 w-56 max-w-[calc(100vw-1.5rem)] bg-white rounded-xl shadow-2xl border border-slate-200 py-1.5 animate-in fade-in zoom-in-95 duration-150 z-50">
               <div className="px-4 py-3 border-b border-slate-100">
                 <p className="text-[13px] font-bold text-slate-900">{user?.name}</p>
                 <p className="text-[11px] text-slate-500 truncate">{user?.email}</p>

@@ -75,7 +75,7 @@ export default function AdminOverviewPage() {
   return (
     <div className="space-y-8">
       {/* Top Banner & Quick Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/80 text-white shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-4 sm:p-6 rounded-2xl border border-slate-700/80 text-white shadow-xl">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
@@ -91,17 +91,17 @@ export default function AdminOverviewPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
           <Link
             href="/admin/products/new"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 text-xs uppercase tracking-wider font-bold shadow-md shadow-amber-600/20 transition-all cursor-pointer"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 text-xs uppercase tracking-wider font-bold shadow-md shadow-amber-600/20 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Add Jewel</span>
           </Link>
           <Link
             href="/admin/orders"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs uppercase tracking-wider font-semibold border border-slate-700 transition-colors"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs uppercase tracking-wider font-semibold border border-slate-700 transition-colors"
           >
             <span>Orders</span>
             <ArrowRight className="w-4 h-4" />
@@ -201,7 +201,7 @@ export default function AdminOverviewPage() {
       {/* Row 3: Sales Analytics Chart & Order Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sales Chart (2 Cols) */}
-        <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-6 shadow-sm min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-100 gap-4">
             <div>
               <h2 className="font-cormorant text-2xl font-bold text-slate-900">
@@ -213,12 +213,12 @@ export default function AdminOverviewPage() {
             </div>
 
             {/* Time Range Filter Buttons */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/60">
+            <div className="flex flex-wrap items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/60 max-w-full overflow-x-auto">
               {(["daily", "weekly", "monthly", "yearly"] as const).map((range) => (
                 <button
                   key={range}
                   onClick={() => setSalesRange(range)}
-                  className={`px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`px-2.5 sm:px-3 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
                     salesRange === range
                       ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
                       : "text-slate-500 hover:text-slate-900"
@@ -231,8 +231,8 @@ export default function AdminOverviewPage() {
           </div>
 
           {/* Bar / Column Chart visualization */}
-          <div className="mt-8">
-            <div className="h-64 flex items-end gap-3 sm:gap-6 justify-between px-2 pt-6">
+          <div className="mt-8 overflow-x-auto pb-2 -mx-2 sm:mx-0 px-2 sm:px-0">
+            <div className="h-64 flex items-end gap-2 sm:gap-6 justify-between px-1 sm:px-2 pt-6 min-w-[320px] sm:min-w-[420px]">
               {activePoints.map((item) => {
                 const heightPercent = Math.round((item.sales / maxSales) * 100);
                 return (
@@ -355,7 +355,7 @@ export default function AdminOverviewPage() {
       {/* Row 4: Recent Orders & Inventory Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders Table (2 Cols) */}
-        <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-6 shadow-sm min-w-0">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
             <div>
               <h2 className="font-cormorant text-2xl font-bold text-slate-900">
@@ -372,8 +372,8 @@ export default function AdminOverviewPage() {
             </Link>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-[13px]">
+          <div className="overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0">
+            <table className="w-full text-left text-[13px] min-w-[620px]">
               <thead>
                 <tr className="border-b border-slate-100 text-[11px] uppercase font-bold tracking-wider text-slate-400">
                   <th className="pb-3 font-semibold">Order ID</th>

@@ -134,8 +134,8 @@ export default function OrderDetailsPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold tracking-tight text-stone-900 font-mono">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-stone-900 font-mono">
                 {order.orderNumber}
               </h1>
               <StatusBadge status={order.orderStatus} />
@@ -296,7 +296,7 @@ export default function OrderDetailsPage() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
+              <table className="w-full text-left text-sm min-w-[550px]">
                 <thead>
                   <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
                     <th className="py-3 px-4">Masterwork</th>

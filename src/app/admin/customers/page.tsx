@@ -103,7 +103,7 @@ export default function CustomersPage() {
       {/* Customers Table */}
       <div className="bg-white rounded-xl border border-stone-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-sm">
+          <table className="w-full text-left border-collapse text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
                 <th className="py-3 px-4">Client Dossier</th>

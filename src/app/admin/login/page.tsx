@@ -13,7 +13,7 @@ export default function AdminLoginPage() {
   const { login, quickDemoLogin } = useAdminAuth();
   const { success, error: toastError } = useAdminToast();
 
-  const [email, setEmail] = useState("admin@sirihsan.com");
+  const [email, setEmail] = useState("admin@mnawazjewelry.com");
   const [password, setPassword] = useState("admin123");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-[#0B0F19] to-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-[#0B0F19] to-slate-900 flex flex-col justify-center px-4 py-8 sm:py-12 sm:px-6 lg:px-8 text-white relative overflow-hidden">
       {/* Background ambient gold lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
 

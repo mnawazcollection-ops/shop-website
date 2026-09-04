@@ -52,6 +52,18 @@ export default function AdminSidebar({
   const pathname = usePathname();
   const { orders, products } = useAdminData();
 
+  // Prevent background page scrolling when mobile drawer is open
+  React.useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileOpen]);
+
   const pendingOrdersCount = orders.filter((o) => o.orderStatus === "pending").length;
   const lowStockCount = products.filter((p) => p.stock <= p.lowStockThreshold).length;
 
@@ -143,7 +155,7 @@ export default function AdminSidebar({
     <div className="flex flex-col h-full bg-slate-950 text-slate-200 border-r border-slate-800 select-none">
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800/80 shrink-0">
-        <Link href="/admin" className="flex items-center gap-3 overflow-hidden group">
+        <Link href="/admin" onClick={onMobileClose} className="flex items-center gap-3 overflow-hidden group">
           <div className="relative w-9 h-9 rounded-lg bg-white p-1 flex items-center justify-center shrink-0 shadow-md shadow-amber-500/15 border border-amber-400/30 overflow-hidden">
             <Image
               src="/images/logo.png"
@@ -168,7 +180,7 @@ export default function AdminSidebar({
         {/* Mobile close button */}
         <button
           onClick={onMobileClose}
-          className="lg:hidden text-slate-400 hover:text-white p-1"
+          className="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors p-1"
           aria-label="Close sidebar"
         >
           <X className="w-5 h-5" />
@@ -232,6 +244,7 @@ export default function AdminSidebar({
         <Link
           href="/"
           target="_blank"
+          onClick={onMobileClose}
           className="flex items-center gap-3 px-3 py-2 text-[12px] text-slate-400 hover:text-amber-400 hover:bg-slate-900 rounded-lg transition-colors border border-transparent hover:border-slate-800"
         >
           <ExternalLink className="w-4 h-4 shrink-0" />

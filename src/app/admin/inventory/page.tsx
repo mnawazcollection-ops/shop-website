@@ -166,10 +166,10 @@ export default function InventoryPage() {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
           <button
             onClick={() => setFilterLevel("all")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
               filterLevel === "all"
                 ? "bg-stone-900 text-white"
                 : "border border-stone-200 text-stone-600 hover:bg-stone-50"
@@ -179,7 +179,7 @@ export default function InventoryPage() {
           </button>
           <button
             onClick={() => setFilterLevel("low")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
               filterLevel === "low"
                 ? "bg-amber-600 text-white"
                 : "border border-stone-200 text-stone-600 hover:bg-stone-50"
@@ -189,7 +189,7 @@ export default function InventoryPage() {
           </button>
           <button
             onClick={() => setFilterLevel("out")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
               filterLevel === "out"
                 ? "bg-red-600 text-white"
                 : "border border-stone-200 text-stone-600 hover:bg-stone-50"
@@ -203,7 +203,7 @@ export default function InventoryPage() {
       {/* Inventory Table */}
       <div className="bg-white rounded-xl border border-stone-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-sm">
+          <table className="w-full text-left border-collapse text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
                 <th className="py-3 px-4">Masterwork</th>
