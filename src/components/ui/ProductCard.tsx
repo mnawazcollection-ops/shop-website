@@ -72,10 +72,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Top-Right Quick Wishlist Button */}
         <button
           onClick={handleWishlistClick}
-          className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 z-10 ${
+          className={`absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 z-10 ${
             isWishlisted
               ? "bg-white text-[#E74C3C] shadow-md scale-100 opacity-100"
-              : "bg-white/80 backdrop-blur-sm text-[#555] hover:text-[#E74C3C] hover:bg-white opacity-0 group-hover:opacity-100"
+              : "bg-white/90 shadow-sm sm:shadow-none text-[#555] hover:text-[#E74C3C] hover:bg-white opacity-80 sm:opacity-0 sm:group-hover:opacity-100"
           }`}
           title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
           aria-label="Wishlist"

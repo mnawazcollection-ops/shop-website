@@ -219,7 +219,7 @@ export default function CartDrawer() {
                 View Cart
               </Link>
               <Link
-                href="/cart"
+                href="/checkout"
                 onClick={() => setCartOpen(false)}
                 className="w-full text-center py-3.5 bg-[#C8A165] hover:bg-[#b8914f] text-white uppercase text-[11px] tracking-[2px] font-bold transition-colors"
               >

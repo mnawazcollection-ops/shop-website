@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/store/StoreContext";
 import { categories } from "@/data";
 
 const FREE_SHIPPING_THRESHOLD = 500;
 
 export default function CartPage() {
+  const router = useRouter();
   const {
     items,
     updateQuantity,
@@ -61,12 +63,7 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
-    setIsCheckingOut(true);
-    setTimeout(() => {
-      setIsCheckingOut(false);
-      setCheckoutSuccess(true);
-      clearCart();
-    }, 1500);
+    router.push("/checkout");
   };
 
   const freeShippingProgress = Math.min(

@@ -202,10 +202,10 @@ export default function WishlistPage() {
                   </div>
 
                   {/* Actions */}
-                  <div className="col-span-3 flex items-center justify-start md:justify-end gap-2">
+                  <div className="col-span-3 flex flex-wrap sm:flex-nowrap items-center justify-start md:justify-end gap-2">
                     <button
                       onClick={() => handleAddToCart(product)}
-                      className={`px-4 py-2.5 text-[11px] uppercase tracking-[1.5px] font-semibold transition-colors ${
+                      className={`flex-1 sm:flex-initial text-center px-4 py-2.5 text-[11px] uppercase tracking-[1.5px] font-semibold transition-colors ${
                         addedIds[product.id]
                           ? "bg-green-600 text-white"
                           : "bg-[#1A1A1A] hover:bg-[#C8A165] text-white"
@@ -215,7 +215,7 @@ export default function WishlistPage() {
                     </button>
                     <button
                       onClick={() => handleMoveToCart(product)}
-                      className="px-3 py-2.5 border border-[#ddd] hover:border-[#C8A165] hover:text-[#C8A165] text-[11px] uppercase tracking-[1.5px] font-semibold text-[#555] transition-colors"
+                      className="flex-1 sm:flex-initial text-center px-3 py-2.5 border border-[#ddd] hover:border-[#C8A165] hover:text-[#C8A165] text-[11px] uppercase tracking-[1.5px] font-semibold text-[#555] transition-colors whitespace-nowrap"
                       title="Move to bag and remove from wishlist"
                     >
                       Move to Bag
