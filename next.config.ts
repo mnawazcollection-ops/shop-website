@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Standalone output is required for self-hosted/Hostinger deployments,
+  // but breaks Vercel's serverless packaging (causing ENOENT next-server.js.nft.json error)
+  ...(process.env.VERCEL ? {} : { output: "standalone" }),
   images: {
     remotePatterns: [
       {
