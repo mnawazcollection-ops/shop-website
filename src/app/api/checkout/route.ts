@@ -6,6 +6,10 @@ import { AdminOrder, AdminOrderItem } from "@/types/admin";
 interface CheckoutRequestBody {
   items: Array<{
     id: string;
+    name?: string;
+    price?: number;
+    image?: string;
+    slug?: string;
     quantity: number;
     selectedVariants?: Record<string, string>;
   }>;
@@ -102,22 +106,29 @@ export async function POST(request: Request) {
     for (const item of items) {
       const quantity = Math.max(1, Math.min(99, Math.floor(Number(item.quantity) || 1)));
       const catalogItem = productCatalog.get(item.id);
+      const resolvedItem = catalogItem || (item.name && typeof item.price === "number" ? {
+        id: item.id,
+        name: item.name,
+        price: Math.max(0, Number(item.price)),
+        image: item.image || "/images/logo.png",
+        slug: item.slug || item.id,
+      } : null);
 
-      if (!catalogItem) {
+      if (!resolvedItem) {
         return NextResponse.json(
           { success: false, error: `Product with ID '${item.id}' is no longer available in the catalog.` },
           { status: 400 }
         );
       }
 
-      const itemSubtotal = catalogItem.price * quantity;
+      const itemSubtotal = resolvedItem.price * quantity;
       subtotal += itemSubtotal;
 
       verifiedOrderItems.push({
-        productId: catalogItem.id,
-        name: catalogItem.name,
-        image: catalogItem.image,
-        price: catalogItem.price,
+        productId: resolvedItem.id,
+        name: resolvedItem.name,
+        image: resolvedItem.image,
+        price: resolvedItem.price,
         quantity,
         selectedVariants: item.selectedVariants || {},
         subtotal: itemSubtotal,

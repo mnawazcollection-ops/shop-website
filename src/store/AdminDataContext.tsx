@@ -156,6 +156,27 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
       .catch((err) => console.warn("Admin Firestore sync skipped:", err));
   }, []);
 
+  // Listen for orders and products updates across tabs and storefront checkout
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleDataSync = () => {
+      setOrders(getInitialData("orders", initialAdminOrders));
+      setCustomers(getInitialData("customers", initialAdminCustomers));
+      setProducts(getInitialData("products", initialAdminProducts));
+    };
+
+    window.addEventListener("storage", handleDataSync);
+    window.addEventListener("mnawaz_orders_updated", handleDataSync);
+    window.addEventListener("mnawaz_products_updated", handleDataSync);
+
+    return () => {
+      window.removeEventListener("storage", handleDataSync);
+      window.removeEventListener("mnawaz_orders_updated", handleDataSync);
+      window.removeEventListener("mnawaz_products_updated", handleDataSync);
+    };
+  }, []);
+
   // Save changes helpers
   const saveProducts = (updated: AdminProduct[]) => {
     setProducts(updated);

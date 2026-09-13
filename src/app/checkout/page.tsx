@@ -225,12 +225,19 @@ export default function CheckoutPage() {
         localStorage.setItem("sir-ihsan-orders", JSON.stringify(orders));
         localStorage.setItem("sir-ihsan-latest-order", JSON.stringify(customerOrderData));
 
-        // Also push to admin orders if localStorage key is initialized
-        const adminOrdersKey = "sir_ihsan_admin_orders";
-        const adminExisting = localStorage.getItem(adminOrdersKey);
-        const adminOrders = adminExisting ? JSON.parse(adminExisting) : [];
-        adminOrders.unshift(verifiedOrder);
-        localStorage.setItem(adminOrdersKey, JSON.stringify(adminOrders));
+        // Also push to admin orders across both current and fallback storage keys
+        const adminKeys = ["mnawaz_admin_orders", "sir_ihsan_admin_orders"];
+        for (const adminKey of adminKeys) {
+          const adminExisting = localStorage.getItem(adminKey);
+          const adminOrders = adminExisting ? JSON.parse(adminExisting) : [];
+          adminOrders.unshift(verifiedOrder);
+          localStorage.setItem(adminKey, JSON.stringify(adminOrders));
+        }
+
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("storage"));
+          window.dispatchEvent(new Event("mnawaz_orders_updated"));
+        }
       } catch {
         // Safe fallback if local storage is restricted
       }
