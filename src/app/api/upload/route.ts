@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { uploadToCloudinary, isCloudinaryConfigured } from "@/lib/cloudinary";
+import { uploadToCloudinary, getCloudinary } from "@/lib/cloudinary";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
     const contentType = req.headers.get("content-type") || "";
+    const { isConfigured } = getCloudinary();
 
     // 1. Handle multipart/form-data upload
     if (contentType.includes("multipart/form-data")) {
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
         url: result.secure_url || result.url,
         publicId: result.public_id,
         isFallback: result.isFallback,
-        cloudConfigured: isCloudinaryConfigured,
+        cloudConfigured: isConfigured,
         format: result.format,
       });
     }
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
         url: result.secure_url || result.url,
         publicId: result.public_id,
         isFallback: result.isFallback,
-        cloudConfigured: isCloudinaryConfigured,
+        cloudConfigured: isConfigured,
         format: result.format,
       });
     }
@@ -77,9 +78,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
+  const { isConfigured, cloudName } = getCloudinary();
   return NextResponse.json({
     status: "ok",
     service: "Cloudinary Upload API for M. Nawaz Jewelry Collection",
-    isConfigured: isCloudinaryConfigured,
+    isConfigured,
+    cloudName,
   });
 }
+

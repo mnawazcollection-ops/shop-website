@@ -98,8 +98,20 @@ export default function ImageUploader({
       ? "aspect-[21/9]"
       : "aspect-square";
 
+  const isCloudinaryAsset = Boolean(value && value.includes("cloudinary.com"));
+  const isBase64Asset = Boolean(value && value.startsWith("data:image"));
+
   return (
     <div className="space-y-3">
+      {/* Hidden File Input: ALWAYS mounted in DOM so Replace Image works */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
+        className="hidden"
+      />
+
       <div className="flex items-center justify-between">
         <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700">
           {label} {required && <span className="text-red-500">*</span>}
@@ -162,9 +174,23 @@ export default function ImageUploader({
             </div>
           </div>
 
-          <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-xs text-white text-[10px] font-mono flex items-center gap-1">
-            <Check className="w-3 h-3 text-emerald-400" />
-            Asset Ready
+          <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-xs text-white text-[10px] font-mono flex items-center gap-1">
+            {isCloudinaryAsset ? (
+              <>
+                <Check className="w-3 h-3 text-emerald-400" />
+                <span>Cloudinary CDN Active</span>
+              </>
+            ) : isBase64Asset ? (
+              <>
+                <Cloud className="w-3 h-3 text-amber-400" />
+                <span>Local Draft (Syncs to Cloudinary on Save)</span>
+              </>
+            ) : (
+              <>
+                <Check className="w-3 h-3 text-emerald-400" />
+                <span>Asset Ready</span>
+              </>
+            )}
           </div>
         </div>
       ) : (
@@ -185,14 +211,6 @@ export default function ImageUploader({
                   : "border-stone-300 hover:border-amber-400 bg-stone-50/60 hover:bg-amber-50/20"
               }`}
             >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
-                className="hidden"
-              />
-
               {isUploading ? (
                 <div className="py-4 flex flex-col items-center gap-2 text-amber-700">
                   <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
@@ -209,7 +227,7 @@ export default function ImageUploader({
                       Click to upload or drag and drop image
                     </p>
                     <p className="text-[11px] text-stone-400 mt-0.5">
-                      PNG, JPG, WebP up to 10MB • Auto-optimized via Cloudinary
+                      PNG, JPG, WebP up to 10MB • Auto-optimized via Cloudinary CDN
                     </p>
                   </div>
                 </div>

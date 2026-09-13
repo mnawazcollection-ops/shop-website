@@ -8,12 +8,33 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import { db, isFirebaseConfigured } from "./config";
+import { db, getDb, isFirebaseConfigured } from "./config";
+
+/**
+ * Recursively removes all undefined keys from an object or array.
+ * Firestore strictly rejects documents with undefined fields.
+ */
+export function cleanUndefined<T>(obj: T): T {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => cleanUndefined(item)) as unknown as T;
+  }
+  if (obj !== null && typeof obj === "object" && !(obj instanceof Date)) {
+    const result: Record<string, any> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== undefined) {
+        result[key] = cleanUndefined(value);
+      }
+    }
+    return result as T;
+  }
+  return obj;
+}
 
 export async function fetchCollection<T>(collectionName: string): Promise<T[]> {
-  if (!isFirebaseConfigured || !db) return [];
+  const activeDb = db || getDb();
+  if (!isFirebaseConfigured || !activeDb) return [];
   try {
-    const q = query(collection(db, collectionName), orderBy("createdAt", "desc"));
+    const q = query(collection(activeDb, collectionName), orderBy("createdAt", "desc"));
     const snapshot = await getDocs(q);
     return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as T));
   } catch (error) {
@@ -23,9 +44,10 @@ export async function fetchCollection<T>(collectionName: string): Promise<T[]> {
 }
 
 export async function fetchDocument<T>(collectionName: string, id: string): Promise<T | null> {
-  if (!isFirebaseConfigured || !db) return null;
+  const activeDb = db || getDb();
+  if (!isFirebaseConfigured || !activeDb) return null;
   try {
-    const docRef = doc(db, collectionName, id);
+    const docRef = doc(activeDb, collectionName, id);
     const snapshot = await getDoc(docRef);
     if (!snapshot.exists()) return null;
     return { id: snapshot.id, ...snapshot.data() } as T;
@@ -39,28 +61,39 @@ export async function saveDocument<T extends { id?: string }>(
   collectionName: string,
   data: T
 ): Promise<string> {
-  if (!isFirebaseConfigured || !db) {
+  const activeDb = db || getDb();
+  if (!isFirebaseConfigured || !activeDb) {
+    console.warn(`[Firestore] Skipping cloud save (${collectionName}): Firebase not configured or db offline.`);
     return data.id || `doc-${Date.now()}`;
   }
   try {
     const id = data.id || `doc-${Date.now()}`;
-    const docRef = doc(db, collectionName, id);
-    await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
+    const docRef = doc(activeDb, collectionName, id);
+    const payload = cleanUndefined({
+      ...data,
+      id,
+      updatedAt: new Date().toISOString(),
+    });
+    await setDoc(docRef, payload, { merge: true });
+    console.log(`[Firestore] Successfully saved document ${id} to ${collectionName}`);
     return id;
   } catch (error) {
-    console.error(`Error saving document in ${collectionName}:`, error);
+    console.error(`[Firestore] Error saving document in ${collectionName}:`, error);
     throw error;
   }
 }
 
 export async function removeDocument(collectionName: string, id: string): Promise<boolean> {
-  if (!isFirebaseConfigured || !db) return true;
+  const activeDb = db || getDb();
+  if (!isFirebaseConfigured || !activeDb) return true;
   try {
-    const docRef = doc(db, collectionName, id);
+    const docRef = doc(activeDb, collectionName, id);
     await deleteDoc(docRef);
+    console.log(`[Firestore] Successfully deleted document ${id} from ${collectionName}`);
     return true;
   } catch (error) {
     console.error(`Error deleting document ${id} in ${collectionName}:`, error);
     return false;
   }
 }
+

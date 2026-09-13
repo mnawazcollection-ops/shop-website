@@ -1,20 +1,29 @@
 import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 
-// Initialize Cloudinary with environment variables
-const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME;
-const apiKey = process.env.CLOUDINARY_API_KEY;
-const apiSecret = process.env.CLOUDINARY_API_SECRET;
+// Helper to dynamically read and configure Cloudinary credentials
+export function getCloudinary() {
+  const cloudName =
+    process.env.CLOUDINARY_CLOUD_NAME ||
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
+    "ncd1dai8";
+  const apiKey = process.env.CLOUDINARY_API_KEY || "542122654958738";
+  const apiSecret = process.env.CLOUDINARY_API_SECRET || "E1Cmg8qLUuzUB_9TzQ-bedZWMWM";
 
-export const isCloudinaryConfigured = Boolean(cloudName && apiKey && apiSecret);
+  const isConfigured = Boolean(cloudName && apiKey && apiSecret);
 
-if (isCloudinaryConfigured) {
-  cloudinary.config({
-    cloud_name: cloudName,
-    api_key: apiKey,
-    api_secret: apiSecret,
-    secure: true,
-  });
+  if (isConfigured) {
+    cloudinary.config({
+      cloud_name: cloudName,
+      api_key: apiKey,
+      api_secret: apiSecret,
+      secure: true,
+    });
+  }
+
+  return { cloudinary, isConfigured, cloudName, apiKey };
 }
+
+export const isCloudinaryConfigured = true;
 
 export interface CloudinaryUploadResult {
   url: string;
@@ -35,10 +44,11 @@ export async function uploadToCloudinary(
   folder = "sir-ihsan/products",
   fileName?: string
 ): Promise<CloudinaryUploadResult> {
-  // If credentials are not set in environment, gracefully fallback to data URI for dev testing
-  if (!isCloudinaryConfigured) {
+  const { cloudinary: client, isConfigured } = getCloudinary();
+
+  if (!isConfigured) {
     console.warn(
-      "Cloudinary credentials missing in .env.local. Falling back to local data URI for development."
+      "Cloudinary credentials missing. Falling back to local data URI for development."
     );
 
     let dataUri = "";
@@ -59,13 +69,19 @@ export async function uploadToCloudinary(
     };
   }
 
+  // Clean public_id filename if provided
+  const sanitizedPublicId = fileName
+    ? fileName.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_")
+    : undefined;
+
+
   // Upload using Cloudinary Stream for Buffers
   if (Buffer.isBuffer(fileBuffer)) {
     return new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
+      const uploadStream = client.uploader.upload_stream(
         {
           folder,
-          public_id: fileName ? fileName.replace(/\.[^/.]+$/, "") : undefined,
+          public_id: sanitizedPublicId,
           resource_type: "image",
           transformation: [
             { quality: "auto:best" },
@@ -94,8 +110,9 @@ export async function uploadToCloudinary(
   }
 
   // Upload using string URL or Base64
-  const result = await cloudinary.uploader.upload(fileBuffer, {
+  const result = await client.uploader.upload(fileBuffer, {
     folder,
+    public_id: sanitizedPublicId,
     resource_type: "image",
     transformation: [
       { quality: "auto:best" },

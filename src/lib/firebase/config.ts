@@ -23,9 +23,27 @@ try {
     auth = getAuth(app);
     db = getFirestore(app);
     storage = getStorage(app);
+  } else {
+    // In server/SSR environments, also make db accessible if needed
+    try {
+      db = getFirestore(app);
+    } catch {
+      /* ignore server init if not needed */
+    }
   }
 } catch (error) {
   console.warn("Firebase initialization warning (safe fallback active):", error);
+}
+
+export function getDb(): Firestore | null {
+  if (db) return db;
+  try {
+    const activeApp = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    db = getFirestore(activeApp);
+    return db;
+  } catch {
+    return null;
+  }
 }
 
 export { app, auth, db, storage };

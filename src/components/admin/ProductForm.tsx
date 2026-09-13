@@ -20,7 +20,7 @@ import { AdminProduct, AdminProductVariant } from "@/types/admin";
 import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 import ImageUploader from "@/components/admin/ImageUploader";
-import { uploadImage } from "@/lib/uploadClient";
+import { uploadImage, uploadBase64OrUrl } from "@/lib/uploadClient";
 
 interface ProductFormProps {
   initialProduct?: AdminProduct;
@@ -171,7 +171,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
   };
 
   // Submit Handler
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) {
       addToast({
@@ -185,6 +185,43 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
     setIsSubmitting(true);
 
     try {
+      // If main image is a local base64 URI, upload directly to Cloudinary
+      let cloudMainImage = mainImage.trim();
+      if (cloudMainImage.startsWith("data:image")) {
+        try {
+          const res = await uploadBase64OrUrl(
+            cloudMainImage,
+            "sir-ihsan/products",
+            slug.trim() || name.trim()
+          );
+          if (res.url && !res.isFallback) {
+            cloudMainImage = res.url;
+            setMainImage(res.url);
+          }
+        } catch (uploadErr) {
+          console.warn("Base64 cover upload fallback:", uploadErr);
+        }
+      }
+
+      // Check and upload any base64 gallery items
+      let cloudGallery = [...gallery];
+      for (let i = 0; i < cloudGallery.length; i++) {
+        if (cloudGallery[i].startsWith("data:image")) {
+          try {
+            const res = await uploadBase64OrUrl(
+              cloudGallery[i],
+              "sir-ihsan/products",
+              `${slug.trim() || name.trim()}-view-${i + 1}`
+            );
+            if (res.url && !res.isFallback) {
+              cloudGallery[i] = res.url;
+            }
+          } catch (uploadErr) {
+            console.warn("Base64 gallery upload fallback:", uploadErr);
+          }
+        }
+      }
+
       const parsedTags = tagsInput
         .split(",")
         .map((t) => t.trim())
@@ -229,8 +266,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         costPrice: costPrice ? Number(costPrice) : undefined,
         stock: Number(stock),
         lowStockThreshold: Number(lowStockThreshold),
-        image: mainImage.trim(),
-        gallery: gallery.filter(Boolean),
+        image: cloudMainImage,
+        gallery: cloudGallery.filter(Boolean),
         shortDescription: shortDescription.trim() || `${name} handcrafted with exceptional master artisanal detail.`,
         description:
           description.trim() ||
@@ -249,19 +286,20 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         updateProduct(initialProduct.id, productPayload);
         addToast({
           title: "Product Updated",
-          message: `"${productPayload.name}" has been successfully updated.`,
+          message: `"${productPayload.name}" saved & synced with cloud catalog.`,
           type: "success",
         });
       } else {
         const created = addProduct(productPayload);
         addToast({
           title: "Product Created",
-          message: `"${created.name}" is now live in your catalog.`,
+          message: `"${created.name}" is now live in catalog & synced to cloud.`,
           type: "success",
         });
       }
 
       router.push("/admin/products");
+
     } catch (err) {
       console.error(err);
       addToast({

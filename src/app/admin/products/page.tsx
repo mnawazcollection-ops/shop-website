@@ -16,6 +16,8 @@ import {
   ChevronRight,
   Download,
   ExternalLink,
+  Cloud,
+  RefreshCw,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import StatusBadge from "@/components/admin/StatusBadge";
@@ -33,8 +35,10 @@ export default function ProductsPage() {
     updateProduct,
     bulkDeleteProducts,
     bulkUpdateProductStatus,
+    syncCatalogToCloud,
   } = useAdminData();
   const { addToast } = useAdminToast();
+  const [isSyncingCloud, setIsSyncingCloud] = useState(false);
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
@@ -196,6 +200,32 @@ export default function ProductsPage() {
     });
   };
 
+  const handleCloudSync = async () => {
+    setIsSyncingCloud(true);
+    addToast({
+      title: "Cloud Sync Initiated",
+      message: "Syncing images to Cloudinary and catalog to Firebase Firestore...",
+      type: "info",
+    });
+
+    const result = await syncCatalogToCloud();
+    setIsSyncingCloud(false);
+
+    if (result.success) {
+      addToast({
+        title: "Cloud Sync Complete",
+        message: `All ${result.count} jewelry pieces synced with Firebase Firestore & Cloudinary CDN.`,
+        type: "success",
+      });
+    } else {
+      addToast({
+        title: "Cloud Sync Warning",
+        message: result.error || "Failed to complete full cloud sync.",
+        type: "error",
+      });
+    }
+  };
+
   return (
     <div className="space-y-6 pb-12">
       {/* Top Header */}
@@ -208,6 +238,20 @@ export default function ProductsPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <button
+            onClick={handleCloudSync}
+            disabled={isSyncingCloud}
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-3.5 py-2 border border-amber-300 bg-amber-50/80 hover:bg-amber-100 text-amber-900 text-sm font-semibold rounded-lg shadow-xs transition-colors disabled:opacity-50"
+            title="Sync all products and images to Cloudinary & Firebase Firestore"
+          >
+            {isSyncingCloud ? (
+              <RefreshCw className="w-4 h-4 text-amber-700 animate-spin" />
+            ) : (
+              <Cloud className="w-4 h-4 text-amber-700" />
+            )}
+            <span>{isSyncingCloud ? "Syncing..." : "Sync to Cloud"}</span>
+          </button>
+
           <button
             onClick={exportCSV}
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-3.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-sm font-medium rounded-lg shadow-xs transition-colors"

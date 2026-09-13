@@ -20,8 +20,9 @@ import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 
 export default function SettingsPage() {
-  const { settings, updateSettings, resetToDefaults, cleanOperationalData } = useAdminData();
+  const { settings, updateSettings, resetToDefaults, cleanOperationalData, syncCatalogToCloud } = useAdminData();
   const { addToast } = useAdminToast();
+  const [isSyncingCloud, setIsSyncingCloud] = useState(false);
 
   const [activeTab, setActiveTab] = useState<
     "store" | "shipping" | "tax" | "notifications" | "firebase"
@@ -78,6 +79,32 @@ export default function SettingsPage() {
       message: "Atelier configurations updated successfully.",
       type: "success",
     });
+  };
+
+  const handleCloudSync = async () => {
+    setIsSyncingCloud(true);
+    addToast({
+      title: "Cloud Sync Initiated",
+      message: "Syncing images to Cloudinary and catalog to Firebase Firestore...",
+      type: "info",
+    });
+
+    const result = await syncCatalogToCloud();
+    setIsSyncingCloud(false);
+
+    if (result.success) {
+      addToast({
+        title: "Catalog Synced Successfully",
+        message: `All ${result.count} products have been saved to Firebase Firestore & Cloudinary.`,
+        type: "success",
+      });
+    } else {
+      addToast({
+        title: "Sync Warning",
+        message: result.error || "Could not complete cloud sync.",
+        type: "error",
+      });
+    }
   };
 
   const handleReset = () => {
@@ -557,6 +584,16 @@ export default function SettingsPage() {
                     ))}
                   </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={handleCloudSync}
+                  disabled={isSyncingCloud}
+                  className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors disabled:opacity-50 cursor-pointer"
+                >
+                  <Cloud className={`w-4 h-4 ${isSyncingCloud ? "animate-spin" : ""}`} />
+                  <span>{isSyncingCloud ? "Syncing Catalog with Cloud..." : "Push Local Catalog to Firebase & Cloudinary"}</span>
+                </button>
               </div>
             </div>
             {/* Client Handover Card */}
