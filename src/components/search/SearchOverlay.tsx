@@ -4,11 +4,11 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSearch } from "@/store/StoreContext";
-import { products } from "@/data";
+import { useSearch, useStore } from "@/store/StoreContext";
 
 export default function SearchOverlay() {
   const { isSearchOpen, setSearchOpen } = useSearch();
+  const { products } = useStore();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function SearchOverlay() {
         p.category.toLowerCase().includes(q) ||
         p.tags?.some((t) => t.toLowerCase().includes(q))
     );
-  }, [query]);
+  }, [products, query]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

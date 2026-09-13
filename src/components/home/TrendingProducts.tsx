@@ -1,8 +1,12 @@
+"use client";
+
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProductCard from "@/components/ui/ProductCard";
-import { products } from "@/data";
+import { useStore } from "@/store/StoreContext";
 
 export default function TrendingProducts() {
+  const { products } = useStore();
+
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-[1400px] mx-auto px-6">

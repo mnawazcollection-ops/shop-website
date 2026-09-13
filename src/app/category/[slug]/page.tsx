@@ -3,7 +3,8 @@
 import { use, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { products, categories } from "@/data";
+import { categories } from "@/data";
+import { useStore } from "@/store/StoreContext";
 import ProductCard from "@/components/ui/ProductCard";
 
 interface CategoryPageProps {
@@ -100,6 +101,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = use(params);
   const { slug } = resolvedParams;
   const normalizedSlug = slug.toLowerCase();
+  const { products } = useStore();
 
   // Filters state
   const [priceFilter, setPriceFilter] = useState<string>("all");
@@ -138,7 +140,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     );
     // If no exact match (e.g. watches or rare tag), fallback to all products so page isn't broken
     return matched.length > 0 ? matched : products;
-  }, [normalizedSlug]);
+  }, [products, normalizedSlug]);
 
   // Apply subfilters (price, metal, sale, sort)
   const filteredProducts = useMemo(() => {

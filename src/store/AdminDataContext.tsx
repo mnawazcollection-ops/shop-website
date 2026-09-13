@@ -1,6 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { isFirebaseConfigured } from "@/lib/firebase/config";
+import { saveDocument, removeDocument, fetchCollection } from "@/lib/firebase/firestoreService";
 import {
   AdminProduct,
   AdminCategory,
@@ -106,11 +108,40 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<AdminSettings>(() => getInitialData("settings", initialAdminSettings));
   const [isLoading] = useState(false);
 
+  // Re-sync with cloud if Firebase Firestore is connected
+  useEffect(() => {
+    if (!isFirebaseConfigured) return;
+    fetchCollection<AdminProduct>("products")
+      .then((cloudProducts) => {
+        if (cloudProducts && cloudProducts.length > 0) {
+          setProducts((prev) => {
+            const map = new Map<string, AdminProduct>();
+            prev.forEach((p) => map.set(p.id, p));
+            cloudProducts.forEach((p) => map.set(p.id, { ...map.get(p.id), ...p }));
+            const merged = Array.from(map.values());
+            try {
+              localStorage.setItem(`${PREFIX}products`, JSON.stringify(merged));
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new Event("mnawaz_products_updated"));
+              }
+            } catch {
+              /* ignore */
+            }
+            return merged;
+          });
+        }
+      })
+      .catch((err) => console.warn("Admin Firestore sync skipped:", err));
+  }, []);
+
   // Save changes helpers
   const saveProducts = (updated: AdminProduct[]) => {
     setProducts(updated);
     try {
       localStorage.setItem(`${PREFIX}products`, JSON.stringify(updated));
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("mnawaz_products_updated"));
+      }
     } catch (e) {
       console.error(e);
     }
@@ -189,6 +220,13 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
     };
     const updated = [newProduct, ...products];
     saveProducts(updated);
+
+    if (isFirebaseConfigured) {
+      saveDocument("products", newProduct).catch((err) =>
+        console.warn("Firestore product save warning:", err)
+      );
+    }
+
     return newProduct;
   };
 
@@ -197,11 +235,26 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
       p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString() } : p
     );
     saveProducts(updated);
+
+    if (isFirebaseConfigured) {
+      const target = updated.find((p) => p.id === id);
+      if (target) {
+        saveDocument("products", target).catch((err) =>
+          console.warn("Firestore product update warning:", err)
+        );
+      }
+    }
   };
 
   const deleteProduct = (id: string) => {
     const updated = products.filter((p) => p.id !== id);
     saveProducts(updated);
+
+    if (isFirebaseConfigured) {
+      removeDocument("products", id).catch((err) =>
+        console.warn("Firestore product deletion warning:", err)
+      );
+    }
   };
 
   const bulkDeleteProducts = (ids: string[]) => {

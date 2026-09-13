@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
 import { Product } from "@/types";
+import { getCombinedProducts, syncProductsFromFirebase } from "./productsBridge";
 
 /* ─────────────── Cart ─────────────── */
 export interface CartItem {
@@ -12,6 +13,9 @@ export interface CartItem {
 
 /* ─────────────── Combined Store ─────────────── */
 interface StoreContextType {
+  // Products Catalog
+  products: Product[];
+  getProductBySlug: (slug: string) => Product | undefined;
   // Cart
   cartItems: CartItem[];
   addToCart: (product: Product, quantity?: number, variants?: Record<string, string>) => void;
@@ -38,6 +42,42 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
+  // Live Products Catalog (combines static products with admin-added products like "tatheer")
+  const [products, setProducts] = useState<Product[]>(() => getCombinedProducts());
+
+  // Re-sync products on mount, storage events, and custom update triggers
+  useEffect(() => {
+    // Initial sync
+    setProducts(getCombinedProducts());
+
+    const handleSync = () => {
+      setProducts(getCombinedProducts());
+    };
+
+    window.addEventListener("storage", handleSync);
+    window.addEventListener("mnawaz_products_updated", handleSync);
+
+    // Also pull any cloud products from Firebase Firestore
+    syncProductsFromFirebase((updated) => {
+      setProducts(updated);
+    });
+
+    return () => {
+      window.removeEventListener("storage", handleSync);
+      window.removeEventListener("mnawaz_products_updated", handleSync);
+    };
+  }, []);
+
+  const getProductBySlug = useCallback(
+    (slug: string) => {
+      const cleanSlug = decodeURIComponent(slug).toLowerCase();
+      return products.find(
+        (p) => p.slug.toLowerCase() === cleanSlug || p.id === slug || p.id === cleanSlug
+      );
+    },
+    [products]
+  );
+
   // Lazy state initialization from localStorage
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     if (typeof window === "undefined") return [];
@@ -151,6 +191,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   return (
     <StoreContext.Provider
       value={{
+        products,
+        getProductBySlug,
         cartItems, addToCart, removeFromCart, updateQuantity, clearCart,
         cartCount, cartSubtotal, isCartOpen, setCartOpen,
         wishlistItems, addToWishlist, removeFromWishlist, isInWishlist,
@@ -167,6 +209,11 @@ export function useStore() {
   const ctx = useContext(StoreContext);
   if (!ctx) throw new Error("useStore must be used within StoreProvider");
   return ctx;
+}
+
+export function useProducts() {
+  const s = useStore();
+  return { products: s.products, getProductBySlug: s.getProductBySlug };
 }
 
 export function useCart() {

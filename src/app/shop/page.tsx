@@ -3,11 +3,13 @@
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
-import { products, categories } from "@/data";
+import { categories } from "@/data";
+import { useStore } from "@/store/StoreContext";
 
 function ShopContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
+  const { products } = useStore();
 
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [sortBy, setSortBy] = useState("featured");
@@ -32,7 +34,7 @@ function ShopContent() {
         if (sortBy === "rating") return (b.rating || 0) - (a.rating || 0);
         return 0;
       });
-  }, [selectedCategory, sortBy, priceRange]);
+  }, [products, selectedCategory, sortBy, priceRange]);
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 py-12">

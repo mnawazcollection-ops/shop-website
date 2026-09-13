@@ -3,13 +3,15 @@
 import { Suspense, useState, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { products, categories } from "@/data";
+import { categories } from "@/data";
+import { useStore } from "@/store/StoreContext";
 import ProductCard from "@/components/ui/ProductCard";
 
 function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const query = searchParams.get("q") || "";
+  const { products } = useStore();
 
   const [inputQuery, setInputQuery] = useState(query);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -40,7 +42,7 @@ function SearchContent() {
       list = [...list].sort((a, b) => (b.rating || 0) - (a.rating || 0));
     }
     return list;
-  }, [query, selectedCategory, sortBy]);
+  }, [products, query, selectedCategory, sortBy]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();

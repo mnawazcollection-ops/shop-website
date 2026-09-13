@@ -2,7 +2,8 @@
 
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { products, productReviews } from "@/data";
+import { productReviews } from "@/data";
+import { useStore } from "@/store/StoreContext";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductInfo from "@/components/product/ProductInfo";
 import ProductTabs from "@/components/product/ProductTabs";
@@ -19,8 +20,16 @@ interface ProductPageProps {
 export default function ProductDetailPage({ params }: ProductPageProps) {
   const resolvedParams = use(params);
   const { slug } = resolvedParams;
+  const { products, getProductBySlug } = useStore();
 
-  const product = products.find((p) => p.slug === slug);
+  const product =
+    getProductBySlug(slug) ||
+    products.find(
+      (p) =>
+        p.slug.toLowerCase() === slug.toLowerCase() ||
+        p.id === slug ||
+        p.name.toLowerCase() === decodeURIComponent(slug).toLowerCase()
+    );
 
   // Recently viewed (client-side localStorage)
   const [recentlyViewed] = useState<typeof products>(() => {
