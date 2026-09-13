@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { AdminUser } from "@/types/admin";
 import { initialAdminUser } from "@/data/adminMockData";
 
@@ -9,7 +9,6 @@ interface AdminAuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string, rememberMe?: boolean) => Promise<{ success: boolean; error?: string }>;
-  quickDemoLogin: () => void;
   logout: () => void;
 }
 
@@ -18,35 +17,38 @@ const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefin
 const STORAGE_KEY = "mnawaz_admin_session";
 
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AdminUser | null>(() => {
-    if (typeof window === "undefined") return initialAdminUser;
+  const [user, setUser] = useState<AdminUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("sir_ihsan_admin_session");
-      if (stored) return JSON.parse(stored);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialAdminUser));
-      return initialAdminUser;
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed?.email?.toLowerCase() === "ahsan@admin.com") {
+          setUser(parsed);
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem("sir_ihsan_admin_session");
+        }
+      }
     } catch {
-      return initialAdminUser;
+      // Invalid session
+    } finally {
+      setIsLoading(false);
     }
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  }, []);
 
   const login = async (email: string, password: string, rememberMe = true) => {
     setIsLoading(true);
-    // Simulate slight network latency for authentic feel
-    await new Promise((res) => setTimeout(res, 600));
+    await new Promise((res) => setTimeout(res, 500));
 
-    if (
-      (email.toLowerCase() === "admin@mnawazjewelry.com" && password === "admin123") ||
-      (email.toLowerCase() === "admin@sirihsan.com" && password === "admin123") ||
-      (email.toLowerCase() === "demo@mnawazjewelry.com" && password === "demo123") ||
-      (email.toLowerCase() === "demo@sirihsan.com" && password === "demo123") ||
-      (email.includes("@") && password.length >= 6)
-    ) {
+    const cleanEmail = email.trim().toLowerCase();
+    if (cleanEmail === "ahsan@admin.com" && password === "Ahsan@321") {
       const loggedUser: AdminUser = {
         ...initialAdminUser,
-        email,
-        name: email.split("@")[0].toUpperCase() + " (Admin)",
+        email: "ahsan@admin.com",
+        name: "Ahsan (Super Admin)",
       };
       setUser(loggedUser);
       if (rememberMe) {
@@ -57,17 +59,16 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     setIsLoading(false);
-    return { success: false, error: "Invalid admin credentials. Please use admin@mnawazjewelry.com / admin123" };
-  };
-
-  const quickDemoLogin = () => {
-    setUser(initialAdminUser);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialAdminUser));
+    return {
+      success: false,
+      error: "Invalid username or password. Please verify your credentials.",
+    };
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem("sir_ihsan_admin_session");
   };
 
   return (
@@ -77,7 +78,6 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated: !!user,
         isLoading,
         login,
-        quickDemoLogin,
         logout,
       }}
     >

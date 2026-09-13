@@ -4,17 +4,17 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight } from "lucide-react";
+import { Lock, Mail, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAdminAuth } from "@/store/AdminAuthContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { login, quickDemoLogin } = useAdminAuth();
+  const { login } = useAdminAuth();
   const { success, error: toastError } = useAdminToast();
 
-  const [email, setEmail] = useState("admin@mnawazjewelry.com");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,19 +27,13 @@ export default function AdminLoginPage() {
 
     const res = await login(email, password, rememberMe);
     if (res.success) {
-      success("Welcome Back", "Authenticated successfully as Super Admin.");
+      success("Welcome Back", "Authenticated successfully as Super Admin Ahsan.");
       router.push("/admin");
     } else {
       setErrorMsg(res.error || "Authentication failed. Please verify credentials.");
       toastError("Access Denied", res.error);
       setIsSubmitting(false);
     }
-  };
-
-  const handleQuickDemo = () => {
-    quickDemoLogin();
-    success("Demo Access Granted", "Logged in with master administrator privileges.");
-    router.push("/admin");
   };
 
   return (
@@ -79,7 +73,7 @@ export default function AdminLoginPage() {
             {/* Email Field */}
             <div>
               <label className="block text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-1.5">
-                Administrator Email
+                Administrator Username / Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
@@ -90,7 +84,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@sirihsan.com"
+                  placeholder="ahsan@admin.com"
                   className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-700/80 rounded-lg text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all"
                 />
               </div>
@@ -102,13 +96,6 @@ export default function AdminLoginPage() {
                 <label className="block text-[11px] uppercase tracking-wider font-bold text-slate-400">
                   Secure Password
                 </label>
-                <button
-                  type="button"
-                  onClick={() => alert("Demo Password is: admin123")}
-                  className="text-[11px] text-amber-400 hover:text-amber-300 hover:underline"
-                >
-                  Forgot password?
-                </button>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
@@ -161,21 +148,6 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
-
-          {/* Quick 1-Click Demo Login */}
-          <div className="mt-6 pt-5 border-t border-slate-800 text-center">
-            <p className="text-[11px] text-slate-400 mb-3">
-              Reviewer / Testing Mode Active
-            </p>
-            <button
-              type="button"
-              onClick={handleQuickDemo}
-              className="w-full py-2.5 px-4 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-amber-300 text-xs font-semibold border border-amber-500/30 hover:border-amber-500/60 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-            >
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span>1-Click Auto Login (Demo Super Admin)</span>
-            </button>
-          </div>
         </div>
 
         {/* Back to Store Link */}

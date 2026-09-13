@@ -12,8 +12,8 @@ import {
 
 export const initialAdminUser: AdminUser = {
   id: "admin-1",
-  email: "admin@mnawazjewelry.com",
-  name: "M. Nawaz",
+  email: "ahsan@admin.com",
+  name: "Ahsan",
   role: "Super Admin",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces",
   createdAt: "2024-01-15T09:00:00Z",
