@@ -283,17 +283,17 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       };
 
       if (isEdit && initialProduct) {
-        updateProduct(initialProduct.id, productPayload);
+        await updateProduct(initialProduct.id, productPayload);
         addToast({
           title: "Product Updated",
-          message: `"${productPayload.name}" saved successfully.`,
+          message: `"${productPayload.name}" saved to Firestore & Cloudinary.`,
           type: "success",
         });
       } else {
-        const created = addProduct(productPayload);
+        const created = await addProduct(productPayload);
         addToast({
           title: "Product Created",
-          message: `"${created.name}" is now live in your store.`,
+          message: `"${created.name}" saved to Firestore & Cloudinary.`,
           type: "success",
         });
       }

@@ -37,17 +37,17 @@ interface AdminDataContextType {
   isLoading: boolean;
 
   // Product Operations
-  addProduct: (product: Omit<AdminProduct, "id" | "createdAt" | "updatedAt">) => AdminProduct;
-  updateProduct: (id: string, updates: Partial<AdminProduct>) => void;
-  deleteProduct: (id: string) => void;
-  bulkDeleteProducts: (ids: string[]) => void;
-  bulkUpdateProductStatus: (ids: string[], status: "active" | "draft" | "archived") => void;
-  duplicateProduct: (id: string) => AdminProduct | null;
+  addProduct: (product: Omit<AdminProduct, "id" | "createdAt" | "updatedAt">) => Promise<AdminProduct>;
+  updateProduct: (id: string, updates: Partial<AdminProduct>) => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
+  bulkDeleteProducts: (ids: string[]) => Promise<void>;
+  bulkUpdateProductStatus: (ids: string[], status: "active" | "draft" | "archived") => Promise<void>;
+  duplicateProduct: (id: string) => Promise<AdminProduct | null>;
 
   // Category Operations
-  addCategory: (category: Omit<AdminCategory, "id" | "createdAt" | "productCount">) => AdminCategory;
-  updateCategory: (id: string, updates: Partial<AdminCategory>) => void;
-  deleteCategory: (id: string) => void;
+  addCategory: (category: Omit<AdminCategory, "id" | "createdAt" | "productCount">) => Promise<AdminCategory>;
+  updateCategory: (id: string, updates: Partial<AdminCategory>) => Promise<void>;
+  deleteCategory: (id: string) => Promise<void>;
 
   // Order Operations
   updateOrderStatus: (orderId: string, status: AdminOrder["orderStatus"]) => void;
@@ -89,12 +89,12 @@ interface AdminDataContextType {
 const AdminDataContext = createContext<AdminDataContextType | undefined>(undefined);
 
 const PREFIX = "mnawaz_admin_";
-const CLEANUP_KEY = "mnawaz_pkr_currency_v1";
+const CLEANUP_KEY = "mnawaz_cloudinary_firestore_sync_v2";
 
 function getInitialData<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
   try {
-    // Clean mock orders, clients, reviews, and sync products/settings to PKR
+    // Clean mock orders, clients, reviews, and sync products/categories to Cloudinary & Firestore
     if (localStorage.getItem(CLEANUP_KEY) !== "true") {
       try {
         const storedProductsRaw =
@@ -102,7 +102,7 @@ function getInitialData<T>(key: string, fallback: T): T {
         if (storedProductsRaw) {
           const storedProducts: AdminProduct[] = JSON.parse(storedProductsRaw);
           const customProducts = storedProducts.filter(
-            (p) => !initialAdminProducts.some((ip) => ip.id === p.id)
+            (p) => !initialAdminProducts.some((ip) => ip.id === p.id || ip.name.toLowerCase() === p.name.toLowerCase())
           );
           const updatedProducts = [...initialAdminProducts, ...customProducts];
           localStorage.setItem(`${PREFIX}products`, JSON.stringify(updatedProducts));
@@ -110,9 +110,10 @@ function getInitialData<T>(key: string, fallback: T): T {
           localStorage.setItem(`${PREFIX}products`, JSON.stringify(initialAdminProducts));
         }
       } catch {
-        localStorage.removeItem(`${PREFIX}products`);
+        localStorage.setItem(`${PREFIX}products`, JSON.stringify(initialAdminProducts));
       }
 
+      localStorage.setItem(`${PREFIX}categories`, JSON.stringify(initialAdminCategories));
       localStorage.removeItem(`${PREFIX}settings`);
       localStorage.removeItem(`sir_ihsan_admin_settings`);
       localStorage.removeItem(`${PREFIX}orders`);
@@ -174,7 +175,26 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
           });
         }
       })
-      .catch((err) => console.warn("Admin Firestore sync skipped:", err));
+      .catch((err) => console.warn("Admin Firestore products sync skipped:", err));
+
+    fetchCollection<AdminCategory>("categories")
+      .then((cloudCategories) => {
+        if (cloudCategories && cloudCategories.length > 0) {
+          setCategories((prev) => {
+            const map = new Map<string, AdminCategory>();
+            prev.forEach((c) => map.set(c.id, c));
+            cloudCategories.forEach((c) => map.set(c.id, { ...map.get(c.id), ...c }));
+            const merged = Array.from(map.values());
+            try {
+              localStorage.setItem(`${PREFIX}categories`, JSON.stringify(merged));
+            } catch {
+              /* ignore */
+            }
+            return merged;
+          });
+        }
+      })
+      .catch((err) => console.warn("Admin Firestore categories sync skipped:", err));
   }, []);
 
   // Listen for orders and products updates across tabs and storefront checkout
@@ -275,138 +295,206 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
   };
 
   // --- Product Actions ---
-  const addProduct = (data: Omit<AdminProduct, "id" | "createdAt" | "updatedAt">) => {
-    const newProduct: AdminProduct = {
+  const addProduct = async (
+    data: Omit<AdminProduct, "id" | "createdAt" | "updatedAt">
+  ): Promise<AdminProduct> => {
+    let finalProduct: AdminProduct = {
       ...data,
       id: `prod-${Date.now()}`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    const updated = [newProduct, ...products];
-    saveProducts(updated);
 
-    // Asynchronously ensure base64 images migrate to Cloudinary and document saves to Firestore
-    (async () => {
-      let finalProduct = { ...newProduct };
-      let imageUpdated = false;
+    // 1. Upload base64 or local cover image to Cloudinary
+    if (finalProduct.image && (finalProduct.image.startsWith("data:image") || !finalProduct.image.includes("res.cloudinary.com"))) {
+      try {
+        const cloudRes = await uploadBase64OrUrl(
+          finalProduct.image,
+          "sir-ihsan/products",
+          finalProduct.slug || finalProduct.name
+        );
+        if (cloudRes.url && !cloudRes.isFallback) {
+          finalProduct.image = cloudRes.url;
+        }
+      } catch (err) {
+        console.warn("Cloudinary upload on addProduct:", err);
+      }
+    }
 
-      if (finalProduct.image && finalProduct.image.startsWith("data:image")) {
-        try {
-          const cloudRes = await uploadBase64OrUrl(
-            finalProduct.image,
-            "sir-ihsan/products",
-            finalProduct.slug || finalProduct.name
-          );
-          if (cloudRes.url && !cloudRes.isFallback) {
-            finalProduct.image = cloudRes.url;
-            imageUpdated = true;
+    // 2. Upload any base64 or non-Cloudinary gallery images
+    if (Array.isArray(finalProduct.gallery) && finalProduct.gallery.length > 0) {
+      const updatedGallery = [...finalProduct.gallery];
+      for (let i = 0; i < updatedGallery.length; i++) {
+        if (updatedGallery[i] && (updatedGallery[i].startsWith("data:image") || !updatedGallery[i].includes("res.cloudinary.com"))) {
+          try {
+            const cloudRes = await uploadBase64OrUrl(
+              updatedGallery[i],
+              "sir-ihsan/products",
+              `${finalProduct.slug || finalProduct.name}-view-${i + 1}`
+            );
+            if (cloudRes.url && !cloudRes.isFallback) {
+              updatedGallery[i] = cloudRes.url;
+            }
+          } catch (err) {
+            console.warn("Gallery Cloudinary upload on addProduct:", err);
           }
-        } catch (err) {
-          console.warn("Base64 Cloudinary upload on addProduct:", err);
         }
       }
+      finalProduct.gallery = updatedGallery;
+    }
 
-      if (imageUpdated) {
-        setProducts((prev) => {
-          const mapped = prev.map((p) => (p.id === finalProduct.id ? finalProduct : p));
-          try {
-            localStorage.setItem(`${PREFIX}products`, JSON.stringify(mapped));
-            if (typeof window !== "undefined") {
-              window.dispatchEvent(new Event("mnawaz_products_updated"));
-            }
-          } catch {
-            /* ignore */
-          }
-          return mapped;
-        });
+    // 3. Save to Firebase Firestore
+    if (isFirebaseConfigured) {
+      try {
+        await saveDocument("products", finalProduct);
+      } catch (err) {
+        console.warn("Firestore product save warning:", err);
       }
+    }
 
-      if (isFirebaseConfigured) {
-        saveDocument("products", finalProduct).catch((err) =>
-          console.warn("Firestore product save warning:", err)
-        );
+    // 4. Update local state and localStorage
+    setProducts((prev) => {
+      const updated = [finalProduct, ...prev.filter((p) => p.id !== finalProduct.id)];
+      try {
+        localStorage.setItem(`${PREFIX}products`, JSON.stringify(updated));
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("mnawaz_products_updated"));
+        }
+      } catch (e) {
+        console.error(e);
       }
-    })();
+      return updated;
+    });
 
-    return newProduct;
+    return finalProduct;
   };
 
-  const updateProduct = (id: string, updates: Partial<AdminProduct>) => {
-    const updated = products.map((p) =>
-      p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString() } : p
-    );
-    saveProducts(updated);
+  const updateProduct = async (id: string, updates: Partial<AdminProduct>): Promise<void> => {
+    const existing = products.find((p) => p.id === id);
+    let finalProduct: AdminProduct = {
+      ...(existing || {}),
+      ...updates,
+      id,
+      updatedAt: new Date().toISOString(),
+    } as AdminProduct;
 
-    (async () => {
-      let target = updated.find((p) => p.id === id);
-      if (!target) return;
+    // 1. Upload base64 cover image if modified
+    if (finalProduct.image && finalProduct.image.startsWith("data:image")) {
+      try {
+        const cloudRes = await uploadBase64OrUrl(
+          finalProduct.image,
+          "sir-ihsan/products",
+          finalProduct.slug || finalProduct.name
+        );
+        if (cloudRes.url && !cloudRes.isFallback) {
+          finalProduct.image = cloudRes.url;
+        }
+      } catch (err) {
+        console.warn("Cloudinary upload on updateProduct:", err);
+      }
+    }
 
-      let imageUpdated = false;
-      if (target.image && target.image.startsWith("data:image")) {
-        try {
-          const cloudRes = await uploadBase64OrUrl(
-            target.image,
-            "sir-ihsan/products",
-            target.slug || target.name
-          );
-          if (cloudRes.url && !cloudRes.isFallback) {
-            target = { ...target, image: cloudRes.url };
-            imageUpdated = true;
+    // 2. Upload any base64 gallery images
+    if (Array.isArray(finalProduct.gallery) && finalProduct.gallery.length > 0) {
+      const updatedGallery = [...finalProduct.gallery];
+      for (let i = 0; i < updatedGallery.length; i++) {
+        if (updatedGallery[i] && updatedGallery[i].startsWith("data:image")) {
+          try {
+            const cloudRes = await uploadBase64OrUrl(
+              updatedGallery[i],
+              "sir-ihsan/products",
+              `${finalProduct.slug || finalProduct.name}-view-${i + 1}`
+            );
+            if (cloudRes.url && !cloudRes.isFallback) {
+              updatedGallery[i] = cloudRes.url;
+            }
+          } catch (err) {
+            console.warn("Gallery Cloudinary upload on updateProduct:", err);
           }
-        } catch (err) {
-          console.warn("Base64 Cloudinary upload on updateProduct:", err);
         }
       }
+      finalProduct.gallery = updatedGallery;
+    }
 
-      if (imageUpdated) {
-        setProducts((prev) => {
-          const mapped = prev.map((p) => (p.id === id ? (target as AdminProduct) : p));
-          try {
-            localStorage.setItem(`${PREFIX}products`, JSON.stringify(mapped));
-            if (typeof window !== "undefined") {
-              window.dispatchEvent(new Event("mnawaz_products_updated"));
-            }
-          } catch {
-            /* ignore */
-          }
-          return mapped;
-        });
+    // 3. Save to Firebase Firestore
+    if (isFirebaseConfigured) {
+      try {
+        await saveDocument("products", finalProduct);
+      } catch (err) {
+        console.warn("Firestore product update warning:", err);
       }
+    }
 
-      if (isFirebaseConfigured) {
-        saveDocument("products", target).catch((err) =>
-          console.warn("Firestore product update warning:", err)
-        );
+    // 4. Update local state and localStorage
+    setProducts((prev) => {
+      const updated = prev.map((p) => (p.id === id ? finalProduct : p));
+      try {
+        localStorage.setItem(`${PREFIX}products`, JSON.stringify(updated));
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("mnawaz_products_updated"));
+        }
+      } catch (e) {
+        console.error(e);
       }
-    })();
+      return updated;
+    });
   };
 
-  const deleteProduct = (id: string) => {
+  const deleteProduct = async (id: string): Promise<void> => {
     const updated = products.filter((p) => p.id !== id);
     saveProducts(updated);
 
     if (isFirebaseConfigured) {
-      removeDocument("products", id).catch((err) =>
-        console.warn("Firestore product deletion warning:", err)
-      );
+      try {
+        await removeDocument("products", id);
+      } catch (err) {
+        console.warn("Firestore product deletion warning:", err);
+      }
     }
   };
 
-  const bulkDeleteProducts = (ids: string[]) => {
+  const bulkDeleteProducts = async (ids: string[]): Promise<void> => {
     const set = new Set(ids);
     const updated = products.filter((p) => !set.has(p.id));
     saveProducts(updated);
+
+    if (isFirebaseConfigured) {
+      for (const id of ids) {
+        try {
+          await removeDocument("products", id);
+        } catch (err) {
+          console.warn("Firestore bulk delete warning:", err);
+        }
+      }
+    }
   };
 
-  const bulkUpdateProductStatus = (ids: string[], status: "active" | "draft" | "archived") => {
+  const bulkUpdateProductStatus = async (
+    ids: string[],
+    status: "active" | "draft" | "archived"
+  ): Promise<void> => {
     const set = new Set(ids);
+    const now = new Date().toISOString();
     const updated = products.map((p) =>
-      set.has(p.id) ? { ...p, status, updatedAt: new Date().toISOString() } : p
+      set.has(p.id) ? { ...p, status, updatedAt: now } : p
     );
     saveProducts(updated);
+
+    if (isFirebaseConfigured) {
+      for (const id of ids) {
+        const item = updated.find((p) => p.id === id);
+        if (item) {
+          try {
+            await saveDocument("products", item);
+          } catch (err) {
+            console.warn("Firestore bulk status update warning:", err);
+          }
+        }
+      }
+    }
   };
 
-  const duplicateProduct = (id: string) => {
+  const duplicateProduct = async (id: string): Promise<AdminProduct | null> => {
     const orig = products.find((p) => p.id === id);
     if (!orig) return null;
     const duplicated: AdminProduct = {
@@ -420,30 +508,103 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
     };
     const updated = [duplicated, ...products];
     saveProducts(updated);
+
+    if (isFirebaseConfigured) {
+      try {
+        await saveDocument("products", duplicated);
+      } catch (err) {
+        console.warn("Firestore duplicate product save warning:", err);
+      }
+    }
+
     return duplicated;
   };
 
   // --- Category Actions ---
-  const addCategory = (data: Omit<AdminCategory, "id" | "createdAt" | "productCount">) => {
-    const newCat: AdminCategory = {
+  const addCategory = async (
+    data: Omit<AdminCategory, "id" | "createdAt" | "productCount">
+  ): Promise<AdminCategory> => {
+    let newCat: AdminCategory = {
       ...data,
       id: `cat-${Date.now()}`,
       productCount: 0,
       createdAt: new Date().toISOString(),
     };
+
+    if (newCat.image && (newCat.image.startsWith("data:image") || !newCat.image.includes("res.cloudinary.com"))) {
+      try {
+        const res = await uploadBase64OrUrl(
+          newCat.image,
+          "sir-ihsan/categories",
+          newCat.slug || newCat.name
+        );
+        if (res.url && !res.isFallback) {
+          newCat.image = res.url;
+        }
+      } catch (e) {
+        console.warn("Category image upload warning:", e);
+      }
+    }
+
+    if (isFirebaseConfigured) {
+      try {
+        await saveDocument("categories", newCat);
+      } catch (e) {
+        console.warn("Firestore category save warning:", e);
+      }
+    }
+
     const updated = [...categories, newCat];
     saveCategories(updated);
     return newCat;
   };
 
-  const updateCategory = (id: string, updates: Partial<AdminCategory>) => {
-    const updated = categories.map((c) => (c.id === id ? { ...c, ...updates } : c));
+  const updateCategory = async (id: string, updates: Partial<AdminCategory>): Promise<void> => {
+    const existing = categories.find((c) => c.id === id);
+    let finalCat: AdminCategory = {
+      ...(existing || {}),
+      ...updates,
+      id,
+    } as AdminCategory;
+
+    if (finalCat.image && finalCat.image.startsWith("data:image")) {
+      try {
+        const res = await uploadBase64OrUrl(
+          finalCat.image,
+          "sir-ihsan/categories",
+          finalCat.slug || finalCat.name
+        );
+        if (res.url && !res.isFallback) {
+          finalCat.image = res.url;
+        }
+      } catch (e) {
+        console.warn("Category image upload warning:", e);
+      }
+    }
+
+    if (isFirebaseConfigured) {
+      try {
+        await saveDocument("categories", finalCat);
+      } catch (e) {
+        console.warn("Firestore category update warning:", e);
+      }
+    }
+
+    const updated = categories.map((c) => (c.id === id ? finalCat : c));
     saveCategories(updated);
   };
 
-  const deleteCategory = (id: string) => {
+  const deleteCategory = async (id: string): Promise<void> => {
     const updated = categories.filter((c) => c.id !== id);
     saveCategories(updated);
+
+    if (isFirebaseConfigured) {
+      try {
+        await removeDocument("categories", id);
+      } catch (e) {
+        console.warn("Firestore category delete warning:", e);
+      }
+    }
   };
 
   // --- Order Actions ---

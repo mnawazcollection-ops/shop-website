@@ -119,21 +119,21 @@ export default function ProductsPage() {
   };
 
   // Actions
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deleteId) {
-      deleteProduct(deleteId);
+      await deleteProduct(deleteId);
       setSelectedIds(selectedIds.filter((i) => i !== deleteId));
       setDeleteId(null);
       addToast({
         title: "Product Deleted",
-        message: "The product was removed from your store.",
+        message: "The product was removed from Firestore & your store.",
         type: "info",
       });
     }
   };
 
-  const handleBulkDeleteConfirm = () => {
-    bulkDeleteProducts(selectedIds);
+  const handleBulkDeleteConfirm = async () => {
+    await bulkDeleteProducts(selectedIds);
     addToast({
       title: "Bulk Deletion Complete",
       message: `${selectedIds.length} products were removed.`,
@@ -143,8 +143,8 @@ export default function ProductsPage() {
     setIsBulkDeleteDialogOpen(false);
   };
 
-  const handleBulkStatusChange = (status: "active" | "draft" | "archived") => {
-    bulkUpdateProductStatus(selectedIds, status);
+  const handleBulkStatusChange = async (status: "active" | "draft" | "archived") => {
+    await bulkUpdateProductStatus(selectedIds, status);
     addToast({
       title: "Status Updated",
       message: `${selectedIds.length} products marked as ${status}.`,
@@ -153,8 +153,8 @@ export default function ProductsPage() {
     setSelectedIds([]);
   };
 
-  const handleDuplicate = (id: string) => {
-    const dupe = duplicateProduct(id);
+  const handleDuplicate = async (id: string) => {
+    const dupe = await duplicateProduct(id);
     if (dupe) {
       addToast({
         title: "Product Duplicated",

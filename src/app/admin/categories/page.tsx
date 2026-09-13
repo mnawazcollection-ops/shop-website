@@ -95,7 +95,7 @@ export default function CategoriesPage() {
   };
 
   // Validate and Submit
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
     if (!formName.trim()) errs.name = "Category name is required.";
@@ -108,7 +108,7 @@ export default function CategoriesPage() {
     }
 
     if (editingCategory) {
-      updateCategory(editingCategory.id, {
+      await updateCategory(editingCategory.id, {
         name: formName.trim(),
         slug: formSlug.trim(),
         description: formDescription.trim(),
@@ -119,11 +119,11 @@ export default function CategoriesPage() {
       });
       addToast({
         title: "Category Updated",
-        message: `"${formName}" has been updated successfully.`,
+        message: `"${formName}" has been updated in Firestore & Cloudinary.`,
         type: "success",
       });
     } else {
-      addCategory({
+      await addCategory({
         name: formName.trim(),
         slug: formSlug.trim(),
         description: formDescription.trim(),
@@ -134,7 +134,7 @@ export default function CategoriesPage() {
       });
       addToast({
         title: "Category Created",
-        message: `"${formName}" has been added to jewelry collections.`,
+        message: `"${formName}" has been saved to Firestore & Cloudinary.`,
         type: "success",
       });
     }
@@ -142,12 +142,12 @@ export default function CategoriesPage() {
     setIsDrawerOpen(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (deleteCategoryItem) {
-      deleteCategory(deleteCategoryItem.id);
+      await deleteCategory(deleteCategoryItem.id);
       addToast({
         title: "Category Deleted",
-        message: `"${deleteCategoryItem.name}" was removed.`,
+        message: `"${deleteCategoryItem.name}" was removed from Firestore.`,
         type: "info",
       });
       setDeleteCategoryItem(null);
