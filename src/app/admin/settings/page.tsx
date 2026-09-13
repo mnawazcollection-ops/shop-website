@@ -20,7 +20,7 @@ import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 
 export default function SettingsPage() {
-  const { settings, updateSettings, resetToDefaults } = useAdminData();
+  const { settings, updateSettings, resetToDefaults, cleanOperationalData } = useAdminData();
   const { addToast } = useAdminToast();
 
   const [activeTab, setActiveTab] = useState<
@@ -87,6 +87,21 @@ export default function SettingsPage() {
         title: "Settings Restored",
         message: "Default parameters applied.",
         type: "info",
+      });
+    }
+  };
+
+  const handleCleanOperational = () => {
+    if (
+      confirm(
+        "Clean all operational data for client handover?\n\nThis will reset orders, customers, coupons, and reviews to 0, while keeping all products and categories intact."
+      )
+    ) {
+      cleanOperationalData();
+      addToast({
+        title: "Store Cleaned for Client Handover",
+        message: "Orders, customers, coupons, and reviews reset to zero. Products & categories preserved.",
+        type: "success",
       });
     }
   };
@@ -542,6 +557,34 @@ export default function SettingsPage() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+            {/* Client Handover Card */}
+            <div className="bg-amber-50/50 rounded-xl border border-amber-300/80 p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-amber-200/80 pb-3">
+                <div>
+                  <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                    <RotateCcw className="w-4 h-4 text-amber-700" />
+                    Client Handover Data Wipe
+                  </h2>
+                  <p className="text-xs text-stone-600 mt-0.5">
+                    Clean all test/mock orders, clientele records, reviews, and coupons to handover a clean slate ($0.00 sales, 0 orders).
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                <div className="text-xs text-stone-600 space-y-1">
+                  <p className="font-semibold text-emerald-800">✓ Preserved:</p>
+                  <p className="text-stone-500">All products in catalog, categories, inventory threshold rules, and store branding.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCleanOperational}
+                  className="px-4 py-2.5 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold text-xs rounded-lg shadow-sm transition-colors cursor-pointer shrink-0 border border-stone-800"
+                >
+                  Wipe Operational Data (Handover Ready)
+                </button>
               </div>
             </div>
           </div>

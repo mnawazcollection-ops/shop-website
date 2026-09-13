@@ -81,15 +81,37 @@ interface AdminDataContextType {
   // Settings
   updateSettings: (updates: Partial<AdminSettings>) => void;
   resetToDefaults: () => void;
+  cleanOperationalData: () => void;
 }
 
 const AdminDataContext = createContext<AdminDataContextType | undefined>(undefined);
 
 const PREFIX = "mnawaz_admin_";
+const CLEANUP_KEY = "mnawaz_clean_handover_final";
 
 function getInitialData<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
   try {
+    // Clean mock orders, clients, reviews, coupons, cart, wishlist once for clean client handover
+    if (localStorage.getItem(CLEANUP_KEY) !== "true") {
+      localStorage.removeItem(`${PREFIX}orders`);
+      localStorage.removeItem(`sir_ihsan_admin_orders`);
+      localStorage.removeItem(`sir-ihsan-orders`);
+      localStorage.removeItem(`sir-ihsan-latest-order`);
+      localStorage.removeItem(`${PREFIX}customers`);
+      localStorage.removeItem(`sir_ihsan_admin_customers`);
+      localStorage.removeItem(`${PREFIX}reviews`);
+      localStorage.removeItem(`sir_ihsan_admin_reviews`);
+      localStorage.removeItem(`${PREFIX}coupons`);
+      localStorage.removeItem(`sir_ihsan_admin_coupons`);
+      localStorage.removeItem("mnawaz-cart");
+      localStorage.removeItem("sir-ihsan-cart");
+      localStorage.removeItem("mnawaz-wishlist");
+      localStorage.removeItem("sir-ihsan-wishlist");
+      localStorage.removeItem("sir-ihsan-recently-viewed");
+      localStorage.setItem(CLEANUP_KEY, "true");
+    }
+
     const item = localStorage.getItem(`${PREFIX}${key}`) || localStorage.getItem(`sir_ihsan_admin_${key}`);
     return item ? JSON.parse(item) : fallback;
   } catch {
@@ -477,6 +499,32 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
     saveSettings(initialAdminSettings);
   };
 
+  const cleanOperationalData = () => {
+    saveOrders([]);
+    saveCustomers([]);
+    saveCoupons([]);
+    saveReviews([]);
+    try {
+      localStorage.removeItem(`${PREFIX}orders`);
+      localStorage.removeItem(`sir_ihsan_admin_orders`);
+      localStorage.removeItem(`sir-ihsan-orders`);
+      localStorage.removeItem(`sir-ihsan-latest-order`);
+      localStorage.removeItem(`${PREFIX}customers`);
+      localStorage.removeItem(`sir_ihsan_admin_customers`);
+      localStorage.removeItem(`${PREFIX}reviews`);
+      localStorage.removeItem(`sir_ihsan_admin_reviews`);
+      localStorage.removeItem(`${PREFIX}coupons`);
+      localStorage.removeItem(`sir_ihsan_admin_coupons`);
+      localStorage.removeItem("mnawaz-cart");
+      localStorage.removeItem("sir-ihsan-cart");
+      localStorage.removeItem("mnawaz-wishlist");
+      localStorage.removeItem("sir-ihsan-wishlist");
+      localStorage.removeItem("sir-ihsan-recently-viewed");
+    } catch {
+      /* ignore */
+    }
+  };
+
   return (
     <AdminDataContext.Provider
       value={{
@@ -518,6 +566,7 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
         deleteReview,
         updateSettings,
         resetToDefaults,
+        cleanOperationalData,
       }}
     >
       {children}

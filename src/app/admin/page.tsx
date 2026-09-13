@@ -18,16 +18,28 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
+import { useAdminAuth } from "@/store/AdminAuthContext";
 import StatsCard from "@/components/admin/StatsCard";
 import StatusBadge from "@/components/admin/StatusBadge";
 
 export default function AdminOverviewPage() {
   const { products, orders, customers } = useAdminData();
+  const { user } = useAdminAuth();
   const [salesRange, setSalesRange] = useState<"daily" | "weekly" | "monthly" | "yearly">("monthly");
 
-  // Calculations
+  // Real calculations from client transactions
   const totalSales = orders
     .filter((o) => o.paymentStatus === "paid")
+    .reduce((sum, o) => sum + o.total, 0);
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const todaySales = orders
+    .filter((o) => o.createdAt.startsWith(todayStr) && o.paymentStatus === "paid")
+    .reduce((sum, o) => sum + o.total, 0);
+
+  const monthStr = new Date().toISOString().slice(0, 7);
+  const monthlyRevenue = orders
+    .filter((o) => o.createdAt.startsWith(monthStr) && o.paymentStatus === "paid")
     .reduce((sum, o) => sum + o.total, 0);
 
   const pendingOrders = orders.filter((o) => o.orderStatus === "pending").length;
@@ -36,41 +48,81 @@ export default function AdminOverviewPage() {
   const cancelledOrders = orders.filter((o) => o.orderStatus === "cancelled").length;
   const lowStockProducts = products.filter((p) => p.stock <= p.lowStockThreshold);
 
+  // Dynamic calculations for fulfillment ratio
+  const totalOrderCount = orders.length;
+  const deliveredPercent = totalOrderCount > 0 ? Math.round((completedOrders / totalOrderCount) * 100) : 0;
+  const processingPercent = totalOrderCount > 0 ? Math.round((processingOrders / totalOrderCount) * 100) : 0;
+  const pendingPercent = totalOrderCount > 0 ? Math.round((pendingOrders / totalOrderCount) * 100) : 0;
+  const cancelledPercent = totalOrderCount > 0 ? Math.round((cancelledOrders / totalOrderCount) * 100) : 0;
+
+  // Dynamic category revenue share
+  const categoriesList = ["Rings", "Necklaces", "Bracelets", "Earrings"];
+  const categoryStats = categoriesList.map((catName) => {
+    const catTotal = orders
+      .filter((o) => o.paymentStatus === "paid")
+      .reduce((sum, o) => {
+        const itemSum = o.items
+          .filter((it) => {
+            const prod = products.find((p) => p.id === it.productId || p.name === it.name);
+            return (prod?.category || "").toLowerCase().includes(catName.toLowerCase());
+          })
+          .reduce((s, it) => s + it.price * it.quantity, 0);
+        return sum + itemSum;
+      }, 0);
+
+    const share = totalSales > 0 ? Math.round((catTotal / totalSales) * 100) : 0;
+    return { name: catName, total: catTotal, share };
+  });
+
   // Sales trend data points for chart
   const salesChartData = {
     daily: [
-      { label: "Mon", sales: 2450, orders: 3 },
-      { label: "Tue", sales: 3890, orders: 4 },
-      { label: "Wed", sales: 1850, orders: 2 },
-      { label: "Thu", sales: 4200, orders: 5 },
-      { label: "Fri", sales: 6100, orders: 7 },
-      { label: "Sat", sales: 7400, orders: 9 },
-      { label: "Sun", sales: 5200, orders: 6 },
+      { label: "Mon", sales: 0, orders: 0 },
+      { label: "Tue", sales: 0, orders: 0 },
+      { label: "Wed", sales: 0, orders: 0 },
+      { label: "Thu", sales: 0, orders: 0 },
+      { label: "Fri", sales: 0, orders: 0 },
+      { label: "Sat", sales: 0, orders: 0 },
+      { label: "Sun", sales: 0, orders: 0 },
     ],
     weekly: [
-      { label: "W1 Feb", sales: 28400, orders: 32 },
-      { label: "W2 Feb", sales: 34100, orders: 41 },
-      { label: "W3 Feb", sales: 31200, orders: 38 },
-      { label: "W4 Feb", sales: 42800, orders: 49 },
+      { label: "Week 1", sales: 0, orders: 0 },
+      { label: "Week 2", sales: 0, orders: 0 },
+      { label: "Week 3", sales: 0, orders: 0 },
+      { label: "Week 4", sales: 0, orders: 0 },
     ],
     monthly: [
-      { label: "Oct", sales: 84000, orders: 95 },
-      { label: "Nov", sales: 112000, orders: 130 },
-      { label: "Dec (Holiday)", sales: 178000, orders: 210 },
-      { label: "Jan", sales: 94000, orders: 105 },
-      { label: "Feb (Valentine)", sales: 142000, orders: 165 },
-      { label: "Mar (YTD)", sales: 38500, orders: 42 },
+      { label: "Jan", sales: 0, orders: 0 },
+      { label: "Feb", sales: 0, orders: 0 },
+      { label: "Mar", sales: 0, orders: 0 },
+      { label: "Apr", sales: 0, orders: 0 },
+      { label: "May", sales: 0, orders: 0 },
+      { label: "Jun", sales: 0, orders: 0 },
     ],
     yearly: [
-      { label: "2023", sales: 780000, orders: 890 },
-      { label: "2024", sales: 1140000, orders: 1250 },
-      { label: "2025", sales: 1680000, orders: 1820 },
-      { label: "2026 (Proj)", sales: 2100000, orders: 2300 },
+      { label: "2024", sales: 0, orders: 0 },
+      { label: "2025", sales: 0, orders: 0 },
+      { label: "2026", sales: 0, orders: 0 },
     ],
   };
 
+  // Populate sales from real orders if available
+  if (orders.length > 0) {
+    orders.forEach((o) => {
+      if (o.paymentStatus === "paid") {
+        const m = new Date(o.createdAt).toLocaleString("en-US", { month: "short" });
+        const monthPoint = salesChartData.monthly.find((p) => p.label === m);
+        if (monthPoint) {
+          monthPoint.sales += o.total;
+          monthPoint.orders += 1;
+        }
+      }
+    });
+  }
+
   const activePoints = salesChartData[salesRange];
-  const maxSales = Math.max(...activePoints.map((p) => p.sales));
+  const rawMaxSales = Math.max(...activePoints.map((p) => p.sales));
+  const maxSales = rawMaxSales > 0 ? rawMaxSales : 1;
 
   return (
     <div className="space-y-8">
@@ -84,7 +136,7 @@ export default function AdminOverviewPage() {
             </span>
           </div>
           <h1 className="font-cormorant text-2xl sm:text-3xl font-bold tracking-wide text-white">
-            Welcome back, M. Nawaz
+            Welcome back, {user?.name ? user.name.split(" ")[0] : "Ahsan"}
           </h1>
           <p className="text-xs text-slate-300 mt-1 max-w-xl">
             Here is your daily executive overview of acquisitions, vault fulfillment, and client activity.
@@ -113,29 +165,29 @@ export default function AdminOverviewPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           title="Total Net Sales"
-          value={`$${(totalSales + 138000).toLocaleString()}`}
-          change="+14.8%"
+          value={`$${totalSales.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+          change={orders.length > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<DollarSign className="w-5 h-5" />}
         />
         <StatsCard
           title="Today's Acquisition"
-          value="$4,280.00"
-          change="+8.2%"
+          value={`$${todaySales.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+          change={todaySales > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<Sparkles className="w-5 h-5" />}
         />
         <StatsCard
           title="Monthly Revenue"
-          value="$38,500.00"
-          change="+11.5%"
+          value={`$${monthlyRevenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+          change={monthlyRevenue > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<TrendingUp className="w-5 h-5" />}
         />
         <StatsCard
           title="Total Orders"
-          value={orders.length + 180}
-          change="+6.4%"
+          value={orders.length}
+          change={orders.length > 0 ? `+${orders.length}` : "0"}
           isPositive={true}
           icon={<ShoppingBag className="w-5 h-5" />}
         />
@@ -166,7 +218,7 @@ export default function AdminOverviewPage() {
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Delivered</span>
             <CheckCircle2 className="w-4 h-4" />
           </div>
-          <p className="text-xl font-bold text-slate-900">{completedOrders + 160}</p>
+          <p className="text-xl font-bold text-slate-900">{completedOrders}</p>
           <span className="text-[10px] text-emerald-600 font-medium">Fulfilled</span>
         </div>
 
@@ -184,7 +236,7 @@ export default function AdminOverviewPage() {
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Clients</span>
             <Users className="w-4 h-4" />
           </div>
-          <p className="text-xl font-bold text-slate-900">{customers.length + 420}</p>
+          <p className="text-xl font-bold text-slate-900">{customers.length}</p>
           <span className="text-[10px] text-slate-500 font-medium">Registered</span>
         </div>
 
@@ -234,7 +286,7 @@ export default function AdminOverviewPage() {
           <div className="mt-8 overflow-x-auto pb-2 -mx-2 sm:mx-0 px-2 sm:px-0">
             <div className="h-64 flex items-end gap-2 sm:gap-6 justify-between px-1 sm:px-2 pt-6 min-w-[320px] sm:min-w-[420px]">
               {activePoints.map((item) => {
-                const heightPercent = Math.round((item.sales / maxSales) * 100);
+                const heightPercent = rawMaxSales > 0 ? Math.round((item.sales / maxSales) * 100) : 4;
                 return (
                   <div key={item.label} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
                     {/* Tooltip Hover Value */}
@@ -258,6 +310,11 @@ export default function AdminOverviewPage() {
                 );
               })}
             </div>
+            {totalSales === 0 && (
+              <p className="text-center text-[11px] text-slate-400 mt-3 italic">
+                Storefront is ready for client launch. Live sales transactions will populate this chart in real time.
+              </p>
+            )}
           </div>
         </div>
 
@@ -268,7 +325,9 @@ export default function AdminOverviewPage() {
               Order Fulfillment Ratio
             </h2>
             <p className="text-xs text-slate-500 mb-6">
-              Distribution of recent customer acquisitions
+              {totalOrderCount === 0
+                ? "Awaiting first client purchases"
+                : `${totalOrderCount} total order${totalOrderCount > 1 ? "s" : ""}`}
             </p>
 
             <div className="space-y-4">
@@ -278,10 +337,10 @@ export default function AdminOverviewPage() {
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
                     Delivered & Verified
                   </span>
-                  <span className="text-slate-900 font-bold">68%</span>
+                  <span className="text-slate-900 font-bold">{deliveredPercent}% ({completedOrders})</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: "68%" }} />
+                  <div className="bg-emerald-500 h-full rounded-full transition-all duration-500" style={{ width: `${deliveredPercent}%` }} />
                 </div>
               </div>
 
@@ -291,10 +350,10 @@ export default function AdminOverviewPage() {
                     <span className="w-2 h-2 rounded-full bg-blue-500" />
                     Workshop Processing
                   </span>
-                  <span className="text-slate-900 font-bold">18%</span>
+                  <span className="text-slate-900 font-bold">{processingPercent}% ({processingOrders})</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-blue-500 h-full rounded-full" style={{ width: "18%" }} />
+                  <div className="bg-blue-500 h-full rounded-full transition-all duration-500" style={{ width: `${processingPercent}%` }} />
                 </div>
               </div>
 
@@ -304,10 +363,10 @@ export default function AdminOverviewPage() {
                     <span className="w-2 h-2 rounded-full bg-amber-500" />
                     Pending Wire / Verification
                   </span>
-                  <span className="text-slate-900 font-bold">9%</span>
+                  <span className="text-slate-900 font-bold">{pendingPercent}% ({pendingOrders})</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-amber-500 h-full rounded-full" style={{ width: "9%" }} />
+                  <div className="bg-amber-500 h-full rounded-full transition-all duration-500" style={{ width: `${pendingPercent}%` }} />
                 </div>
               </div>
 
@@ -317,10 +376,10 @@ export default function AdminOverviewPage() {
                     <span className="w-2 h-2 rounded-full bg-rose-500" />
                     Cancelled / Exchanged
                   </span>
-                  <span className="text-slate-900 font-bold">5%</span>
+                  <span className="text-slate-900 font-bold">{cancelledPercent}% ({cancelledOrders})</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-rose-500 h-full rounded-full" style={{ width: "5%" }} />
+                  <div className="bg-rose-500 h-full rounded-full transition-all duration-500" style={{ width: `${cancelledPercent}%` }} />
                 </div>
               </div>
             </div>
@@ -331,22 +390,14 @@ export default function AdminOverviewPage() {
               Category Revenue Share
             </h3>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                <span className="text-slate-500">Rings & Bands</span>
-                <p className="font-bold text-slate-900 mt-0.5">48% • $68.5k</p>
-              </div>
-              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                <span className="text-slate-500">Necklaces</span>
-                <p className="font-bold text-slate-900 mt-0.5">26% • $37.2k</p>
-              </div>
-              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                <span className="text-slate-500">Bracelets</span>
-                <p className="font-bold text-slate-900 mt-0.5">16% • $22.8k</p>
-              </div>
-              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                <span className="text-slate-500">Earrings</span>
-                <p className="font-bold text-slate-900 mt-0.5">10% • $14.3k</p>
-              </div>
+              {categoryStats.map((stat) => (
+                <div key={stat.name} className="p-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                  <span className="text-slate-500">{stat.name}</span>
+                  <p className="font-bold text-slate-900 mt-0.5">
+                    {stat.share}% • ${stat.total.toLocaleString()}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -385,39 +436,51 @@ export default function AdminOverviewPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {orders.slice(0, 5).map((order) => (
-                  <tr key={order.id} className="hover:bg-slate-50/60 transition-colors">
-                    <td className="py-3.5 font-bold text-slate-900">
-                      <Link href={`/admin/orders/${order.id}`} className="hover:text-amber-700">
-                        {order.orderNumber}
-                      </Link>
-                    </td>
-                    <td className="py-3.5">
-                      <p className="font-semibold text-slate-800">{order.customer.name}</p>
-                      <p className="text-[11px] text-slate-400 truncate max-w-[140px]">
-                        {order.customer.email}
+                {orders.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="py-12 text-center text-slate-400">
+                      <ShoppingBag className="w-8 h-8 mx-auto mb-2 text-slate-300 opacity-60" />
+                      <p className="font-semibold text-slate-700 text-xs">No orders received yet</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        When clients place orders on the storefront, they will appear here in real time.
                       </p>
                     </td>
-                    <td className="py-3.5 text-slate-500 text-xs">
-                      {order.createdAt.slice(0, 10)}
-                    </td>
-                    <td className="py-3.5 font-bold text-slate-900">
-                      ${order.total.toLocaleString()}
-                    </td>
-                    <td className="py-3.5">
-                      <StatusBadge status={order.orderStatus} />
-                    </td>
-                    <td className="py-3.5 text-right">
-                      <Link
-                        href={`/admin/orders/${order.id}`}
-                        className="p-1.5 rounded-lg text-slate-500 hover:text-amber-700 hover:bg-slate-100 inline-flex items-center transition-colors"
-                        title="View Order Details"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </Link>
-                    </td>
                   </tr>
-                ))}
+                ) : (
+                  orders.slice(0, 5).map((order) => (
+                    <tr key={order.id} className="hover:bg-slate-50/60 transition-colors">
+                      <td className="py-3.5 font-bold text-slate-900">
+                        <Link href={`/admin/orders/${order.id}`} className="hover:text-amber-700">
+                          {order.orderNumber}
+                        </Link>
+                      </td>
+                      <td className="py-3.5">
+                        <p className="font-semibold text-slate-800">{order.customer.name}</p>
+                        <p className="text-[11px] text-slate-400 truncate max-w-[140px]">
+                          {order.customer.email}
+                        </p>
+                      </td>
+                      <td className="py-3.5 text-slate-500 text-xs">
+                        {order.createdAt.slice(0, 10)}
+                      </td>
+                      <td className="py-3.5 font-bold text-slate-900">
+                        ${order.total.toLocaleString()}
+                      </td>
+                      <td className="py-3.5">
+                        <StatusBadge status={order.orderStatus} />
+                      </td>
+                      <td className="py-3.5 text-right">
+                        <Link
+                          href={`/admin/orders/${order.id}`}
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-amber-700 hover:bg-slate-100 inline-flex items-center transition-colors"
+                          title="View Order Details"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
