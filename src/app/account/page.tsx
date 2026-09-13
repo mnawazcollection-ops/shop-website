@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { formatPrice } from "@/lib/currency";
 
 interface OrderRecord {
   orderId: string;
@@ -32,8 +33,8 @@ interface OrderRecord {
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState<"portal" | "orders" | "track">("portal");
-  const clientName = "Victoria Sterling";
-  const clientEmail = "v.sterling@luxury.com";
+  const clientName = "Fatima Nawaz";
+  const clientEmail = "f.nawaz@mnawazjewelry.com";
 
   const [orders] = useState<OrderRecord[]>(() => {
     if (typeof window === "undefined") return [];
@@ -44,14 +45,14 @@ export default function AccountPage() {
       }
       return [
         {
-          orderId: "SIJ-2026-89421",
+          orderId: "MNJ-2026-89421",
           createdAt: new Date().toISOString(),
           customer: {
-            firstName: "Victoria",
-            lastName: "Sterling",
-            email: "v.sterling@luxury.com",
-            city: "New York",
-            country: "United States",
+            firstName: "Fatima",
+            lastName: "Nawaz",
+            email: "f.nawaz@mnawazjewelry.com",
+            city: "Lahore",
+            country: "Pakistan",
           },
           shipping: {
             name: "Complimentary Insured Courier",
@@ -63,12 +64,12 @@ export default function AccountPage() {
               name: "Golden Bloom Earrings",
               slug: "golden-bloom-earrings",
               image: "/images/products/earrings-1.jpg",
-              price: 245,
+              price: 68500,
               quantity: 1,
               variants: { metal: "18K Yellow Gold" },
             },
           ],
-          total: 245,
+          total: 68500,
         },
       ];
     } catch {
@@ -182,9 +183,9 @@ export default function AccountPage() {
                   Saved Delivery Address
                 </p>
                 <p className="text-[13px] text-[#666] mb-4">
-                  742 Fifth Avenue, Penthouse 12A<br />
-                  New York, NY 10022<br />
-                  United States
+                  Gulberg III, M. M. Alam Road<br />
+                  Lahore, Punjab 54000<br />
+                  Pakistan
                 </p>
                 <span className="text-[12px] uppercase tracking-wider font-bold text-emerald-700 flex items-center gap-1">
                   ✓ Verified Vault Address
@@ -274,11 +275,11 @@ export default function AccountPage() {
                             </p>
                           )}
                           <p className="text-[12px] text-[#777]">
-                            Qty: <strong>{item.quantity}</strong> × ${item.price.toFixed(2)}
+                            Qty: <strong>{item.quantity}</strong> × {formatPrice(item.price)}
                           </p>
                         </div>
                         <span className="font-bold text-[15px] text-[#D97706]">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          {formatPrice(item.price * item.quantity)}
                         </span>
                       </div>
                     ))}
@@ -288,7 +289,7 @@ export default function AccountPage() {
                   <div className="p-4 px-6 bg-[#FAF7F4] border-t border-[#eee] flex items-center justify-between text-[13px]">
                     <span className="text-[#666] font-medium">{ord.shipping.name}</span>
                     <span className="font-bold text-[16px] text-[#1A1A1A]">
-                      Total: <span className="text-[#D97706]">${ord.total.toFixed(2)}</span>
+                      Total: <span className="text-[#D97706]">{formatPrice(ord.total)}</span>
                     </span>
                   </div>
                 </div>
@@ -345,7 +346,7 @@ export default function AccountPage() {
                   <p><strong>Courier:</strong> {trackResult.shipping.name}</p>
                   <p><strong>Estimated Delivery:</strong> <span className="text-[#D97706] font-semibold">{trackResult.shipping.eta}</span></p>
                   <p><strong>Destination:</strong> {trackResult.customer.city}, {trackResult.customer.country}</p>
-                  <p><strong>Total Value:</strong> <span className="text-[#D97706] font-bold">${trackResult.total.toFixed(2)}</span> (Fully Insured)</p>
+                  <p><strong>Total Value:</strong> <span className="text-[#D97706] font-bold">{formatPrice(trackResult.total)}</span> (Fully Insured)</p>
                 </div>
 
                 <Link

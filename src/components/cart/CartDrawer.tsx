@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/store/StoreContext";
+import { formatPrice } from "@/lib/currency";
 
-const FREE_SHIPPING_THRESHOLD = 500;
+const FREE_SHIPPING_THRESHOLD = 50000;
 
 export default function CartDrawer() {
   const {
@@ -81,7 +82,7 @@ export default function CartDrawer() {
           <p className="text-[12px] text-slate-600 text-center mb-2">
             {remainingForFreeShipping > 0 ? (
               <>
-                Add <span className="font-bold text-amber-600">${remainingForFreeShipping.toFixed(2)}</span> more to enjoy <span className="font-bold text-slate-900">Free Express Shipping</span>!
+                Add <span className="font-bold text-amber-600">{formatPrice(remainingForFreeShipping)}</span> more to enjoy <span className="font-bold text-slate-900">Free Express Courier</span>!
               </>
             ) : (
               <span className="font-bold text-emerald-600 flex items-center justify-center gap-1.5">
@@ -156,7 +157,7 @@ export default function CartDrawer() {
                     </p>
                   )}
                   <p className="text-[13px] font-bold text-amber-600 mt-1">
-                    ${product.price.toFixed(2)}
+                    {formatPrice(product.price)}
                   </p>
 
                   <div className="flex items-center gap-3 mt-2">
@@ -202,7 +203,7 @@ export default function CartDrawer() {
                 Subtotal
               </span>
               <span className="font-bold text-[18px] text-[#1A1A1A]">
-                ${cartSubtotal.toFixed(2)}
+                {formatPrice(cartSubtotal)}
               </span>
             </div>
 

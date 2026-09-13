@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/store/StoreContext";
 import StorefrontShell from "@/components/layout/StorefrontShell";
+import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE, SEO_KEYWORDS, getRootSchemaGraph } from "@/lib/seo";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -18,14 +19,90 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#0B0F19",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: "M. Nawaz Jewelry Collection | Luxury Handcrafted Jewelry",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | Luxury 18K/21K/22K Gold & Diamond Jewelry Pakistan`,
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
-    "Discover exquisite handcrafted gold, diamond, and precious gemstone jewelry at M. Nawaz Jewelry Collection. Timeless elegance and artisan craftsmanship.",
+    "Pakistan's premier luxury jewelry atelier. Discover handcrafted 18K, 21K & 22K pure gold jewelry, certified natural diamonds, solitaire engagement rings, bridal sets, and bespoke high jewelry. Complimentary insured courier nationwide.",
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  generator: "Next.js",
+  keywords: SEO_KEYWORDS,
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "Luxury Fine Jewelry & Diamonds",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: SITE_URL,
+    languages: {
+      "en-PK": `${SITE_URL}`,
+      "ur-PK": `${SITE_URL}`,
+      "en-US": `${SITE_URL}`,
+      "x-default": `${SITE_URL}`,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_PK",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | Luxury Gold & Certified Diamond Atelier Pakistan`,
+    description:
+      "Handcrafted 18K/21K/22K gold jewelry, GIA-certified diamonds, bridal sets & bespoke solitaire engagement rings. Insured transit across Pakistan.",
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} Luxury Haute Joaillerie Showcase`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} | Haute Joaillerie Pakistan`,
+    description:
+      "Handcrafted 18K/21K/22K gold jewelry, GIA-certified natural diamonds, and royal bridal collections.",
+    images: [DEFAULT_OG_IMAGE],
+    creator: "@mnawazjewelry",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/images/logo.png",
     shortcut: "/images/logo.png",
     apple: "/images/logo.png",
+  },
+  other: {
+    "geo.region": "PK-PB",
+    "geo.placename": "Lahore, Pakistan",
+    "geo.position": "31.5204;74.3587",
+    "ICBM": "31.5204, 74.3587",
   },
 };
 
@@ -34,44 +111,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "JewelryStore",
-        "@id": "https://mnawaz-jewelry.com/#organization",
-        "name": "M. Nawaz Jewelry Collection",
-        "url": "https://mnawaz-jewelry.com",
-        "logo": "https://mnawaz-jewelry.com/images/logo.png",
-        "image": "https://mnawaz-jewelry.com/images/logo.png",
-        "description": "Exquisite handcrafted gold, diamond, and precious gemstone jewelry by master artisans.",
-        "telephone": "+1-800-555-MNJC",
-        "priceRange": "$$$$",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "450 Luxury Avenue, Suite 1200",
-          "addressLocality": "New York",
-          "addressRegion": "NY",
-          "postalCode": "10022",
-          "addressCountry": "US"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://mnawaz-jewelry.com/#website",
-        "url": "https://mnawaz-jewelry.com",
-        "name": "M. Nawaz Jewelry Collection",
-        "publisher": {
-          "@id": "https://mnawaz-jewelry.com/#organization"
-        },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://mnawaz-jewelry.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    ]
-  };
+  const rootJsonLd = getRootSchemaGraph();
 
   return (
     <html
@@ -81,7 +121,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[#FAF7F4] text-[#1A1A1A]">

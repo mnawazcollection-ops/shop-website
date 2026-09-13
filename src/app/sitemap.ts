@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
-import { products } from "@/data";
+import { products, categories as catalogCategories } from "@/data";
+import { SITE_URL } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mnawaz-jewelry.com";
+  const baseUrl = SITE_URL;
 
   // Static routes
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -16,31 +17,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/shop`,
       lastModified: new Date(),
       changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/collections`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.6,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.6,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/cart`,
@@ -61,13 +56,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}/product/${product.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.9,
   }));
 
   // Categories
-  const categories = ["necklaces", "earrings", "bracelets", "rings", "pendants", "bridal"];
-  const categoryRoutes: MetadataRoute.Sitemap = categories.map((cat) => ({
-    url: `${baseUrl}/category/${cat}`,
+  const categorySlugs = [
+    ...catalogCategories.map((c) => c.slug),
+    "new-arrivals",
+    "best-sellers",
+    "gold-sets",
+    "watches",
+  ];
+  const uniqueCategorySlugs = Array.from(new Set(categorySlugs));
+
+  const categoryRoutes: MetadataRoute.Sitemap = uniqueCategorySlugs.map((slug) => ({
+    url: `${baseUrl}/category/${slug}`,
     lastModified: new Date(),
     changeFrequency: "daily",
     priority: 0.85,

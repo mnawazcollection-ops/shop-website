@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearch, useStore } from "@/store/StoreContext";
+import { formatPrice } from "@/lib/currency";
 
 export default function SearchOverlay() {
   const { isSearchOpen, setSearchOpen } = useSearch();
@@ -150,11 +151,11 @@ export default function SearchOverlay() {
                     <div className="text-right shrink-0">
                       {product.originalPrice && (
                         <span className="text-[12px] text-[#999] line-through block">
-                          ${product.originalPrice.toFixed(2)}
+                          {formatPrice(product.originalPrice)}
                         </span>
                       )}
                       <span className="text-[15px] font-bold text-[#D97706]">
-                        ${product.price.toFixed(2)}
+                        {formatPrice(product.price)}
                       </span>
                     </div>
                   </Link>

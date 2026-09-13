@@ -87,13 +87,32 @@ interface AdminDataContextType {
 const AdminDataContext = createContext<AdminDataContextType | undefined>(undefined);
 
 const PREFIX = "mnawaz_admin_";
-const CLEANUP_KEY = "mnawaz_clean_handover_final";
+const CLEANUP_KEY = "mnawaz_pkr_currency_v1";
 
 function getInitialData<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
   try {
-    // Clean mock orders, clients, reviews, coupons, cart, wishlist once for clean client handover
+    // Clean mock orders, clients, reviews, and sync products/settings to PKR
     if (localStorage.getItem(CLEANUP_KEY) !== "true") {
+      try {
+        const storedProductsRaw =
+          localStorage.getItem(`${PREFIX}products`) || localStorage.getItem(`sir_ihsan_admin_products`);
+        if (storedProductsRaw) {
+          const storedProducts: AdminProduct[] = JSON.parse(storedProductsRaw);
+          const customProducts = storedProducts.filter(
+            (p) => !initialAdminProducts.some((ip) => ip.id === p.id)
+          );
+          const updatedProducts = [...initialAdminProducts, ...customProducts];
+          localStorage.setItem(`${PREFIX}products`, JSON.stringify(updatedProducts));
+        } else {
+          localStorage.setItem(`${PREFIX}products`, JSON.stringify(initialAdminProducts));
+        }
+      } catch {
+        localStorage.removeItem(`${PREFIX}products`);
+      }
+
+      localStorage.removeItem(`${PREFIX}settings`);
+      localStorage.removeItem(`sir_ihsan_admin_settings`);
       localStorage.removeItem(`${PREFIX}orders`);
       localStorage.removeItem(`sir_ihsan_admin_orders`);
       localStorage.removeItem(`sir-ihsan-orders`);

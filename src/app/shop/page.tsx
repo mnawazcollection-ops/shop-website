@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
 import { categories } from "@/data";
 import { useStore } from "@/store/StoreContext";
+import { formatPrice } from "@/lib/currency";
 
 function ShopContent() {
   const searchParams = useSearchParams();
@@ -13,7 +14,7 @@ function ShopContent() {
 
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [sortBy, setSortBy] = useState("featured");
-  const [priceRange, setPriceRange] = useState(2000);
+  const [priceRange, setPriceRange] = useState(1000000);
 
   const filteredProducts = useMemo(() => {
     return products
@@ -96,20 +97,20 @@ function ShopContent() {
           {/* Price Range Filter */}
           <div className="border border-[#f0f0f0] p-6 bg-white shadow-sm rounded-sm">
             <h3 className="font-cormorant text-xl font-bold text-[#1A1A1A] mb-4 pb-2 border-b border-[#f0f0f0]">
-              Max Price: <span className="text-amber-600">${priceRange}</span>
+              Max Price: <span className="text-amber-600">{formatPrice(priceRange)}</span>
             </h3>
             <input
               type="range"
-              min="100"
-              max="2000"
-              step="50"
+              min="20000"
+              max="1000000"
+              step="10000"
               value={priceRange}
               onChange={(e) => setPriceRange(Number(e.target.value))}
               className="w-full accent-amber-600 cursor-pointer"
             />
             <div className="flex justify-between text-[12px] text-[#888] mt-2 font-medium">
-              <span>$100</span>
-              <span className="text-amber-600 font-bold">$2,000+</span>
+              <span>{formatPrice(20000)}</span>
+              <span className="text-amber-600 font-bold">{formatPrice(1000000)}+</span>
             </div>
           </div>
         </aside>

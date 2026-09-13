@@ -6,8 +6,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/store/StoreContext";
 import { categories } from "@/data";
+import { formatPrice } from "@/lib/currency";
 
-const FREE_SHIPPING_THRESHOLD = 500;
+const FREE_SHIPPING_THRESHOLD = 50000;
 
 export default function CartPage() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function CartPage() {
 
   const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
   const shipping =
-    cartSubtotal === 0 || cartSubtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 35;
+    cartSubtotal === 0 || cartSubtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 2500;
   const estimatedTotal = discountedSubtotal + shipping;
 
   const handleApplyCoupon = (e: React.FormEvent) => {
@@ -53,11 +54,11 @@ export default function CartPage() {
     if (code === "LUXURY10" || code === "WELCOME10") {
       setAppliedDiscount({ code, percent: 10 });
       setCouponSuccess("10% luxury discount applied!");
-    } else if (code === "GOLD50") {
-      setAppliedDiscount({ code, amount: 50 });
-      setCouponSuccess("$50 artisan discount applied!");
+    } else if (code === "GOLD50" || code === "GOLD5000") {
+      setAppliedDiscount({ code, amount: 5000 });
+      setCouponSuccess("Rs. 5,000 artisan discount applied!");
     } else {
-      setCouponError("Invalid promo code. Try 'LUXURY10' or 'GOLD50'");
+      setCouponError("Invalid promo code. Try 'LUXURY10' or 'GOLD5000'");
     }
   };
 
@@ -171,7 +172,7 @@ export default function CartPage() {
                   <span className="text-[13px] text-[#555] font-medium">
                     {remainingForFreeShipping > 0 ? (
                       <>
-                        Add <strong className="text-[#D97706] font-bold">${remainingForFreeShipping.toFixed(2)}</strong> more for <strong>Free Express Insured Shipping</strong>
+                        Add <strong className="text-[#D97706] font-bold">{formatPrice(remainingForFreeShipping)}</strong> more for <strong>Free Express Insured Courier</strong>
                       </>
                     ) : (
                       <span className="text-emerald-700 font-bold flex items-center gap-1.5">
@@ -250,7 +251,7 @@ export default function CartPage() {
                       {/* Price */}
                       <div className="col-span-2 text-left md:text-center text-[14px] text-amber-700 font-bold">
                         <span className="md:hidden text-[12px] text-[#888] mr-2">Price:</span>
-                        ${product.price.toFixed(2)}
+                        {formatPrice(product.price)}
                       </div>
 
                       {/* Quantity */}
@@ -288,7 +289,7 @@ export default function CartPage() {
                       {/* Subtotal */}
                       <div className="col-span-2 text-left md:text-right font-bold text-[15px] text-[#1A1A1A]">
                         <span className="md:hidden text-[12px] text-[#888] mr-2">Subtotal:</span>
-                        ${(product.price * quantity).toFixed(2)}
+                        {formatPrice(product.price * quantity)}
                       </div>
                     </div>
                   ))}
@@ -338,7 +339,7 @@ export default function CartPage() {
                   <div className="flex justify-between">
                     <span>Subtotal</span>
                     <span className="font-semibold text-[#1A1A1A]">
-                      ${cartSubtotal.toFixed(2)}
+                      {formatPrice(cartSubtotal)}
                     </span>
                   </div>
 
@@ -346,18 +347,18 @@ export default function CartPage() {
                     <div className="flex justify-between text-emerald-600 font-bold">
                       <span>Discount ({appliedDiscount.code})</span>
                       <span className="font-bold">
-                        -${discountAmount.toFixed(2)}
+                        -{formatPrice(discountAmount)}
                       </span>
                     </div>
                   )}
 
                   <div className="flex justify-between items-center">
-                    <span>Insured Shipping</span>
+                    <span>Insured Courier</span>
                     <span className="font-semibold">
                       {shipping === 0 ? (
                         <span className="text-emerald-600 font-bold">FREE</span>
                       ) : (
-                        `$${shipping.toFixed(2)}`
+                        formatPrice(shipping)
                       )}
                     </span>
                   </div>
@@ -401,7 +402,7 @@ export default function CartPage() {
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="font-bold text-[#1A1A1A] text-lg">Estimated Total</span>
                     <span className="font-cormorant text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600">
-                      ${estimatedTotal.toFixed(2)}
+                      {formatPrice(estimatedTotal)}
                     </span>
                   </div>
                   <p className="text-[11px] text-[#999]">

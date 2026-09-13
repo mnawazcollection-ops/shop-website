@@ -12,6 +12,7 @@ import { useAdminToast } from "@/components/admin/AdminToast";
 import SlideOverDrawer from "@/components/admin/SlideOverDrawer";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import { AdminCoupon } from "@/types/admin";
+import { formatPrice } from "@/lib/currency";
 
 export default function CouponsPage() {
   const { coupons, addCoupon, updateCoupon, deleteCoupon, toggleCouponStatus } = useAdminData();
@@ -37,8 +38,8 @@ export default function CouponsPage() {
     setFormCode("");
     setFormType("percentage");
     setFormValue(15);
-    setFormMinOrder(500);
-    setFormMaxDiscount(1000);
+    setFormMinOrder(25000);
+    setFormMaxDiscount(10000);
     setFormUsageLimit(50);
     setFormExpiryDate("2026-12-31");
     setFormIsActive(true);
@@ -198,14 +199,14 @@ export default function CouponsPage() {
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 text-stone-900">
-                            ${cpn.discountValue.toLocaleString()} Fixed
+                            {formatPrice(cpn.discountValue)} Fixed
                           </span>
                         )}
                       </td>
 
                       {/* Min Order */}
                       <td className="py-3.5 px-4 text-xs text-stone-600">
-                        ${cpn.minOrder.toLocaleString()}
+                        {formatPrice(cpn.minOrder)}
                       </td>
 
                       {/* Usage */}
@@ -335,21 +336,21 @@ export default function CouponsPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Min. Order ($)
+                Min. Order (PKR)
               </label>
               <input
                 type="number"
                 min="0"
                 value={formMinOrder}
                 onChange={(e) => setFormMinOrder(e.target.value)}
-                placeholder="500"
+                placeholder="25000"
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Max. Discount ($)
+                Max. Discount (PKR)
               </label>
               <input
                 type="number"

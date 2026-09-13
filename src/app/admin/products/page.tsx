@@ -22,6 +22,7 @@ import StatusBadge from "@/components/admin/StatusBadge";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import { useAdminToast } from "@/components/admin/AdminToast";
 import { AdminProduct } from "@/types/admin";
+import { formatPrice } from "@/lib/currency";
 
 export default function ProductsPage() {
   const {
@@ -491,11 +492,11 @@ export default function ProductsPage() {
                       <td className="py-3.5 px-4">
                         <div className="flex flex-col">
                           <span className="font-semibold text-stone-900">
-                            ${product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            {formatPrice(product.price)}
                           </span>
                           {product.salePrice && (
                             <span className="text-[11px] text-stone-400 line-through">
-                              ${product.salePrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                              {formatPrice(product.salePrice)}
                             </span>
                           )}
                         </div>

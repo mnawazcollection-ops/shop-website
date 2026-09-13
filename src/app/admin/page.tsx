@@ -21,6 +21,7 @@ import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminAuth } from "@/store/AdminAuthContext";
 import StatsCard from "@/components/admin/StatsCard";
 import StatusBadge from "@/components/admin/StatusBadge";
+import { formatPrice } from "@/lib/currency";
 
 export default function AdminOverviewPage() {
   const { products, orders, customers } = useAdminData();
@@ -165,21 +166,21 @@ export default function AdminOverviewPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           title="Total Net Sales"
-          value={`$${totalSales.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+          value={formatPrice(totalSales)}
           change={orders.length > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<DollarSign className="w-5 h-5" />}
         />
         <StatsCard
           title="Today's Acquisition"
-          value={`$${todaySales.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+          value={formatPrice(todaySales)}
           change={todaySales > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<Sparkles className="w-5 h-5" />}
         />
         <StatsCard
           title="Monthly Revenue"
-          value={`$${monthlyRevenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+          value={formatPrice(monthlyRevenue)}
           change={monthlyRevenue > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<TrendingUp className="w-5 h-5" />}
@@ -394,7 +395,7 @@ export default function AdminOverviewPage() {
                 <div key={stat.name} className="p-2.5 bg-slate-50 rounded-lg border border-slate-100">
                   <span className="text-slate-500">{stat.name}</span>
                   <p className="font-bold text-slate-900 mt-0.5">
-                    {stat.share}% • ${stat.total.toLocaleString()}
+                    {stat.share}% • {formatPrice(stat.total)}
                   </p>
                 </div>
               ))}
@@ -464,7 +465,7 @@ export default function AdminOverviewPage() {
                         {order.createdAt.slice(0, 10)}
                       </td>
                       <td className="py-3.5 font-bold text-slate-900">
-                        ${order.total.toLocaleString()}
+                        {formatPrice(order.total)}
                       </td>
                       <td className="py-3.5">
                         <StatusBadge status={order.orderStatus} />
@@ -550,7 +551,7 @@ export default function AdminOverviewPage() {
                         {p.name}
                       </span>
                     </div>
-                    <span className="font-bold text-slate-900">${p.price}</span>
+                    <span className="font-bold text-slate-900">{formatPrice(p.price)}</span>
                   </div>
                 ))}
             </div>

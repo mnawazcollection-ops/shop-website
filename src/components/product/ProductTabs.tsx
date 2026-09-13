@@ -112,7 +112,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                   Free Express Shipping
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
-                  Complimentary FedEx Express fully insured courier shipping on all orders over $500. Standard shipping available for orders under $500 at a flat rate of $35. All shipments require signature upon delivery. International shipping available to over 50 countries.
+                  Complimentary fully insured armored courier delivery on all orders over Rs. 50,000 across Pakistan. Standard insured transit available for orders under Rs. 50,000 at a flat rate of Rs. 2,500. All shipments require signature and photo ID verification upon delivery. International delivery available upon concierge request.
                 </p>
               </div>
             </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/store/StoreContext";
+import { formatPrice } from "@/lib/currency";
 
 interface ShippingOption {
   id: string;
@@ -26,14 +27,14 @@ const SHIPPING_OPTIONS: ShippingOption[] = [
     id: "express-air",
     name: "Priority Air Vault Express",
     desc: "Air cargo express with tamper-evident seal",
-    price: 35,
+    price: 2500,
     eta: "2–3 Business Days",
   },
   {
     id: "white-glove",
     name: "White-Glove VIP Delivery",
     desc: "Personal courier & GIA appraisal pack",
-    price: 75,
+    price: 5000,
     eta: "Next Business Day",
   },
 ];
@@ -52,7 +53,7 @@ export default function CheckoutPage() {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [country, setCountry] = useState("United States");
+  const [country, setCountry] = useState("Pakistan");
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [city, setCity] = useState("");
@@ -114,11 +115,11 @@ export default function CheckoutPage() {
     if (code === "LUXURY10" || code === "WELCOME10") {
       setAppliedDiscount({ code, percent: 10 });
       setCouponSuccess("10% luxury discount applied!");
-    } else if (code === "GOLD50") {
-      setAppliedDiscount({ code, amount: 50 });
-      setCouponSuccess("$50 discount applied!");
+    } else if (code === "GOLD50" || code === "GOLD5000") {
+      setAppliedDiscount({ code, amount: 5000 });
+      setCouponSuccess("Rs. 5,000 discount applied!");
     } else {
-      setCouponError("Invalid promo code. Try 'LUXURY10' or 'GOLD50'");
+      setCouponError("Invalid promo code. Try 'LUXURY10' or 'GOLD5000'");
     }
   };
 
@@ -317,7 +318,7 @@ export default function CheckoutPage() {
             </svg>
           </button>
           <span className="font-cormorant text-xl font-bold text-[#D97706]">
-            ${total.toFixed(2)}
+            {formatPrice(total)}
           </span>
         </div>
 
@@ -341,7 +342,7 @@ export default function CheckoutPage() {
                   )}
                 </div>
                 <span className="text-[13px] font-semibold text-[#1A1A1A]">
-                  ${(product.price * quantity).toFixed(2)}
+                  {formatPrice(product.price * quantity)}
                 </span>
               </div>
             ))}
@@ -444,7 +445,7 @@ export default function CheckoutPage() {
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="+92 300 1234567"
                     className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm"
                   />
                 </div>
@@ -477,6 +478,9 @@ export default function CheckoutPage() {
                     onChange={(e) => setCountry(e.target.value)}
                     className="w-full px-4 py-3 text-[14px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 bg-white transition-all rounded-sm"
                   >
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
                     <option value="United States">United States</option>
                     <option value="United Kingdom">United Kingdom</option>
                     <option value="Canada">Canada</option>
@@ -621,7 +625,7 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     <span className="font-bold text-[14px] text-[#1A1A1A]">
-                      {opt.price === 0 ? <span className="text-emerald-600 font-bold">FREE</span> : `$${opt.price.toFixed(2)}`}
+                      {opt.price === 0 ? <span className="text-emerald-600 font-bold">FREE</span> : formatPrice(opt.price)}
                     </span>
                   </label>
                 ))}
@@ -776,7 +780,7 @@ export default function CheckoutPage() {
                     Securing Order & Vault...
                   </>
                 ) : (
-                  `Authorize & Place Order • $${total.toFixed(2)}`
+                  `Authorize & Place Order • ${formatPrice(total)}`
                 )}
               </button>
             </div>
@@ -818,11 +822,11 @@ export default function CheckoutPage() {
                           </p>
                         )}
                         <p className="text-[12px] text-amber-600 font-bold mt-0.5">
-                          ${product.price.toFixed(2)}
+                          {formatPrice(product.price)}
                         </p>
                       </div>
                       <span className="font-bold text-[14px] text-[#1A1A1A]">
-                        ${(product.price * quantity).toFixed(2)}
+                        {formatPrice(product.price * quantity)}
                       </span>
                     </div>
                   ))
@@ -855,13 +859,13 @@ export default function CheckoutPage() {
               <div className="space-y-3 text-[14px] text-[#666] pt-4 border-t border-[#eee] mb-6">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="font-semibold text-[#1A1A1A]">${cartSubtotal.toFixed(2)}</span>
+                  <span className="font-semibold text-[#1A1A1A]">{formatPrice(cartSubtotal)}</span>
                 </div>
 
                 {appliedDiscount && (
                   <div className="flex justify-between text-emerald-600 font-semibold">
                     <span>Discount ({appliedDiscount.code})</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-{formatPrice(discountAmount)}</span>
                   </div>
                 )}
 
@@ -871,7 +875,7 @@ export default function CheckoutPage() {
                     {selectedShipping.price === 0 ? (
                       <span className="text-emerald-600 font-bold tracking-wide">COMPLIMENTARY</span>
                     ) : (
-                      `$${selectedShipping.price.toFixed(2)}`
+                      formatPrice(selectedShipping.price)
                     )}
                   </span>
                 </div>
@@ -887,7 +891,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between items-baseline">
                   <span className="font-bold text-lg text-[#1A1A1A]">Total</span>
                   <span className="font-cormorant text-3xl font-bold text-[#D97706]">
-                    ${total.toFixed(2)}
+                    {formatPrice(total)}
                   </span>
                 </div>
                 <p className="text-[11px] text-[#888] mt-1">
@@ -911,7 +915,7 @@ export default function CheckoutPage() {
                       Securing Order & Vault...
                     </>
                   ) : (
-                    `Authorize & Place Order • $${total.toFixed(2)}`
+                    `Authorize & Place Order • ${formatPrice(total)}`
                   )}
                 </button>
               </div>

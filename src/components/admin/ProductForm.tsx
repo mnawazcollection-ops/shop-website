@@ -422,18 +422,18 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Regular Price ($) <span className="text-red-500">*</span>
+                  Regular Price (PKR) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-stone-400 text-sm">$</span>
+                  <span className="absolute left-3 top-2.5 text-stone-400 text-xs font-semibold">Rs.</span>
                   <input
                     type="number"
                     min="0"
-                    step="0.01"
+                    step="1"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    placeholder="2450.00"
-                    className={`w-full pl-7 pr-3 py-2 bg-stone-50 border rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
+                    placeholder="185000"
+                    className={`w-full pl-9 pr-3 py-2 bg-stone-50 border rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
                       errors.price ? "border-red-400 bg-red-50/20" : "border-stone-200"
                     }`}
                   />
@@ -443,18 +443,18 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Sale / Promo Price ($)
+                  Sale / Promo Price (PKR)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-stone-400 text-sm">$</span>
+                  <span className="absolute left-3 top-2.5 text-stone-400 text-xs font-semibold">Rs.</span>
                   <input
                     type="number"
                     min="0"
-                    step="0.01"
+                    step="1"
                     value={salePrice}
                     onChange={(e) => setSalePrice(e.target.value)}
                     placeholder="Optional promo price"
-                    className={`w-full pl-7 pr-3 py-2 bg-stone-50 border rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
+                    className={`w-full pl-9 pr-3 py-2 bg-stone-50 border rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
                       errors.salePrice ? "border-red-400 bg-red-50/20" : "border-stone-200"
                     }`}
                   />
@@ -464,18 +464,18 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Cost Price ($)
+                  Cost Price (PKR)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-stone-400 text-sm">$</span>
+                  <span className="absolute left-3 top-2.5 text-stone-400 text-xs font-semibold">Rs.</span>
                   <input
                     type="number"
                     min="0"
-                    step="0.01"
+                    step="1"
                     value={costPrice}
                     onChange={(e) => setCostPrice(e.target.value)}
                     placeholder="Workshop cost"
-                    className="w-full pl-7 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    className="w-full pl-9 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
                 </div>
                 <p className="text-[11px] text-stone-400 mt-1">Internal only. Never shown to clients.</p>

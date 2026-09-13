@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { Product } from "@/types";
 import { useCart, useWishlist } from "@/store/StoreContext";
 import { useRouter } from "next/navigation";
+import { formatPrice } from "@/lib/currency";
 
 interface ProductInfoProps {
   product: Product;
@@ -113,11 +114,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       <div className="flex items-center gap-3 mb-6 pb-6 border-b border-[#eee]">
         {computedOriginalPrice && (
           <span className="text-[20px] text-[#999] line-through">
-            ${computedOriginalPrice.toFixed(2)}
+            {formatPrice(computedOriginalPrice)}
           </span>
         )}
         <span className="text-[30px] font-bold text-[#D97706] tracking-tight">
-          ${computedPrice.toFixed(2)}
+          {formatPrice(computedPrice)}
         </span>
         {salePercent > 0 && (
           <span className="text-[11px] font-bold text-white bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm shadow-red-500/25">

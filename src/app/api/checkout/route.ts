@@ -38,11 +38,11 @@ const SHIPPING_RATES: Record<string, { name: string; price: number }> = {
   },
   "express-air": {
     name: "Priority Air Vault Express",
-    price: 35,
+    price: 2500,
   },
   "white-glove": {
     name: "White-Glove VIP Delivery",
-    price: 75,
+    price: 5000,
   },
 };
 

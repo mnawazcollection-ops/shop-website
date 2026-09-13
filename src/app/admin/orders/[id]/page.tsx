@@ -20,6 +20,7 @@ import { useAdminData } from "@/store/AdminDataContext";
 import { useAdminToast } from "@/components/admin/AdminToast";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { AdminOrder } from "@/types/admin";
+import { formatPrice } from "@/lib/currency";
 
 export default function OrderDetailsPage() {
   const params = useParams();
@@ -346,11 +347,11 @@ export default function OrderDetailsPage() {
                       </td>
 
                       <td className="py-4 px-4 text-stone-700">
-                        ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        {formatPrice(item.price)}
                       </td>
 
                       <td className="py-4 px-4 text-right font-bold text-stone-900">
-                        ${item.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        {formatPrice(item.subtotal)}
                       </td>
                     </tr>
                   ))}
@@ -364,7 +365,7 @@ export default function OrderDetailsPage() {
                 <div className="flex justify-between text-stone-600">
                   <span>Subtotal:</span>
                   <span className="font-medium text-stone-900">
-                    ${order.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    {formatPrice(order.subtotal)}
                   </span>
                 </div>
 
@@ -374,7 +375,7 @@ export default function OrderDetailsPage() {
                       Privilege Discount {order.discountCode ? `(${order.discountCode})` : ""}:
                     </span>
                     <span>
-                      -${order.discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      -{formatPrice(order.discount)}
                     </span>
                   </div>
                 )}
@@ -384,21 +385,21 @@ export default function OrderDetailsPage() {
                   <span className="font-medium text-stone-900">
                     {order.shipping === 0
                       ? "Complimentary"
-                      : `$${order.shipping.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+                      : formatPrice(order.shipping)}
                   </span>
                 </div>
 
                 <div className="flex justify-between text-stone-600">
                   <span>Estimated Tax:</span>
                   <span className="font-medium text-stone-900">
-                    ${order.tax.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    {formatPrice(order.tax)}
                   </span>
                 </div>
 
                 <div className="pt-2 border-t border-stone-200 flex justify-between text-sm font-bold text-stone-900">
                   <span>Total Amount:</span>
                   <span className="text-amber-600">
-                    ${order.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    {formatPrice(order.total)}
                   </span>
                 </div>
               </div>

@@ -10,6 +10,8 @@ import ProductTabs from "@/components/product/ProductTabs";
 import RelatedProducts from "@/components/product/RelatedProducts";
 import ProductCard from "@/components/ui/ProductCard";
 import Button from "@/components/ui/Button";
+import JsonLd from "@/components/seo/JsonLd";
+import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
 interface ProductPageProps {
   params: Promise<{
@@ -107,42 +109,21 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   const allRelated = [...relatedProducts, ...fillProducts];
 
-  const productJsonLd = {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": product.name,
-    "image": product.image.startsWith("http") ? product.image : `https://sir-ihsan-jewelry.com${product.image}`,
-    "description": product.shortDescription || product.description,
-    "sku": product.sku || `MNJ-${product.id}`,
-    "brand": {
-      "@type": "Brand",
-      "name": "M. Nawaz Jewelry Collection"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": `https://sir-ihsan-jewelry.com/product/${product.slug}`,
-      "priceCurrency": "USD",
-      "price": product.price,
-      "availability": product.inStock !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      "seller": {
-        "@type": "Organization",
-        "name": "M. Nawaz Jewelry Collection"
-      }
-    },
-    ...(product.rating ? {
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": product.rating,
-        "reviewCount": product.reviewCount || 1
-      }
-    } : {})
-  };
+  const productSchema = getProductSchema(product);
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Shop", url: "/shop" },
+    { name: product.category, url: `/category/${product.category.toLowerCase()}` },
+    { name: product.name, url: `/product/${product.slug}` },
+  ]);
 
   return (
     <div className="bg-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [breadcrumbSchema, productSchema],
+        }}
       />
       {/* Breadcrumb */}
       <div className="bg-[#FAF7F4] border-b border-[#f0ece5]">

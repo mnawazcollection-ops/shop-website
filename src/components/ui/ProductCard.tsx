@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Product } from "@/types";
 import { useState } from "react";
 import { useCart, useWishlist } from "@/store/StoreContext";
+import { formatPrice } from "@/lib/currency";
 
 interface ProductCardProps {
   product: Product;
@@ -190,11 +191,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center justify-center gap-2">
           {product.originalPrice && (
             <span className="text-[13px] text-[#999] line-through">
-              ${product.originalPrice.toFixed(2)}
+              {formatPrice(product.originalPrice)}
             </span>
           )}
           <span className="text-[16px] font-bold text-[#D97706]">
-            ${product.price.toFixed(2)}
+            {formatPrice(product.price)}
           </span>
         </div>
         {/* Rating Stars */}

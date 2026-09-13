@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useAdminData } from "@/store/AdminDataContext";
 import StatusBadge from "@/components/admin/StatusBadge";
+import { formatPrice } from "@/lib/currency";
 
 export default function OrdersPage() {
   const { orders } = useAdminData();
@@ -249,7 +250,7 @@ export default function OrdersPage() {
 
                       {/* Total */}
                       <td className="py-3.5 px-4 font-semibold text-stone-900">
-                        ${order.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        {formatPrice(order.total)}
                       </td>
 
                       {/* Payment Status */}

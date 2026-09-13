@@ -6,6 +6,8 @@ import Link from "next/link";
 import { categories } from "@/data";
 import { useStore } from "@/store/StoreContext";
 import ProductCard from "@/components/ui/ProductCard";
+import JsonLd from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema, getCollectionSchema } from "@/lib/seo";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -147,12 +149,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     let result = [...baseCategoryProducts];
 
     // Price
-    if (priceFilter === "under-300") {
-      result = result.filter((p) => p.price < 300);
-    } else if (priceFilter === "300-500") {
-      result = result.filter((p) => p.price >= 300 && p.price <= 500);
-    } else if (priceFilter === "over-500") {
-      result = result.filter((p) => p.price > 500);
+    if (priceFilter === "under-100k") {
+      result = result.filter((p) => p.price < 100000);
+    } else if (priceFilter === "100k-250k") {
+      result = result.filter((p) => p.price >= 100000 && p.price <= 250000);
+    } else if (priceFilter === "over-250k") {
+      result = result.filter((p) => p.price > 250000);
     }
 
     // Metal
@@ -184,8 +186,27 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Collections", url: "/shop" },
+    { name: meta.title, url: `/category/${normalizedSlug}` },
+  ]);
+
+  const collectionSchema = getCollectionSchema({
+    name: meta.title,
+    url: `/category/${normalizedSlug}`,
+    description: meta.description,
+    itemCount: filteredProducts.length,
+  });
+
   return (
     <div className="bg-[#FCFAF8] min-h-screen">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [breadcrumbSchema, collectionSchema],
+        }}
+      />
       {/* Category Hero Banner */}
       <div className="relative h-[320px] md:h-[400px] w-full overflow-hidden flex items-center justify-center">
         <Image
@@ -252,9 +273,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             </span>
             {[
               { label: "All", val: "all" },
-              { label: "Under $300", val: "under-300" },
-              { label: "$300 - $500", val: "300-500" },
-              { label: "Over $500", val: "over-500" },
+              { label: "Under Rs. 100k", val: "under-100k" },
+              { label: "Rs. 100k - 250k", val: "100k-250k" },
+              { label: "Over Rs. 250k", val: "over-250k" },
             ].map((p) => (
               <button
                 key={p.val}
@@ -312,9 +333,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               <div className="flex flex-wrap gap-2">
                 {[
                   { label: "All", val: "all" },
-                  { label: "Under $300", val: "under-300" },
-                  { label: "$300 - $500", val: "300-500" },
-                  { label: "Over $500", val: "over-500" },
+                  { label: "Under Rs. 100k", val: "under-100k" },
+                  { label: "Rs. 100k - 250k", val: "100k-250k" },
+                  { label: "Over Rs. 250k", val: "over-250k" },
                 ].map((p) => (
                   <button
                     key={p.val}

@@ -7,7 +7,7 @@ export default function TopBar() {
         {/* Left — Contact */}
         <div className="flex items-center gap-6">
           <a
-            href="tel:+1234567890"
+            href="tel:+923001234567"
             className="flex items-center gap-2 hover:text-[#FBBF24] transition-colors"
           >
             <svg
@@ -20,7 +20,7 @@ export default function TopBar() {
             >
               <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
             </svg>
-            <span className="font-medium">+1 (234) 567-890</span>
+            <span className="font-medium">+92 300 1234567</span>
           </a>
           <a
             href="mailto:concierge@mnawazjewelry.com"
@@ -43,7 +43,7 @@ export default function TopBar() {
         {/* Center — Welcome */}
         <p className="text-[12px] tracking-wide flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-          <span className="text-amber-300 font-semibold">Complimentary Insured Express Delivery</span> on orders over $500 • Certified 18K/24K Gold & Natural Diamonds
+          <span className="text-amber-300 font-semibold">Complimentary Insured Express Courier</span> on orders over Rs. 50,000 • Certified 18K/21K/22K Gold & Natural Diamonds
         </p>
 
         {/* Right — Social & Selectors */}
@@ -67,17 +67,17 @@ export default function TopBar() {
           <span className="w-px h-4 bg-white/20"></span>
 
           {/* Currency */}
-          <select className="bg-transparent text-[12px] border-none outline-none cursor-pointer text-white/80">
-            <option value="USD">USD $</option>
-            <option value="EUR">EUR €</option>
-            <option value="GBP">GBP £</option>
+          <select className="bg-transparent text-[12px] border-none outline-none cursor-pointer text-white/90 font-medium">
+            <option value="PKR" className="text-slate-900">PKR (Rs.)</option>
+            <option value="USD" className="text-slate-900">USD ($)</option>
+            <option value="AED" className="text-slate-900">AED (د.إ)</option>
+            <option value="GBP" className="text-slate-900">GBP (£)</option>
           </select>
 
           {/* Language */}
           <select className="bg-transparent text-[12px] border-none outline-none cursor-pointer text-white/80">
-            <option value="en">English</option>
-            <option value="fr">French</option>
-            <option value="ar">Arabic</option>
+            <option value="en" className="text-slate-900">English</option>
+            <option value="ur" className="text-slate-900">Urdu (اردو)</option>
           </select>
         </div>
       </div>

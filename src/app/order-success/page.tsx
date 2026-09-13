@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { formatPrice } from "@/lib/currency";
 
 interface OrderItem {
   id: string;
@@ -78,15 +79,15 @@ function OrderSuccessContent() {
     createdAt: new Date().toISOString(),
     customer: {
       email: "client@mnawazjewelry.com",
-      phone: "+1 (555) 234-5678",
-      firstName: "Victoria",
-      lastName: "Sterling",
-      country: "United States",
-      address1: "742 Fifth Avenue",
-      address2: "Suite 12A",
-      city: "New York",
-      state: "NY",
-      zip: "10022",
+      phone: "+92 300 1234567",
+      firstName: "Fatima",
+      lastName: "Nawaz",
+      country: "Pakistan",
+      address1: "Gulberg III, M. M. Alam Road",
+      address2: "Atelier Suite 4",
+      city: "Lahore",
+      state: "Punjab",
+      zip: "54000",
     },
     shipping: {
       name: "Complimentary Insured Courier",
@@ -103,15 +104,15 @@ function OrderSuccessContent() {
         name: "Golden Bloom Earrings",
         slug: "golden-bloom-earrings",
         image: "/images/products/earrings-1.jpg",
-        price: 245,
+        price: 68500,
         quantity: 1,
         variants: { metal: "18K Yellow Gold" },
       },
     ],
-    subtotal: 245,
+    subtotal: 68500,
     discount: 0,
     shippingCost: 0,
-    total: 245,
+    total: 68500,
   };
 
   const formattedDate = new Date(displayOrder.createdAt).toLocaleDateString("en-US", {
@@ -239,11 +240,11 @@ function OrderSuccessContent() {
                       </p>
                     )}
                     <p className="text-[12px] text-[#777]">
-                      Qty: <strong>{item.quantity}</strong> × ${item.price.toFixed(2)}
+                      Qty: <strong>{item.quantity}</strong> × {formatPrice(item.price)}
                     </p>
                   </div>
                   <span className="font-semibold text-[15px] text-[#1A1A1A]">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    {formatPrice(item.price * item.quantity)}
                   </span>
                 </div>
               ))}
@@ -253,18 +254,18 @@ function OrderSuccessContent() {
             <div className="p-6 bg-[#FAF7F4] border-t border-[#eee] space-y-2.5 text-[13px] text-[#666]">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span className="font-semibold text-[#1A1A1A]">${displayOrder.subtotal.toFixed(2)}</span>
+                <span className="font-semibold text-[#1A1A1A]">{formatPrice(displayOrder.subtotal)}</span>
               </div>
               {displayOrder.discount > 0 && (
                 <div className="flex justify-between text-emerald-600 font-semibold">
                   <span>VIP Promotional Privilege</span>
-                  <span>-${displayOrder.discount.toFixed(2)}</span>
+                  <span>-{formatPrice(displayOrder.discount)}</span>
                 </div>
               )}
               <div className="flex justify-between">
                 <span>Insured Courier Delivery</span>
                 <span className="font-semibold text-emerald-600">
-                  {displayOrder.shippingCost === 0 ? "Complimentary (FREE)" : `$${displayOrder.shippingCost.toFixed(2)}`}
+                  {displayOrder.shippingCost === 0 ? "Complimentary (FREE)" : formatPrice(displayOrder.shippingCost)}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -274,7 +275,7 @@ function OrderSuccessContent() {
               <div className="pt-3 border-t border-[#eee] flex justify-between items-baseline">
                 <span className="font-bold text-[15px] text-[#1A1A1A]">Final Paid Total</span>
                 <span className="font-cormorant text-3xl font-bold text-[#D97706]">
-                  ${displayOrder.total.toFixed(2)}
+                  {formatPrice(displayOrder.total)}
                 </span>
               </div>
             </div>

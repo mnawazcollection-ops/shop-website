@@ -45,7 +45,7 @@ export const products: Product[] = [
   {
     id: "1",
     name: "Golden Bloom Earrings",
-    price: 245,
+    price: 68500,
     image: "/images/products/earrings-1.jpg",
     gallery: [
       "/images/products/earrings-1.jpg",
@@ -76,17 +76,17 @@ export const products: Product[] = [
         label: "Metal Color",
         options: [
           { value: "yellow-gold", label: "Yellow Gold", colorHex: "#D4A843", inStock: true },
-          { value: "rose-gold", label: "Rose Gold", colorHex: "#B76E79", priceModifier: 20, inStock: true },
-          { value: "white-gold", label: "White Gold", colorHex: "#E8E8E8", priceModifier: 35, inStock: true },
+          { value: "rose-gold", label: "Rose Gold", colorHex: "#B76E79", priceModifier: 5000, inStock: true },
+          { value: "white-gold", label: "White Gold", colorHex: "#E8E8E8", priceModifier: 8000, inStock: true },
         ],
       },
       {
         type: "size",
         label: "Size",
         options: [
-          { value: "small", label: "Small (18mm)", priceModifier: -15, inStock: true },
+          { value: "small", label: "Small (18mm)", priceModifier: -4000, inStock: true },
           { value: "medium", label: "Medium (22mm)", inStock: true },
-          { value: "large", label: "Large (28mm)", priceModifier: 30, inStock: false },
+          { value: "large", label: "Large (28mm)", priceModifier: 7500, inStock: false },
         ],
       },
     ],
@@ -95,8 +95,8 @@ export const products: Product[] = [
   {
     id: "2",
     name: "Filigree Gold Bracelet",
-    price: 389,
-    originalPrice: 450,
+    price: 108000,
+    originalPrice: 125000,
     image: "/images/products/bracelet-1.jpg",
     gallery: [
       "/images/products/bracelet-1.jpg",
@@ -127,7 +127,7 @@ export const products: Product[] = [
         label: "Metal Color",
         options: [
           { value: "yellow-gold", label: "Yellow Gold", colorHex: "#D4A843", inStock: true },
-          { value: "rose-gold", label: "Rose Gold", colorHex: "#B76E79", priceModifier: 25, inStock: true },
+          { value: "rose-gold", label: "Rose Gold", colorHex: "#B76E79", priceModifier: 6000, inStock: true },
         ],
       },
     ],
@@ -136,7 +136,7 @@ export const products: Product[] = [
   {
     id: "3",
     name: "Diamond Solitaire Ring",
-    price: 1250,
+    price: 345000,
     image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&h=600&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&h=800&fit=crop",
@@ -178,8 +178,8 @@ export const products: Product[] = [
         label: "Band Metal",
         options: [
           { value: "platinum", label: "Platinum 950", inStock: true },
-          { value: "white-gold", label: "18K White Gold", colorHex: "#E8E8E8", priceModifier: -150, inStock: true },
-          { value: "yellow-gold", label: "18K Yellow Gold", colorHex: "#D4A843", priceModifier: -150, inStock: true },
+          { value: "white-gold", label: "18K White Gold", colorHex: "#E8E8E8", priceModifier: -35000, inStock: true },
+          { value: "yellow-gold", label: "18K Yellow Gold", colorHex: "#D4A843", priceModifier: -35000, inStock: true },
         ],
       },
     ],
@@ -188,7 +188,7 @@ export const products: Product[] = [
   {
     id: "4",
     name: "Pearl Drop Pendant",
-    price: 320,
+    price: 89000,
     image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&h=600&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&h=800&fit=crop",
@@ -217,8 +217,8 @@ export const products: Product[] = [
         label: "Chain Metal",
         options: [
           { value: "yellow-gold", label: "Yellow Gold", colorHex: "#D4A843", inStock: true },
-          { value: "white-gold", label: "White Gold", colorHex: "#E8E8E8", priceModifier: 15, inStock: true },
-          { value: "rose-gold", label: "Rose Gold", colorHex: "#B76E79", priceModifier: 15, inStock: true },
+          { value: "white-gold", label: "White Gold", colorHex: "#E8E8E8", priceModifier: 4000, inStock: true },
+          { value: "rose-gold", label: "Rose Gold", colorHex: "#B76E79", priceModifier: 4000, inStock: true },
         ],
       },
     ],
@@ -227,7 +227,7 @@ export const products: Product[] = [
   {
     id: "5",
     name: "Twisted Gold Bangle",
-    price: 475,
+    price: 135000,
     image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&h=600&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&h=800&fit=crop",
@@ -265,8 +265,8 @@ export const products: Product[] = [
   {
     id: "6",
     name: "Sapphire Cluster Earrings",
-    price: 580,
-    originalPrice: 680,
+    price: 165000,
+    originalPrice: 195000,
     image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&h=800&fit=crop",
@@ -297,7 +297,7 @@ export const products: Product[] = [
         label: "Metal Setting",
         options: [
           { value: "white-gold", label: "White Gold", colorHex: "#E8E8E8", inStock: true },
-          { value: "platinum", label: "Platinum", colorHex: "#D0D0D0", priceModifier: 120, inStock: true },
+          { value: "platinum", label: "Platinum", colorHex: "#D0D0D0", priceModifier: 25000, inStock: true },
         ],
       },
     ],
@@ -306,7 +306,7 @@ export const products: Product[] = [
   {
     id: "7",
     name: "Rose Gold Chain Necklace",
-    price: 295,
+    price: 82000,
     image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&h=800&fit=crop",
@@ -334,9 +334,9 @@ export const products: Product[] = [
         type: "size",
         label: "Chain Length",
         options: [
-          { value: "16", label: "16 inches (Choker)", priceModifier: -20, inStock: true },
+          { value: "16", label: "16 inches (Choker)", priceModifier: -5000, inStock: true },
           { value: "18", label: "18 inches (Classic)", inStock: true },
-          { value: "20", label: "20 inches (Long)", priceModifier: 25, inStock: true },
+          { value: "20", label: "20 inches (Long)", priceModifier: 6500, inStock: true },
         ],
       },
     ],
@@ -345,7 +345,7 @@ export const products: Product[] = [
   {
     id: "8",
     name: "Vintage Diamond Band",
-    price: 890,
+    price: 248000,
     image: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&h=600&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&h=800&fit=crop",
