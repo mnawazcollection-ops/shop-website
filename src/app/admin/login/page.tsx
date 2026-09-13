@@ -27,10 +27,10 @@ export default function AdminLoginPage() {
 
     const res = await login(email, password, rememberMe);
     if (res.success) {
-      success("Welcome Back", "Authenticated successfully as Super Admin Ahsan.");
+      success("Welcome Back", "Logged in successfully.");
       router.push("/admin");
     } else {
-      setErrorMsg(res.error || "Authentication failed. Please verify credentials.");
+      setErrorMsg(res.error || "Login failed. Please check your email and password.");
       toastError("Access Denied", res.error);
       setIsSubmitting(false);
     }
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
             M. Nawaz
           </h1>
           <p className="text-xs uppercase tracking-[3px] font-semibold text-amber-400 mt-1">
-            Private Atelier • Management Console
+            Store Admin Portal
           </p>
         </div>
 
@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
             {/* Email Field */}
             <div>
               <label className="block text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-1.5">
-                Administrator Username / Email
+                Admin Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                  Secure Password
+                  Password
                 </label>
               </div>
               <div className="relative">
@@ -139,10 +139,10 @@ export default function AdminLoginPage() {
               className="w-full bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 font-bold py-3.5 rounded-lg shadow-lg shadow-amber-600/20 hover:shadow-amber-600/30 text-xs uppercase tracking-[2px] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
-                <span>Authenticating Credentials...</span>
+                <span>Signing In...</span>
               ) : (
                 <>
-                  <span>Sign In to Dashboard</span>
+                  <span>Sign In</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}

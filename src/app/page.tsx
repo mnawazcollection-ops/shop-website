@@ -14,27 +14,27 @@ const HOME_FAQS = [
   {
     question: "Does M. Nawaz Jewelry Collection provide certified pure gold and natural diamonds?",
     answer:
-      "Yes, every masterwork in our atelier is hallmarked for metal purity (18K, 21K, and 22K solid gold) and accompanied by official GIA and IGI laboratory certificates confirming 100% natural, ethically sourced diamonds.",
+      "Yes, every jewelry piece is stamped for gold purity (18K, 21K, and 22K solid gold) and comes with official certificate confirming 100% natural, certified diamonds.",
   },
   {
     question: "Do you deliver jewelry across Pakistan and internationally?",
     answer:
-      "Yes, we provide fully insured, tamper-evident armored courier delivery across all cities in Pakistan (including Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, and Peshawar) as well as worldwide delivery.",
+      "Yes, we provide safe and insured courier delivery across all cities in Pakistan (including Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, and Peshawar) as well as worldwide delivery.",
   },
   {
     question: "Can I pay Cash on Delivery (COD) for fine jewelry in Pakistan?",
     answer:
-      "Yes, we offer Cash on Delivery (COD) and private vault VIP delivery across major metropolitan centers in Pakistan, in addition to direct bank wire transfers and major debit/credit cards.",
+      "Yes, we offer Cash on Delivery (COD) across Pakistan, in addition to direct bank transfer and credit/debit cards.",
   },
   {
-    question: "Where is the M. Nawaz Jewelry Collection flagship atelier located?",
+    question: "Where is the M. Nawaz Jewelry Collection flagship showroom located?",
     answer:
-      "Our flagship bridal salon and atelier is situated on M. M. Alam Road, Gulberg III, Lahore, Pakistan, welcoming clients Monday through Saturday for bespoke appointments.",
+      "Our main showroom is located on M. M. Alam Road, Gulberg III, Lahore, Pakistan, open Monday through Saturday for visits and appointments.",
   },
   {
-    question: "Do you offer custom made bridal jewelry and solitaire engagement rings?",
+    question: "Do you offer custom made bridal jewelry and engagement rings?",
     answer:
-      "Absolutely. Our master goldsmiths specialize in bespoke engagement rings, custom heirloom bridal suites, gemstone sourcing, and personalized hallmark engravings.",
+      "Yes, our jewelers specialize in custom engagement rings, complete bridal sets, gemstone selection, and personalized engravings.",
   },
 ];
 

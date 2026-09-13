@@ -69,10 +69,10 @@ export default function OrdersPage() {
   };
 
   const statusTabs = [
-    { id: "all", label: "All Acquisitions" },
-    { id: "pending", label: "Pending Vault" },
-    { id: "processing", label: "In Workshop" },
-    { id: "shipped", label: "In Transit" },
+    { id: "all", label: "All Orders" },
+    { id: "pending", label: "Pending" },
+    { id: "processing", label: "Processing" },
+    { id: "shipped", label: "Shipped" },
     { id: "delivered", label: "Delivered" },
     { id: "cancelled", label: "Cancelled" },
   ];
@@ -82,9 +82,9 @@ export default function OrdersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Acquisitions & Orders</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Orders</h1>
           <p className="text-sm text-stone-500">
-            Fulfill high-jewelry shipments, track courier status, and verify client payments.
+            View and manage customer orders, delivery status, and payments.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function OrdersPage() {
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            placeholder="Search by Order #, client name, or email..."
+            placeholder="Search by order number, customer name, or email..."
             className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
           />
         </div>
@@ -152,9 +152,9 @@ export default function OrdersPage() {
             }}
             className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-700 focus:outline-none"
           >
-            <option value="all">All Payment Statuses</option>
-            <option value="paid">Payment Confirmed (Paid)</option>
-            <option value="pending">Pending Payment</option>
+            <option value="all">All Payments</option>
+            <option value="paid">Paid</option>
+            <option value="pending">Unpaid / Pending</option>
             <option value="refunded">Refunded</option>
           </select>
 
@@ -166,8 +166,8 @@ export default function OrdersPage() {
           >
             <option value="date-desc">Newest Orders</option>
             <option value="date-asc">Oldest Orders</option>
-            <option value="total-desc">Highest Total</option>
-            <option value="total-asc">Lowest Total</option>
+            <option value="total-desc">Highest Amount</option>
+            <option value="total-asc">Lowest Amount</option>
           </select>
         </div>
       </div>
@@ -178,13 +178,13 @@ export default function OrdersPage() {
           <table className="w-full text-left border-collapse text-sm min-w-[850px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                <th className="py-3 px-4">Order Ref</th>
-                <th className="py-3 px-4">Client</th>
-                <th className="py-3 px-4">Date Placed</th>
+                <th className="py-3 px-4">Order #</th>
+                <th className="py-3 px-4">Customer</th>
+                <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Items</th>
-                <th className="py-3 px-4">Total Amount</th>
+                <th className="py-3 px-4">Total</th>
                 <th className="py-3 px-4">Payment</th>
-                <th className="py-3 px-4">Fulfillment Status</th>
+                <th className="py-3 px-4">Delivery Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -270,7 +270,7 @@ export default function OrdersPage() {
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-semibold transition-colors"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          Manage
+                          View Order
                         </Link>
                       </td>
                     </tr>

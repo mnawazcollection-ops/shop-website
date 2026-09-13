@@ -18,7 +18,7 @@ export default function EditProductPage() {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs text-stone-500 font-medium">Loading masterwork details...</p>
+          <p className="text-xs text-stone-500 font-medium">Loading product details...</p>
         </div>
       </div>
     );
@@ -32,13 +32,13 @@ export default function EditProductPage() {
         </div>
         <h2 className="text-xl font-bold text-stone-900">Product Not Found</h2>
         <p className="text-sm text-stone-500">
-          The requested fine jewelry piece (ID: {productId}) could not be located in your catalog.
+          This product (ID: {productId}) could not be found.
         </p>
         <Link
           href="/admin/products"
           className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-lg text-xs font-semibold hover:bg-stone-800"
         >
-          <ArrowLeft className="w-4 h-4" /> Return to Catalog
+          <ArrowLeft className="w-4 h-4" /> Back to Products
         </Link>
       </div>
     );

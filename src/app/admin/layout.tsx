@@ -29,7 +29,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white">
         <div className="w-10 h-10 border-3 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
         <p className="text-sm font-semibold tracking-wider uppercase text-amber-400">
-          Loading Atelier Console...
+          Loading Dashboard...
         </p>
       </div>
     );
@@ -44,7 +44,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white">
         <div className="w-10 h-10 border-3 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
         <p className="text-sm font-semibold tracking-wider uppercase text-amber-400">
-          Authenticating...
+          Checking login...
         </p>
       </div>
     );

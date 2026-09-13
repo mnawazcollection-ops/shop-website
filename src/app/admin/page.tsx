@@ -133,14 +133,14 @@ export default function AdminOverviewPage() {
           <div className="flex items-center gap-2 mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             <span className="text-[11px] font-bold uppercase tracking-[2px] text-amber-400">
-              Live Atelier Console
+              Store Dashboard
             </span>
           </div>
           <h1 className="font-cormorant text-2xl sm:text-3xl font-bold tracking-wide text-white">
             Welcome back, {user?.name ? user.name.split(" ")[0] : "Ahsan"}
           </h1>
           <p className="text-xs text-slate-300 mt-1 max-w-xl">
-            Here is your daily executive overview of acquisitions, vault fulfillment, and client activity.
+            Here is your daily summary of sales, customer orders, and available stock.
           </p>
         </div>
 
@@ -150,13 +150,13 @@ export default function AdminOverviewPage() {
             className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 text-xs uppercase tracking-wider font-bold shadow-md shadow-amber-600/20 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Add Jewel</span>
+            <span>Add Product</span>
           </Link>
           <Link
             href="/admin/orders"
             className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs uppercase tracking-wider font-semibold border border-slate-700 transition-colors"
           >
-            <span>Orders</span>
+            <span>View Orders</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -165,21 +165,21 @@ export default function AdminOverviewPage() {
       {/* Row 1: Key Business Metrics (Grid) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          title="Total Net Sales"
+          title="Total Sales"
           value={formatPrice(totalSales)}
           change={orders.length > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<DollarSign className="w-5 h-5" />}
         />
         <StatsCard
-          title="Today's Acquisition"
+          title="Today's Sales"
           value={formatPrice(todaySales)}
           change={todaySales > 0 ? "+100%" : "0%"}
           isPositive={true}
           icon={<Sparkles className="w-5 h-5" />}
         />
         <StatsCard
-          title="Monthly Revenue"
+          title="Monthly Sales"
           value={formatPrice(monthlyRevenue)}
           change={monthlyRevenue > 0 ? "+100%" : "0%"}
           isPositive={true}
@@ -202,7 +202,7 @@ export default function AdminOverviewPage() {
             <Clock className="w-4 h-4" />
           </div>
           <p className="text-xl font-bold text-slate-900">{pendingOrders}</p>
-          <span className="text-[10px] text-amber-700 font-medium">Awaiting wire</span>
+          <span className="text-[10px] text-amber-700 font-medium">New Orders</span>
         </div>
 
         <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
@@ -211,7 +211,7 @@ export default function AdminOverviewPage() {
             <Package className="w-4 h-4" />
           </div>
           <p className="text-xl font-bold text-slate-900">{processingOrders}</p>
-          <span className="text-[10px] text-blue-600 font-medium">In Workshop</span>
+          <span className="text-[10px] text-blue-600 font-medium">In Progress</span>
         </div>
 
         <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
@@ -220,7 +220,7 @@ export default function AdminOverviewPage() {
             <CheckCircle2 className="w-4 h-4" />
           </div>
           <p className="text-xl font-bold text-slate-900">{completedOrders}</p>
-          <span className="text-[10px] text-emerald-600 font-medium">Fulfilled</span>
+          <span className="text-[10px] text-emerald-600 font-medium">Delivered</span>
         </div>
 
         <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
@@ -229,12 +229,12 @@ export default function AdminOverviewPage() {
             <XCircle className="w-4 h-4" />
           </div>
           <p className="text-xl font-bold text-slate-900">{cancelledOrders}</p>
-          <span className="text-[10px] text-rose-600 font-medium">Refunded</span>
+          <span className="text-[10px] text-rose-600 font-medium">Cancelled</span>
         </div>
 
         <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
           <div className="flex items-center justify-between text-slate-600 mb-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Clients</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Customers</span>
             <Users className="w-4 h-4" />
           </div>
           <p className="text-xl font-bold text-slate-900">{customers.length}</p>
@@ -247,7 +247,7 @@ export default function AdminOverviewPage() {
             <AlertTriangle className="w-4 h-4" />
           </div>
           <p className="text-xl font-bold text-amber-600">{lowStockProducts.length}</p>
-          <span className="text-[10px] text-amber-700 font-semibold">Needs restock</span>
+          <span className="text-[10px] text-amber-700 font-semibold">Needs Restock</span>
         </div>
       </div>
 
@@ -258,10 +258,10 @@ export default function AdminOverviewPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-100 gap-4">
             <div>
               <h2 className="font-cormorant text-2xl font-bold text-slate-900">
-                Sales Revenue Analytics
+                Sales Chart
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                Audited transactional growth across all boutiques & online storefront
+                Track your sales and order trends over time
               </p>
             </div>
 
@@ -292,7 +292,7 @@ export default function AdminOverviewPage() {
                   <div key={item.label} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
                     {/* Tooltip Hover Value */}
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow-md whitespace-nowrap pointer-events-none">
-                      ${item.sales.toLocaleString()} ({item.orders} orders)
+                      Rs. {item.sales.toLocaleString()} ({item.orders} orders)
                     </div>
 
                     {/* Bar */}
@@ -313,7 +313,7 @@ export default function AdminOverviewPage() {
             </div>
             {totalSales === 0 && (
               <p className="text-center text-[11px] text-slate-400 mt-3 italic">
-                Storefront is ready for client launch. Live sales transactions will populate this chart in real time.
+                Your store is ready. New customer orders will show up here automatically.
               </p>
             )}
           </div>
@@ -323,11 +323,11 @@ export default function AdminOverviewPage() {
         <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
           <div>
             <h2 className="font-cormorant text-2xl font-bold text-slate-900 mb-1">
-              Order Fulfillment Ratio
+              Order Status Overview
             </h2>
             <p className="text-xs text-slate-500 mb-6">
               {totalOrderCount === 0
-                ? "Awaiting first client purchases"
+                ? "No orders yet"
                 : `${totalOrderCount} total order${totalOrderCount > 1 ? "s" : ""}`}
             </p>
 
@@ -336,7 +336,7 @@ export default function AdminOverviewPage() {
                 <div className="flex justify-between text-xs font-semibold mb-1.5">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    Delivered & Verified
+                    Delivered
                   </span>
                   <span className="text-slate-900 font-bold">{deliveredPercent}% ({completedOrders})</span>
                 </div>
@@ -349,7 +349,7 @@ export default function AdminOverviewPage() {
                 <div className="flex justify-between text-xs font-semibold mb-1.5">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <span className="w-2 h-2 rounded-full bg-blue-500" />
-                    Workshop Processing
+                    In Progress
                   </span>
                   <span className="text-slate-900 font-bold">{processingPercent}% ({processingOrders})</span>
                 </div>
@@ -362,7 +362,7 @@ export default function AdminOverviewPage() {
                 <div className="flex justify-between text-xs font-semibold mb-1.5">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <span className="w-2 h-2 rounded-full bg-amber-500" />
-                    Pending Wire / Verification
+                    Pending Payment
                   </span>
                   <span className="text-slate-900 font-bold">{pendingPercent}% ({pendingOrders})</span>
                 </div>
@@ -375,7 +375,7 @@ export default function AdminOverviewPage() {
                 <div className="flex justify-between text-xs font-semibold mb-1.5">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <span className="w-2 h-2 rounded-full bg-rose-500" />
-                    Cancelled / Exchanged
+                    Cancelled
                   </span>
                   <span className="text-slate-900 font-bold">{cancelledPercent}% ({cancelledOrders})</span>
                 </div>
@@ -388,7 +388,7 @@ export default function AdminOverviewPage() {
 
           <div className="mt-8 pt-5 border-t border-slate-100">
             <h3 className="text-xs uppercase font-bold tracking-wider text-slate-400 mb-3">
-              Category Revenue Share
+              Sales by Category
             </h3>
             <div className="grid grid-cols-2 gap-2 text-xs">
               {categoryStats.map((stat) => (
@@ -413,7 +413,7 @@ export default function AdminOverviewPage() {
               <h2 className="font-cormorant text-2xl font-bold text-slate-900">
                 Recent Orders
               </h2>
-              <p className="text-xs text-slate-500">Latest transactions received</p>
+              <p className="text-xs text-slate-500">Latest orders from customers</p>
             </div>
             <Link
               href="/admin/orders"
@@ -429,7 +429,7 @@ export default function AdminOverviewPage() {
               <thead>
                 <tr className="border-b border-slate-100 text-[11px] uppercase font-bold tracking-wider text-slate-400">
                   <th className="pb-3 font-semibold">Order ID</th>
-                  <th className="pb-3 font-semibold">Client</th>
+                  <th className="pb-3 font-semibold">Customer</th>
                   <th className="pb-3 font-semibold">Date</th>
                   <th className="pb-3 font-semibold">Total</th>
                   <th className="pb-3 font-semibold">Status</th>
@@ -443,7 +443,7 @@ export default function AdminOverviewPage() {
                       <ShoppingBag className="w-8 h-8 mx-auto mb-2 text-slate-300 opacity-60" />
                       <p className="font-semibold text-slate-700 text-xs">No orders received yet</p>
                       <p className="text-[11px] text-slate-400 mt-0.5">
-                        When clients place orders on the storefront, they will appear here in real time.
+                        When customers place orders on your website, they will appear here.
                       </p>
                     </td>
                   </tr>
@@ -474,7 +474,7 @@ export default function AdminOverviewPage() {
                         <Link
                           href={`/admin/orders/${order.id}`}
                           className="p-1.5 rounded-lg text-slate-500 hover:text-amber-700 hover:bg-slate-100 inline-flex items-center transition-colors"
-                          title="View Order Details"
+                          title="View Order"
                         >
                           <Eye className="w-4 h-4" />
                         </Link>
@@ -487,7 +487,7 @@ export default function AdminOverviewPage() {
           </div>
         </div>
 
-        {/* Low Stock & Best-Selling Jewels Widget (1 Col) */}
+        {/* Low Stock & Best-Selling Products Widget (1 Col) */}
         <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-6">
           {/* Low Stock Warning */}
           <div>
@@ -500,7 +500,7 @@ export default function AdminOverviewPage() {
                 href="/admin/inventory"
                 className="text-[11px] font-bold text-amber-700 hover:underline uppercase tracking-wider"
               >
-                Inventory →
+                Stock →
               </Link>
             </div>
 
@@ -534,7 +534,7 @@ export default function AdminOverviewPage() {
           {/* Top Sellers */}
           <div className="pt-4 border-t border-slate-100">
             <h2 className="font-cormorant text-xl font-bold text-slate-900 mb-3">
-              Best Selling Jewels
+              Best Selling Products
             </h2>
             <div className="space-y-2.5">
               {products

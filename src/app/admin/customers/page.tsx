@@ -38,7 +38,7 @@ export default function CustomersPage() {
   const handleToggleStatus = (cust: AdminCustomer) => {
     toggleCustomerStatus(cust.id);
     addToast({
-      title: "Client Status Updated",
+      title: "Customer Status Updated",
       message: `${cust.name}'s account is now ${cust.status === "active" ? "disabled" : "active"}.`,
       type: "info",
     });
@@ -49,15 +49,15 @@ export default function CustomersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Clientele & Collectors</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Customers</h1>
           <p className="text-sm text-stone-500">
-            Private client dossiers, lifetime acquisition value, and bespoke relationship records.
+            View customer details, order counts, and contact information.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="px-3.5 py-1.5 bg-stone-100 rounded-lg text-xs font-semibold text-stone-700">
-            Total Collectors: {customers.length}
+            Total Customers: {customers.length}
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function CustomersPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by client name, email, or telephone..."
+            placeholder="Search by customer name, email, or phone..."
             className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
           />
         </div>
@@ -81,11 +81,11 @@ export default function CustomersPage() {
             onChange={(e) => setTierFilter(e.target.value)}
             className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-700 focus:outline-none"
           >
-            <option value="all">All VIP Tiers</option>
-            <option value="VIP Collector">VIP Collector</option>
-            <option value="Gold Tier">Gold Tier</option>
-            <option value="Private Client">Private Client</option>
-            <option value="Standard Client">Standard Client</option>
+            <option value="all">All Customer Types</option>
+            <option value="VIP Collector">VIP Customer</option>
+            <option value="Gold Tier">Gold Customer</option>
+            <option value="Private Client">Special Customer</option>
+            <option value="Standard Client">Regular Customer</option>
           </select>
 
           <select
@@ -94,8 +94,8 @@ export default function CustomersPage() {
             className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-700 focus:outline-none"
           >
             <option value="all">All Statuses</option>
-            <option value="active">Active Access</option>
-            <option value="disabled">Suspended / Inactive</option>
+            <option value="active">Active</option>
+            <option value="disabled">Disabled</option>
           </select>
         </div>
       </div>
@@ -106,12 +106,12 @@ export default function CustomersPage() {
           <table className="w-full text-left border-collapse text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                <th className="py-3 px-4">Client Dossier</th>
-                <th className="py-3 px-4">Patronage Tier</th>
-                <th className="py-3 px-4">Telephone</th>
-                <th className="py-3 px-4 text-center">Acquisitions</th>
-                <th className="py-3 px-4">Lifetime Spend</th>
-                <th className="py-3 px-4">Last Acquisition</th>
+                <th className="py-3 px-4">Customer</th>
+                <th className="py-3 px-4">Customer Type</th>
+                <th className="py-3 px-4">Phone Number</th>
+                <th className="py-3 px-4 text-center">Orders</th>
+                <th className="py-3 px-4">Total Spent</th>
+                <th className="py-3 px-4">Last Order</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
@@ -122,7 +122,7 @@ export default function CustomersPage() {
                 <tr>
                   <td colSpan={8} className="py-16 text-center text-stone-500">
                     <AlertCircle className="w-8 h-8 mx-auto mb-2 text-stone-300" />
-                    <p className="font-semibold text-stone-700">No clientele matches found</p>
+                    <p className="font-semibold text-stone-700">No customers found</p>
                   </td>
                 </tr>
               ) : (
@@ -175,7 +175,7 @@ export default function CustomersPage() {
 
                     {/* Lifetime Spend */}
                     <td className="py-3.5 px-4 font-bold text-stone-900">
-                      ${cust.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      Rs. {cust.totalSpent.toLocaleString()}
                     </td>
 
                     {/* Last Order Date */}
@@ -198,7 +198,7 @@ export default function CustomersPage() {
                         <Link
                           href={`/admin/customers/${cust.id}`}
                           className="p-1.5 text-stone-400 hover:text-amber-600 rounded hover:bg-stone-100 transition-colors"
-                          title="View Dossier"
+                          title="View Customer"
                         >
                           <Eye className="w-4 h-4" />
                         </Link>
@@ -209,7 +209,7 @@ export default function CustomersPage() {
                               ? "text-stone-400 hover:text-red-600 hover:bg-red-50"
                               : "text-emerald-600 hover:bg-emerald-50"
                           }`}
-                          title={cust.status === "active" ? "Disable Client" : "Enable Client"}
+                          title={cust.status === "active" ? "Disable Customer" : "Enable Customer"}
                         >
                           {cust.status === "active" ? "Disable" : "Activate"}
                         </button>

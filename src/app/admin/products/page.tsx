@@ -125,8 +125,8 @@ export default function ProductsPage() {
       setSelectedIds(selectedIds.filter((i) => i !== deleteId));
       setDeleteId(null);
       addToast({
-        title: "Masterwork Removed",
-        message: "The product was successfully removed from your catalog.",
+        title: "Product Deleted",
+        message: "The product was removed from your store.",
         type: "info",
       });
     }
@@ -231,9 +231,9 @@ export default function ProductsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Fine Jewelry Catalog</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Products</h1>
           <p className="text-sm text-stone-500">
-            Manage your high-jewelry inventory, pricing, precious metal variants, and visibility.
+            View, add, edit, or delete products and manage prices and stock.
           </p>
         </div>
 
@@ -242,14 +242,14 @@ export default function ProductsPage() {
             onClick={handleCloudSync}
             disabled={isSyncingCloud}
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-3.5 py-2 border border-amber-300 bg-amber-50/80 hover:bg-amber-100 text-amber-900 text-sm font-semibold rounded-lg shadow-xs transition-colors disabled:opacity-50"
-            title="Sync all products and images to Cloudinary & Firebase Firestore"
+            title="Save all products and images online"
           >
             {isSyncingCloud ? (
               <RefreshCw className="w-4 h-4 text-amber-700 animate-spin" />
             ) : (
               <Cloud className="w-4 h-4 text-amber-700" />
             )}
-            <span>{isSyncingCloud ? "Syncing..." : "Sync to Cloud"}</span>
+            <span>{isSyncingCloud ? "Saving..." : "Save to Cloud"}</span>
           </button>
 
           <button
@@ -265,7 +265,7 @@ export default function ProductsPage() {
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"
           >
             <Plus className="w-4 h-4" />
-            Add Masterwork
+            Add Product
           </Link>
         </div>
       </div>
@@ -337,7 +337,7 @@ export default function ProductsPage() {
               <option value="all">Stock: All Levels</option>
               <option value="in-stock">In Stock (&gt;5)</option>
               <option value="low-stock">Low Stock (≤5)</option>
-              <option value="out-of-stock">Vault Empty (0)</option>
+              <option value="out-of-stock">Out of Stock (0)</option>
             </select>
           </div>
         </div>
@@ -346,7 +346,7 @@ export default function ProductsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-stone-100 text-xs text-stone-500">
           <div className="flex items-center gap-2">
             <span>
-              Showing <strong className="text-stone-800">{filteredProducts.length}</strong> jewelry pieces
+              Showing <strong className="text-stone-800">{filteredProducts.length}</strong> products
             </span>
             {(searchQuery || selectedCategory !== "all" || selectedStatus !== "all" || selectedStock !== "all") && (
               <button
@@ -364,17 +364,17 @@ export default function ProductsPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-xs">
             <span className="text-stone-400">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "newest" | "price-asc" | "price-desc" | "stock-asc")}
               className="bg-transparent text-stone-700 font-medium focus:outline-none cursor-pointer"
             >
-              <option value="newest">Recently Crafted (Newest)</option>
+              <option value="newest">Newest First</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
-              <option value="stock-asc">Stock: Lowest First</option>
+              <option value="stock-asc">Stock: Low to High</option>
             </select>
           </div>
         </div>
@@ -437,11 +437,11 @@ export default function ProductsPage() {
                     )}
                   </button>
                 </th>
-                <th className="py-3 px-4">Masterwork</th>
+                <th className="py-3 px-4">Product</th>
                 <th className="py-3 px-4">SKU</th>
                 <th className="py-3 px-4">Category</th>
                 <th className="py-3 px-4">Price</th>
-                <th className="py-3 px-4">Vault Stock</th>
+                <th className="py-3 px-4">Stock</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-center">Featured</th>
                 <th className="py-3 px-4 text-right">Actions</th>
@@ -455,9 +455,9 @@ export default function ProductsPage() {
                     <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-stone-100 flex items-center justify-center text-stone-400">
                       <Search className="w-6 h-6" />
                     </div>
-                    <p className="text-stone-700 font-semibold">No jewelry items found</p>
+                    <p className="text-stone-700 font-semibold">No products found</p>
                     <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto">
-                      Try adjusting your search criteria or create a new fine jewelry piece.
+                      Try searching for something else or add a new product.
                     </p>
                     <Link
                       href="/admin/products/new"
@@ -612,7 +612,7 @@ export default function ProductsPage() {
                           <Link
                             href={`/admin/products/${product.id}/edit`}
                             className="p-1.5 text-stone-400 hover:text-amber-600 rounded hover:bg-stone-100 transition-colors"
-                            title="Edit Masterwork"
+                            title="Edit Product"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                           </Link>
@@ -697,8 +697,8 @@ export default function ProductsPage() {
       {/* Delete Confirmation Modal */}
       <ConfirmDialog
         isOpen={!!deleteId}
-        title="Delete Fine Jewelry Masterwork"
-        message="Are you certain you wish to remove this product from the catalog? This will delete all variant configurations and imagery associations."
+        title="Delete Product"
+        message="Are you sure you want to delete this product? It will be permanently removed from your store."
         confirmText="Yes, Delete Product"
         cancelText="Cancel"
         isDestructive={true}

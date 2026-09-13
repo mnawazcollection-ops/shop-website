@@ -108,7 +108,7 @@ export default function CartPage() {
               Thank You For Your Order
             </h2>
             <p className="text-[14px] text-[#666] leading-relaxed mb-6">
-              Your bespoke luxury order has been received. Our master jewellers are preparing your pieces with complimentary insured packaging. A confirmation email has been sent.
+              We have received your order. We are packing your jewelry in our luxury gift box. A confirmation email has been sent to you.
             </p>
             <div className="flex justify-center gap-4">
               <Link
@@ -320,7 +320,7 @@ export default function CartPage() {
                 <textarea
                   value={orderNotes}
                   onChange={(e) => setOrderNotes(e.target.value)}
-                  placeholder="Add custom ring sizing, bespoke engraving requests, or luxury gift card messages..."
+                  placeholder="Add ring size, custom engraving requests, or gift card message..."
                   rows={3}
                   className="w-full p-3 text-[13px] border border-slate-200 outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all rounded-sm resize-none"
                 />
@@ -353,7 +353,7 @@ export default function CartPage() {
                   )}
 
                   <div className="flex justify-between items-center">
-                    <span>Insured Courier</span>
+                    <span>Delivery</span>
                     <span className="font-semibold">
                       {shipping === 0 ? (
                         <span className="text-emerald-600 font-bold">FREE</span>
@@ -364,7 +364,7 @@ export default function CartPage() {
                   </div>
 
                   <div className="flex justify-between">
-                    <span>Tax & Duties</span>
+                    <span>Tax & Packaging</span>
                     <span className="font-semibold text-emerald-600">Included</span>
                   </div>
                 </div>
@@ -372,7 +372,7 @@ export default function CartPage() {
                 {/* Promo Code Input */}
                 <form onSubmit={handleApplyCoupon} className="mb-6 pt-4 border-t border-[#eee]">
                   <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#777] mb-2">
-                    Promo / Gift Card
+                    Discount Code / Coupon
                   </label>
                   <div className="flex gap-2">
                     <input
@@ -400,13 +400,13 @@ export default function CartPage() {
                 {/* Total */}
                 <div className="pt-4 border-t border-[#eee] mb-8">
                   <div className="flex justify-between items-baseline mb-1">
-                    <span className="font-bold text-[#1A1A1A] text-lg">Estimated Total</span>
+                    <span className="font-bold text-[#1A1A1A] text-lg">Total</span>
                     <span className="font-cormorant text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600">
                       {formatPrice(estimatedTotal)}
                     </span>
                   </div>
                   <p className="text-[11px] text-[#999]">
-                    Including insured delivery & certificate of authenticity
+                    Including safe delivery & authenticity certificate
                   </p>
                 </div>
 
@@ -421,9 +421,9 @@ export default function CartPage() {
                 {/* Trust Badges */}
                 <div className="mt-6 pt-6 border-t border-[#eee] space-y-2 text-[11px] text-[#888] text-center">
                   <p className="flex items-center justify-center gap-1.5">
-                    <span>🔒</span> 256-Bit SSL Encrypted Checkout
+                    <span>🔒</span> 100% Safe & Secure Checkout
                   </p>
-                  <p>Complimentary Insured Shipping & 30-Day Returns</p>
+                  <p>Free Delivery & 30-Day Easy Returns</p>
                 </div>
               </div>
             </div>

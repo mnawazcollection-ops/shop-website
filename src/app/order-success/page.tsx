@@ -78,19 +78,19 @@ function OrderSuccessContent() {
     orderId,
     createdAt: new Date().toISOString(),
     customer: {
-      email: "client@mnawazjewelry.com",
+      email: "customer@example.com",
       phone: "+92 300 1234567",
       firstName: "Fatima",
       lastName: "Nawaz",
       country: "Pakistan",
       address1: "Gulberg III, M. M. Alam Road",
-      address2: "Atelier Suite 4",
+      address2: "Suite 4",
       city: "Lahore",
       state: "Punjab",
       zip: "54000",
     },
     shipping: {
-      name: "Complimentary Insured Courier",
+      name: "Free Standard Delivery",
       price: 0,
       eta: "4–6 Business Days",
     },
@@ -133,13 +133,13 @@ function OrderSuccessContent() {
           </div>
 
           <p className="text-[12px] uppercase tracking-[3px] text-emerald-600 font-bold mb-2">
-            Order Confirmed & Secured
+            Order Placed Successfully!
           </p>
           <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-3">
             Thank You, {displayOrder.customer.firstName}!
           </h1>
           <p className="text-[15px] text-[#555] max-w-lg mx-auto leading-relaxed">
-            Your fine jewellery acquisition has been secured. A confirmation email has been dispatched to{" "}
+            We have received your order. A confirmation email has been sent to{" "}
             <strong className="text-[#1A1A1A]">{displayOrder.customer.email}</strong>.
           </p>
 
@@ -154,33 +154,33 @@ function OrderSuccessContent() {
         {/* Live Status Tracker */}
         <div className="bg-white p-6 md:p-8 border border-[#eee] shadow-sm mb-8">
           <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] mb-6">
-            Atelier Preparation & Transit Tracker
+            Order Progress & Delivery Status
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 relative">
             {[
               {
                 step: "1",
-                title: "Order Secured",
-                desc: "Payment authorized & GIA recorded",
+                title: "Order Placed",
+                desc: "Order confirmed & payment verified",
                 status: "completed",
               },
               {
                 step: "2",
-                title: "Artisan Inspection",
-                desc: "Hand-polishing & hallmark certification",
+                title: "Packing & Quality Check",
+                desc: "Carefully inspected & packed",
                 status: "active",
               },
               {
                 step: "3",
-                title: "Vault Dispatch",
-                desc: "Tamper-evident armored courier",
+                title: "Shipped",
+                desc: "On the way with courier",
                 status: "pending",
               },
               {
                 step: "4",
                 title: "Delivered",
-                desc: `Est: ${displayOrder.shipping.eta}`,
+                desc: `Estimated: ${displayOrder.shipping.eta}`,
                 status: "pending",
               },
             ].map((s) => (
@@ -211,10 +211,10 @@ function OrderSuccessContent() {
           <div className="lg:col-span-2 bg-white border border-[#eee] shadow-sm overflow-hidden">
             <div className="p-6 bg-[#FAF7F4] border-b border-[#eee] flex items-center justify-between">
               <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A]">
-                Acquisition Details
+                Order Items
               </h2>
               <span className="text-[12px] text-[#888]">
-                {displayOrder.items.length} {displayOrder.items.length === 1 ? "Piece" : "Pieces"}
+                {displayOrder.items.length} {displayOrder.items.length === 1 ? "Item" : "Items"}
               </span>
             </div>
 
@@ -258,22 +258,22 @@ function OrderSuccessContent() {
               </div>
               {displayOrder.discount > 0 && (
                 <div className="flex justify-between text-emerald-600 font-semibold">
-                  <span>VIP Promotional Privilege</span>
+                  <span>Discount</span>
                   <span>-{formatPrice(displayOrder.discount)}</span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span>Insured Courier Delivery</span>
+                <span>Shipping</span>
                 <span className="font-semibold text-emerald-600">
-                  {displayOrder.shippingCost === 0 ? "Complimentary (FREE)" : formatPrice(displayOrder.shippingCost)}
+                  {displayOrder.shippingCost === 0 ? "Free Delivery" : formatPrice(displayOrder.shippingCost)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Hallmark Certification & Duties</span>
-                <span className="font-semibold text-emerald-600">Complimentary Included</span>
+                <span>Box & Packaging</span>
+                <span className="font-semibold text-emerald-600">Free / Included</span>
               </div>
               <div className="pt-3 border-t border-[#eee] flex justify-between items-baseline">
-                <span className="font-bold text-[15px] text-[#1A1A1A]">Final Paid Total</span>
+                <span className="font-bold text-[15px] text-[#1A1A1A]">Total Amount</span>
                 <span className="font-cormorant text-3xl font-bold text-[#D97706]">
                   {formatPrice(displayOrder.total)}
                 </span>
@@ -286,7 +286,7 @@ function OrderSuccessContent() {
             <div className="bg-white p-6 border border-[#eee] shadow-sm space-y-5 text-[13px]">
               <div>
                 <p className="text-[11px] uppercase tracking-wider font-semibold text-[#888] mb-1">
-                  Delivery Destination
+                  Delivery Address
                 </p>
                 <p className="font-bold text-[#1A1A1A]">
                   {displayOrder.customer.firstName} {displayOrder.customer.lastName}
@@ -302,7 +302,7 @@ function OrderSuccessContent() {
 
               <div className="pt-4 border-t border-[#eee]">
                 <p className="text-[11px] uppercase tracking-wider font-semibold text-[#888] mb-1">
-                  Delivery Method
+                  Shipping Method
                 </p>
                 <p className="font-medium text-[#1A1A1A]">{displayOrder.shipping.name}</p>
                 <p className="text-[12px] text-[#D97706] font-bold mt-0.5">
@@ -319,7 +319,7 @@ function OrderSuccessContent() {
                     ? `Credit Card (ending in ${displayOrder.payment.cardLast4 || "8821"})`
                     : displayOrder.payment.method}
                 </p>
-                <p className="text-[12px] text-emerald-600 font-bold mt-0.5">✓ Paid & Verified</p>
+                <p className="text-[12px] text-emerald-600 font-bold mt-0.5">✓ Paid</p>
               </div>
             </div>
 
@@ -332,7 +332,7 @@ function OrderSuccessContent() {
                 <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M6.72 13.829c-.24-1.076-.64-2.128-1.2-3.131M17.28 13.829c.24-1.076.64-2.128 1.2-3.131M3 6.75h18M6.75 3h10.5M6.75 21h10.5M4.5 12h15" />
                 </svg>
-                Print Receipt / Invoice
+                Print Receipt
               </button>
 
               <Link

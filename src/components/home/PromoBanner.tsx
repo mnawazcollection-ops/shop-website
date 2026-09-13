@@ -18,13 +18,13 @@ export default function PromoBanner() {
       <div className="absolute inset-0 flex items-center justify-center text-center">
         <div className="max-w-2xl px-6">
           <span className="inline-block text-[11px] tracking-[4px] uppercase bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 text-white font-bold px-5 py-1.5 rounded-full mb-5 shadow-lg shadow-amber-500/30 border border-amber-300/30">
-            ✦ Bespoke Haute Joaillerie ✦
+            ✦ Special Collection ✦
           </span>
           <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl xl:text-[56px] font-bold text-white leading-tight mb-5 drop-shadow-md">
             Discover Radiant Beauty In Pure Handcrafted Gold
           </h2>
           <p className="text-[15px] text-white/90 mb-8 max-w-lg mx-auto leading-relaxed drop-shadow-sm">
-            Explore our exclusive collection of master-sculpted jewelry pieces designed with ethically sourced precious gemstones to illuminate life&apos;s grandest milestones.
+            Explore our exclusive collection of handcrafted jewelry pieces designed with precious stones to celebrate life&apos;s special moments.
           </p>
           <Button href="/shop" variant="primary" size="lg">
             Shop The Collection

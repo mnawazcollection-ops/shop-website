@@ -14,8 +14,8 @@ export default function ContactPage() {
   return (
     <div className="max-w-[1400px] mx-auto px-6 py-12">
       <SectionHeading
-        subtitle="Concierge Support"
-        title="Get in Touch with Our Specialists"
+        subtitle="Customer Help & Support"
+        title="Get in Touch with Our Team"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mt-12">
@@ -32,7 +32,7 @@ export default function ContactPage() {
               </div>
               <h3 className="font-cormorant text-2xl font-bold text-slate-900 mt-2 mb-2">Thank You</h3>
               <p className="text-slate-600 text-[14px] leading-relaxed max-w-md mx-auto">
-                Your message has been received with priority. A master jewelry concierge will contact you within 24 hours.
+                Your message has been received. Our team will contact you within 24 hours.
               </p>
             </div>
           ) : (
@@ -45,7 +45,7 @@ export default function ContactPage() {
                   <input
                     type="text"
                     required
-                    placeholder="Jane Doe"
+                    placeholder="Fatima Nawaz"
                     className="w-full border border-slate-200 px-4 py-3 text-[14px] rounded-sm focus:outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all"
                   />
                 </div>
@@ -56,7 +56,7 @@ export default function ContactPage() {
                   <input
                     type="email"
                     required
-                    placeholder="jane@example.com"
+                    placeholder="name@example.com"
                     className="w-full border border-slate-200 px-4 py-3 text-[14px] rounded-sm focus:outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all"
                   />
                 </div>
@@ -64,12 +64,12 @@ export default function ContactPage() {
 
               <div>
                 <label className="block text-[12px] uppercase tracking-wider text-slate-600 mb-1.5 font-semibold">
-                  Subject / Inquiry Type
+                  Subject / Question
                 </label>
                 <select className="w-full border border-slate-200 px-4 py-3 text-[14px] rounded-sm focus:outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all bg-white">
-                  <option>Bespoke Custom Jewelry Consultation</option>
-                  <option>Order & Shipping Inquiry</option>
-                  <option>Ring Sizing & Care Guidance</option>
+                  <option>Custom Jewelry & Ring Design</option>
+                  <option>Order & Delivery Question</option>
+                  <option>Ring Sizing & Care</option>
                   <option>Other Question</option>
                 </select>
               </div>
@@ -81,7 +81,7 @@ export default function ContactPage() {
                 <textarea
                   rows={5}
                   required
-                  placeholder="How can our master artisans assist you?"
+                  placeholder="How can we help you?"
                   className="w-full border border-slate-200 px-4 py-3 text-[14px] rounded-sm focus:outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-400/20 transition-all"
                 ></textarea>
               </div>
@@ -90,7 +90,7 @@ export default function ContactPage() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#FBBF24] hover:via-[#F59E0B] hover:to-[#D97706] text-white py-4 uppercase text-[12px] tracking-[2px] font-bold rounded-sm shadow-md shadow-amber-500/25 hover:shadow-lg hover:shadow-amber-500/35 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
               >
-                Submit Inquiry
+                Send Message
               </button>
             </form>
           )}
@@ -100,7 +100,7 @@ export default function ContactPage() {
         <div className="flex flex-col justify-between space-y-8">
           <div className="bg-gradient-to-b from-[#FAF7F4] to-white p-8 lg:p-10 border border-amber-100/70 shadow-sm rounded-sm">
             <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-2">
-              <span>Flagship Boutique & Salon</span>
+              <span>Main Showroom & Office</span>
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
             </h2>
 
@@ -111,7 +111,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">Address:</strong>
-                  123 Luxury Avenue, Diamond District, New York, NY 10036
+                  M. M. Alam Road, Gulberg III, Lahore, Pakistan
                 </div>
               </div>
 
@@ -120,8 +120,8 @@ export default function ContactPage() {
                   📞
                 </div>
                 <div>
-                  <strong className="block text-slate-900 font-bold mb-0.5">Direct Phone:</strong>
-                  +1 (234) 567-890 / Toll Free: 1-800-SIR-IHSAN
+                  <strong className="block text-slate-900 font-bold mb-0.5">Phone:</strong>
+                  +92 300 1234567 / +92 42 35789000
                 </div>
               </div>
 
@@ -131,7 +131,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">Email:</strong>
-                  concierge@sirhisan.com | support@sirhisan.com
+                  support@mnawazjewelry.com
                 </div>
               </div>
 
@@ -141,8 +141,8 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">Operating Hours:</strong>
-                  Monday – Saturday: 10:00 AM – 8:00 PM EST<br />
-                  Sunday: Private Appointments Only
+                  Monday – Saturday: 11:00 AM – 9:00 PM PKT<br />
+                  Sunday: Closed
                 </div>
               </div>
             </div>

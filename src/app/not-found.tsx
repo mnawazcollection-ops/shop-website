@@ -18,13 +18,13 @@ export default function NotFound() {
       </p>
 
       <h1 className="font-cormorant text-4xl sm:text-6xl font-normal tracking-wide text-[#1A1A1A] mb-4">
-        Masterpiece Not Found
+        Page Not Found
       </h1>
 
       <div className="w-16 h-[1px] bg-amber-600/40 mx-auto mb-6" />
 
       <p className="max-w-md text-[#666] text-sm sm:text-base leading-relaxed mb-10 font-light">
-        The exquisite creation or boutique salon page you are seeking may have been retired to our private vault or relocated.
+        The page or jewelry item you are looking for does not exist or may have been moved.
       </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -38,7 +38,7 @@ export default function NotFound() {
           href="/"
           className="w-full sm:w-auto px-8 py-3.5 border border-[#1A1A1A] text-[#1A1A1A] text-[12px] font-semibold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#1A1A1A] hover:text-white"
         >
-          Return to Boutique Home
+          Go to Homepage
         </Link>
       </div>
 
@@ -56,7 +56,7 @@ export default function NotFound() {
         </Link>
         <span>•</span>
         <Link href="/contact" className="hover:text-amber-600 transition-colors">
-          Concierge Inquiries
+          Contact Support
         </Link>
       </div>
     </div>

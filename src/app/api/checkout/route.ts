@@ -33,15 +33,15 @@ interface CheckoutRequestBody {
 
 const SHIPPING_RATES: Record<string, { name: string; price: number }> = {
   "free-insured": {
-    name: "Complimentary Insured Courier",
+    name: "Free Standard Delivery",
     price: 0,
   },
   "express-air": {
-    name: "Priority Air Vault Express",
+    name: "Express Delivery",
     price: 2500,
   },
   "white-glove": {
-    name: "White-Glove VIP Delivery",
+    name: "Next Day Priority Delivery",
     price: 5000,
   },
 };
@@ -211,8 +211,8 @@ export async function POST(request: Request) {
         paymentMethod === "card"
           ? `Credit Card (ending in ${cardLast4 || "••••"})`
           : paymentMethod === "paypal"
-          ? "PayPal Express Vault"
-          : "Private Vault Bank Wire / Cash On VIP Delivery",
+          ? "PayPal"
+          : "Bank Transfer / Cash on Delivery",
       orderStatus: "processing",
       timeline: [
         {
@@ -232,25 +232,25 @@ export async function POST(request: Request) {
           completed: paymentMethod !== "wire",
         },
         {
-          title: "Atelier Jewelry Preparation",
+          title: "Packing & Quality Check",
           date: "Pending",
-          description: "Our master jewelers inspect gemstones and assemble packaging.",
+          description: "Items inspected and packed safely.",
           completed: false,
         },
         {
-          title: "Armored Transit Dispatch",
+          title: "Shipped",
           date: "Pending",
-          description: "Handed over to insured high-value courier.",
+          description: "Handed over to courier with tracking.",
           completed: false,
         },
         {
-          title: "Delivered & Signed",
+          title: "Delivered",
           date: "Pending",
-          description: "Recipient signature required.",
+          description: "Delivered to customer.",
           completed: false,
         },
       ],
-      notes: "Direct boutique checkout order.",
+      notes: "Website online order.",
       createdAt: timestamp,
       updatedAt: timestamp,
     };

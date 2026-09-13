@@ -85,8 +85,8 @@ export default function OrderDetailsPage() {
     e.preventDefault();
     updateOrderNotes(order.id, notes);
     addToast({
-      title: "Concierge Notes Saved",
-      message: "Internal record has been stored.",
+      title: "Note Saved",
+      message: "Order note saved successfully.",
       type: "success",
     });
   };
@@ -97,11 +97,11 @@ export default function OrderDetailsPage() {
 
   // Timeline Step Status Mapping
   const timelineStages = [
-    { key: "pending", label: "Order Placed", desc: "Acquisition placed by client" },
-    { key: "payment", label: "Payment Confirmed", desc: "Funds verified & vault unlocked" },
-    { key: "processing", label: "In Workshop", desc: "Artisan inspection & packaging" },
-    { key: "shipped", label: "Armored Transit", desc: "Dispatched with insured courier" },
-    { key: "delivered", label: "Delivered", desc: "Signature received & completed" },
+    { key: "pending", label: "Order Placed", desc: "Order placed by customer" },
+    { key: "payment", label: "Payment Confirmed", desc: "Payment verified" },
+    { key: "processing", label: "Processing", desc: "Packaging product" },
+    { key: "shipped", label: "Shipped", desc: "Dispatched with courier" },
+    { key: "delivered", label: "Delivered", desc: "Delivered to customer" },
   ];
 
   const getStageIndex = (status: AdminOrder["orderStatus"]) => {
@@ -143,7 +143,7 @@ export default function OrderDetailsPage() {
               <StatusBadge status={order.paymentStatus} />
             </div>
             <p className="text-xs text-stone-500 mt-1">
-              Acquisition registered on{" "}
+              Order placed on{" "}
               {new Date(order.createdAt).toLocaleString("en-US", {
                 dateStyle: "medium",
                 timeStyle: "short",
@@ -158,7 +158,7 @@ export default function OrderDetailsPage() {
             className="inline-flex items-center gap-2 px-3.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold rounded-lg shadow-xs transition-colors"
           >
             <Printer className="w-3.5 h-3.5 text-stone-500" />
-            Print Packing Slip
+            Print Receipt
           </button>
 
           {/* Quick Status Action */}
@@ -173,10 +173,10 @@ export default function OrderDetailsPage() {
                 Status: Pending
               </option>
               <option value="processing" className="bg-white text-stone-900">
-                Status: Workshop Processing
+                Status: Processing
               </option>
               <option value="shipped" className="bg-white text-stone-900">
-                Status: Armored Transit (Shipped)
+                Status: Shipped
               </option>
               <option value="delivered" className="bg-white text-stone-900">
                 Status: Delivered
@@ -193,7 +193,7 @@ export default function OrderDetailsPage() {
       <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs">
         <h2 className="text-sm font-bold uppercase tracking-wider text-stone-700 mb-6 flex items-center gap-2">
           <Truck className="w-4 h-4 text-amber-600" />
-          Fulfillment Timeline & Status Progression
+          Order Progress
         </h2>
 
         <div className="relative">
@@ -252,7 +252,7 @@ export default function OrderDetailsPage() {
                 onClick={() => handleStatusChange("processing")}
                 className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 font-semibold rounded-lg border border-amber-300 transition-colors"
               >
-                Advance to Workshop Processing →
+                Mark as Processing →
               </button>
             )}
             {order.orderStatus === "processing" && (
@@ -260,7 +260,7 @@ export default function OrderDetailsPage() {
                 onClick={() => handleStatusChange("shipped")}
                 className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg transition-colors"
               >
-                Dispatch Armored Transit →
+                Mark as Shipped →
               </button>
             )}
             {order.orderStatus === "shipped" && (
@@ -268,7 +268,7 @@ export default function OrderDetailsPage() {
                 onClick={() => handleStatusChange("delivered")}
                 className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-colors"
               >
-                Confirm Final Delivery ✓
+                Mark as Delivered ✓
               </button>
             )}
             {order.orderStatus !== "cancelled" && (
@@ -276,7 +276,7 @@ export default function OrderDetailsPage() {
                 onClick={() => handleStatusChange("cancelled")}
                 className="px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors"
               >
-                Cancel Acquisition
+                Cancel Order
               </button>
             )}
           </div>
@@ -292,7 +292,7 @@ export default function OrderDetailsPage() {
             <div className="p-5 border-b border-stone-100 flex items-center justify-between">
               <h2 className="text-sm font-bold uppercase tracking-wider text-stone-900 flex items-center gap-2">
                 <Package className="w-4 h-4 text-amber-600" />
-                Acquired Items ({order.items.length})
+                Ordered Items ({order.items.length})
               </h2>
             </div>
 
@@ -300,10 +300,10 @@ export default function OrderDetailsPage() {
               <table className="w-full text-left text-sm min-w-[550px]">
                 <thead>
                   <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                    <th className="py-3 px-4">Masterwork</th>
-                    <th className="py-3 px-4">Specifications</th>
+                    <th className="py-3 px-4">Product</th>
+                    <th className="py-3 px-4">Options</th>
                     <th className="py-3 px-4 text-center">Qty</th>
-                    <th className="py-3 px-4">Unit Price</th>
+                    <th className="py-3 px-4">Price</th>
                     <th className="py-3 px-4 text-right">Subtotal</th>
                   </tr>
                 </thead>
@@ -338,7 +338,7 @@ export default function OrderDetailsPage() {
                             ))}
                           </div>
                         ) : (
-                          <span className="text-stone-400 italic">Standard Specification</span>
+                          <span className="text-stone-400 italic">Standard</span>
                         )}
                       </td>
 
@@ -372,7 +372,7 @@ export default function OrderDetailsPage() {
                 {order.discount > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">
                     <span>
-                      Privilege Discount {order.discountCode ? `(${order.discountCode})` : ""}:
+                      Coupon Discount {order.discountCode ? `(${order.discountCode})` : ""}:
                     </span>
                     <span>
                       -{formatPrice(order.discount)}
@@ -381,10 +381,10 @@ export default function OrderDetailsPage() {
                 )}
 
                 <div className="flex justify-between text-stone-600">
-                  <span>Insured Shipping ({order.shippingMethod}):</span>
+                  <span>Shipping ({order.shippingMethod}):</span>
                   <span className="font-medium text-stone-900">
                     {order.shipping === 0
-                      ? "Complimentary"
+                      ? "Free Shipping"
                       : formatPrice(order.shipping)}
                   </span>
                 </div>
@@ -406,17 +406,17 @@ export default function OrderDetailsPage() {
             </div>
           </div>
 
-          {/* Concierge Notes */}
+          {/* Internal Notes */}
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs">
             <h3 className="text-sm font-bold uppercase tracking-wider text-stone-900 mb-3">
-              Internal Concierge Notes
+              Private Order Notes
             </h3>
             <form onSubmit={handleSaveNotes} className="space-y-3">
               <textarea
                 rows={3}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Add private packaging, VIP requests, or courier tracking identifiers..."
+                placeholder="Add private notes about packaging, tracking numbers, or customer requests..."
                 className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
               />
               <div className="flex justify-end">
@@ -424,7 +424,7 @@ export default function OrderDetailsPage() {
                   type="submit"
                   className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5"
                 >
-                  <Send className="w-3.5 h-3.5" /> Save Concierge Note
+                  <Send className="w-3.5 h-3.5" /> Save Note
                 </button>
               </div>
             </form>
@@ -437,7 +437,7 @@ export default function OrderDetailsPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-4">
             <h3 className="text-sm font-bold text-stone-900 uppercase tracking-wider border-b border-stone-100 pb-2 flex items-center gap-2">
               <User className="w-4 h-4 text-amber-600" />
-              Client Profile
+              Customer Details
             </h3>
 
             <div>
@@ -445,7 +445,7 @@ export default function OrderDetailsPage() {
                 <p className="font-semibold text-stone-900">{order.customer.name}</p>
                 {order.customer.isVip && (
                   <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[10px] font-bold">
-                    VIP Collector
+                    VIP Customer
                   </span>
                 )}
               </div>
@@ -470,7 +470,7 @@ export default function OrderDetailsPage() {
             </div>
 
             <div className="flex items-center justify-between text-xs text-stone-500">
-              <span>Payment Instrument:</span>
+              <span>Payment Method:</span>
               <span className="font-semibold text-stone-800">{order.paymentMethod}</span>
             </div>
           </div>
@@ -479,7 +479,7 @@ export default function OrderDetailsPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-3">
             <h3 className="text-sm font-bold text-stone-900 uppercase tracking-wider border-b border-stone-100 pb-2 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-amber-600" />
-              Delivery Destination
+              Delivery Address
             </h3>
 
             <div className="text-xs text-stone-600 space-y-1">
@@ -492,20 +492,19 @@ export default function OrderDetailsPage() {
             </div>
 
             <div className="pt-2 border-t border-stone-100 text-xs">
-              <span className="text-stone-400">Shipping Service:</span>
+              <span className="text-stone-400">Delivery Method:</span>
               <p className="font-semibold text-stone-900 mt-0.5">{order.shippingMethod}</p>
             </div>
           </div>
 
-          {/* Luxury White-Glove Guarantee */}
+          {/* Delivery Note */}
           <div className="bg-gradient-to-br from-stone-900 to-stone-950 rounded-xl p-5 text-white space-y-3">
             <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4" />
-              Vault & Transit Guarantee
+              Safe Delivery
             </div>
             <p className="text-xs text-stone-300 leading-relaxed">
-              Every high-jewelry shipment is fully insured by Lloyd&apos;s of London syndicates and requires
-              in-person identity verification upon handover.
+              Every jewelry order is safely packed in a presentation gift box and delivered via tracked courier.
             </p>
           </div>
         </div>

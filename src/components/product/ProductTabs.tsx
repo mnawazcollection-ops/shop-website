@@ -112,7 +112,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                   Free Express Shipping
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
-                  Complimentary fully insured armored courier delivery on all orders over Rs. 50,000 across Pakistan. Standard insured transit available for orders under Rs. 50,000 at a flat rate of Rs. 2,500. All shipments require signature and photo ID verification upon delivery. International delivery available upon concierge request.
+                  Free insured delivery on all orders over Rs. 50,000 across Pakistan. Standard delivery for orders under Rs. 50,000 is Rs. 2,500. Safe handover with tracking on all parcels. International shipping is also available upon request.
                 </p>
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function ProductTabs({ product, reviews }: ProductTabsProps) {
                   Returns & Exchanges
                 </h4>
                 <p className="text-[14px] text-[#666] leading-relaxed">
-                  We accept returns and size exchanges within 30 days of delivery. Items must be in pristine, unworn condition with all original packaging, security seals, and certificates intact. Custom or engraved pieces are final sale. Contact our concierge team to initiate a return.
+                  We accept returns and size exchanges within 30 days of delivery. Items must be new and unworn with original box and certificates. Custom or engraved jewelry cannot be returned. Contact our support team to help you with an exchange or return.
                 </p>
               </div>
             </div>

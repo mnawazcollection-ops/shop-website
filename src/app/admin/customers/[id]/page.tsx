@@ -39,13 +39,13 @@ export default function CustomerDetailPage() {
         <div className="w-14 h-14 mx-auto rounded-full bg-red-50 text-red-600 flex items-center justify-center">
           <AlertCircle className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-stone-900">Client Not Found</h2>
-        <p className="text-sm text-stone-500">The dossier for ({customerId}) does not exist.</p>
+        <h2 className="text-xl font-bold text-stone-900">Customer Not Found</h2>
+        <p className="text-sm text-stone-500">No customer details found for ID ({customerId}).</p>
         <Link
           href="/admin/customers"
           className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-lg text-xs font-semibold hover:bg-stone-800"
         >
-          <ArrowLeft className="w-4 h-4" /> Return to Clientele
+          <ArrowLeft className="w-4 h-4" /> Back to Customers
         </Link>
       </div>
     );
@@ -90,7 +90,7 @@ export default function CustomerDetailPage() {
               <StatusBadge status={customer.status} />
             </div>
             <p className="text-xs text-stone-500 mt-1">
-              Patron since{" "}
+              Customer since{" "}
               {new Date(customer.joinedDate).toLocaleDateString("en-US", {
                 month: "long",
                 year: "numeric",
@@ -107,40 +107,38 @@ export default function CustomerDetailPage() {
               : "border-emerald-200 text-emerald-700 bg-emerald-50/50 hover:bg-emerald-100"
           }`}
         >
-          {customer.status === "active" ? "Suspend Account Access" : "Re-activate Account Access"}
+          {customer.status === "active" ? "Disable Account" : "Activate Account"}
         </button>
       </div>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs">
-          <span className="text-xs text-stone-500 font-medium">Lifetime Acquisition Value</span>
+          <span className="text-xs text-stone-500 font-medium">Total Spent</span>
           <p className="text-2xl font-bold text-stone-900 mt-1">
-            ${customer.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+            Rs. {customer.totalSpent.toLocaleString()}
           </p>
         </div>
 
         <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs">
-          <span className="text-xs text-stone-500 font-medium">Total Orders Placed</span>
-          <p className="text-2xl font-bold text-stone-900 mt-1">{customer.totalOrders} acquisitions</p>
+          <span className="text-xs text-stone-500 font-medium">Total Orders</span>
+          <p className="text-2xl font-bold text-stone-900 mt-1">{customer.totalOrders} {customer.totalOrders === 1 ? "order" : "orders"}</p>
         </div>
 
         <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs">
           <span className="text-xs text-stone-500 font-medium">Average Order Value</span>
           <p className="text-2xl font-bold text-stone-900 mt-1">
-            $
+            Rs.{" "}
             {customer.totalOrders > 0
-              ? (customer.totalSpent / customer.totalOrders).toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })
+              ? Math.round(customer.totalSpent / customer.totalOrders).toLocaleString()
               : "0"}
           </p>
         </div>
       </div>
 
-      {/* Profile & Acquisition History */}
+      {/* Profile & Order History */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left 1 Col: Contact & Vault Address */}
+        {/* Left 1 Col: Contact & Delivery Address */}
         <div className="space-y-6">
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-stone-900 border-b border-stone-100 pb-2">
@@ -166,7 +164,7 @@ export default function CustomerDetailPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-3">
             <h3 className="text-sm font-bold uppercase tracking-wider text-stone-900 border-b border-stone-100 pb-2 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-amber-600" />
-              Primary Delivery Address
+              Delivery Address
             </h3>
 
             <div className="text-xs text-stone-700 space-y-1">
@@ -184,7 +182,7 @@ export default function CustomerDetailPage() {
           <div className="bg-white rounded-xl border border-stone-200 shadow-xs overflow-hidden">
             <div className="p-5 border-b border-stone-100 flex items-center justify-between">
               <h3 className="text-sm font-bold uppercase tracking-wider text-stone-900">
-                Acquisitions History ({customerOrders.length})
+                Order History ({customerOrders.length})
               </h3>
             </div>
 
@@ -192,7 +190,7 @@ export default function CustomerDetailPage() {
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                    <th className="py-3 px-4">Order Ref</th>
+                    <th className="py-3 px-4">Order #</th>
                     <th className="py-3 px-4">Date</th>
                     <th className="py-3 px-4">Total</th>
                     <th className="py-3 px-4">Payment</th>
@@ -204,7 +202,7 @@ export default function CustomerDetailPage() {
                   {customerOrders.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="py-12 text-center text-xs text-stone-500">
-                        No previous acquisitions registered for this profile.
+                        No orders found for this customer.
                       </td>
                     </tr>
                   ) : (
@@ -217,7 +215,7 @@ export default function CustomerDetailPage() {
                           {new Date(o.createdAt).toLocaleDateString()}
                         </td>
                         <td className="py-3.5 px-4 font-semibold text-stone-900">
-                          ${o.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                          Rs. {o.total.toLocaleString()}
                         </td>
                         <td className="py-3.5 px-4">
                           <StatusBadge status={o.paymentStatus} />

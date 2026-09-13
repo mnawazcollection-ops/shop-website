@@ -75,8 +75,8 @@ export default function SettingsPage() {
       firebaseProjectId,
     });
     addToast({
-      title: "Store Settings Saved",
-      message: "Atelier configurations updated successfully.",
+      title: "Settings Saved",
+      message: "Store settings updated successfully.",
       type: "success",
     });
   };
@@ -84,8 +84,8 @@ export default function SettingsPage() {
   const handleCloudSync = async () => {
     setIsSyncingCloud(true);
     addToast({
-      title: "Cloud Sync Initiated",
-      message: "Syncing images to Cloudinary and catalog to Firebase Firestore...",
+      title: "Cloud Sync Started",
+      message: "Saving photos and products to cloud database...",
       type: "info",
     });
 
@@ -94,8 +94,8 @@ export default function SettingsPage() {
 
     if (result.success) {
       addToast({
-        title: "Catalog Synced Successfully",
-        message: `All ${result.count} products have been saved to Firebase Firestore & Cloudinary.`,
+        title: "Catalog Saved to Cloud",
+        message: `All ${result.count} products have been saved to the cloud.`,
         type: "success",
       });
     } else {
@@ -111,8 +111,8 @@ export default function SettingsPage() {
     if (confirm("Reset all store settings to default demonstration parameters?")) {
       resetToDefaults();
       addToast({
-        title: "Settings Restored",
-        message: "Default parameters applied.",
+        title: "Settings Reset",
+        message: "Settings reset to defaults.",
         type: "info",
       });
     }
@@ -121,13 +121,13 @@ export default function SettingsPage() {
   const handleCleanOperational = () => {
     if (
       confirm(
-        "Clean all operational data for client handover?\n\nThis will reset orders, customers, coupons, and reviews to 0, while keeping all products and categories intact."
+        "Clear all test orders and data?\n\nThis will reset orders, customers, coupons, and reviews to 0, while keeping all products and categories safe."
       )
     ) {
       cleanOperationalData();
       addToast({
-        title: "Store Cleaned for Client Handover",
-        message: "Orders, customers, coupons, and reviews reset to zero. Products & categories preserved.",
+        title: "Test Data Cleared",
+        message: "Orders, customers, coupons, and reviews reset to 0. All products and categories are safe.",
         type: "success",
       });
     }
@@ -138,9 +138,9 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-stone-200 pb-5">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Store Administration</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Store Settings</h1>
           <p className="text-sm text-stone-500">
-            Configure jewelry brand profile, insured logistics rates, taxation, and database keys.
+            Manage your store contact details, shipping fees, tax, and cloud database.
           </p>
         </div>
 
@@ -157,7 +157,7 @@ export default function SettingsPage() {
             onClick={handleSave}
             className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 transition-colors"
           >
-            <Check className="w-4 h-4" /> Save Preferences
+            <Check className="w-4 h-4" /> Save Settings
           </button>
         </div>
       </div>
@@ -166,11 +166,11 @@ export default function SettingsPage() {
       <div className="flex items-center gap-2 border-b border-stone-200 overflow-x-auto pb-1 scrollbar-none">
         {(
           [
-            { id: "store", label: "General & Branding", icon: Store },
-            { id: "shipping", label: "Shipping & Delivery", icon: Truck },
-            { id: "tax", label: "Taxation & Currency", icon: DollarSign },
-            { id: "notifications", label: "Concierge Alerts", icon: Bell },
-            { id: "firebase", label: "Cloudinary & Cloud Storage", icon: Cloud },
+            { id: "store", label: "Store Details", icon: Store },
+            { id: "shipping", label: "Shipping Fees", icon: Truck },
+            { id: "tax", label: "Tax & Currency", icon: DollarSign },
+            { id: "notifications", label: "Alerts & Notifications", icon: Bell },
+            { id: "firebase", label: "Cloud Database & Backup", icon: Cloud },
           ] as const
         ).map((tab) => {
           const Icon = tab.icon;
@@ -199,13 +199,13 @@ export default function SettingsPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <h2 className="text-base font-bold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <Store className="w-4 h-4 text-amber-600" />
-              Flagship Brand Identity
+              Store Information
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Store Title
+                  Store Name
                 </label>
                 <input
                   type="text"
@@ -217,7 +217,7 @@ export default function SettingsPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Brand Tagline
+                  Store Slogan / Tagline
                 </label>
                 <input
                   type="text"
@@ -230,7 +230,7 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                Brand Emblem / Logo
+                Store Logo
               </label>
               <div className="flex items-center gap-4">
                 <div className="relative w-16 h-16 rounded-xl border border-stone-200 bg-white p-2 shrink-0 shadow-xs flex items-center justify-center">
@@ -260,7 +260,7 @@ export default function SettingsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Concierge Email
+                  Support Email
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 absolute left-3 top-3 text-stone-400" />
@@ -275,7 +275,7 @@ export default function SettingsPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Flagship Phone
+                  Phone Number
                 </label>
                 <div className="relative">
                   <Phone className="w-4 h-4 absolute left-3 top-3 text-stone-400" />
@@ -291,7 +291,7 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                Flagship Atelier Address
+                Store Address
               </label>
               <input
                 type="text"
@@ -308,13 +308,13 @@ export default function SettingsPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <h2 className="text-base font-bold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <Truck className="w-4 h-4 text-amber-600" />
-              Insured Logistics & White-Glove Delivery
+              Shipping Charges
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Complimentary Shipping Threshold ($)
+                  Free Shipping on Orders Over (Rs.)
                 </label>
                 <input
                   type="number"
@@ -323,7 +323,7 @@ export default function SettingsPage() {
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
                 />
                 <p className="text-[11px] text-stone-400 mt-1">
-                  Acquisitions exceeding this amount qualify for zero-cost armored transit.
+                  Orders above this total amount will have zero delivery charge.
                 </p>
               </div>
 
@@ -343,7 +343,7 @@ export default function SettingsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Standard Insured ($)
+                  Standard Delivery (Rs.)
                 </label>
                 <input
                   type="number"
@@ -355,7 +355,7 @@ export default function SettingsPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Express Courier ($)
+                  Express Courier (Rs.)
                 </label>
                 <input
                   type="number"
@@ -367,7 +367,7 @@ export default function SettingsPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  White Glove Armored ($)
+                  Urgent / VIP Delivery (Rs.)
                 </label>
                 <input
                   type="number"
@@ -385,34 +385,35 @@ export default function SettingsPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <h2 className="text-base font-bold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <DollarSign className="w-4 h-4 text-amber-600" />
-              Taxation & Currency Parameters
+              Tax & Currency Settings
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Operating Currency
+                  Store Currency
                 </label>
                 <select
                   value={currency}
                   onChange={(e) => {
                     const val = e.target.value;
                     setCurrency(val);
-                    const symbols: Record<string, string> = { USD: "$", EUR: "€", GBP: "£", AED: "AED" };
-                    setCurrencySymbol(symbols[val] || "$");
+                    const symbols: Record<string, string> = { PKR: "Rs.", USD: "$", EUR: "€", GBP: "£", AED: "AED" };
+                    setCurrencySymbol(symbols[val] || "Rs.");
                   }}
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
                 >
-                  <option value="USD">USD ($) - United States Dollar</option>
-                  <option value="EUR">EUR (€) - Euro</option>
-                  <option value="GBP">GBP (£) - British Pound Sterling</option>
+                  <option value="PKR">PKR (Rs.) - Pakistani Rupee</option>
+                  <option value="USD">USD ($) - US Dollar</option>
                   <option value="AED">AED (د.إ) - UAE Dirham</option>
+                  <option value="GBP">GBP (£) - British Pound</option>
+                  <option value="EUR">EUR (€) - Euro</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  VAT / Sales Tax Rate (%)
+                  Tax Rate (%)
                 </label>
                 <input
                   type="number"
@@ -432,7 +433,7 @@ export default function SettingsPage() {
                 className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
               />
               <span className="text-xs font-medium text-stone-800">
-                Display prices inclusive of tax on customer storefront
+                Show prices with tax included on website
               </span>
             </label>
           </div>
@@ -443,7 +444,7 @@ export default function SettingsPage() {
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-4">
             <h2 className="text-base font-bold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <Bell className="w-4 h-4 text-amber-600" />
-              Automated Concierge Alerts
+              Email & Stock Alerts
             </h2>
 
             <label className="flex items-center gap-3 cursor-pointer py-2">
@@ -454,9 +455,9 @@ export default function SettingsPage() {
                 className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
               />
               <div>
-                <span className="text-sm font-semibold text-stone-800">Low-Reserve Stock Alerts</span>
+                <span className="text-sm font-semibold text-stone-800">Low Stock Alerts</span>
                 <p className="text-xs text-stone-500">
-                  Notify store administrators immediately when vault items cross below safety levels.
+                  Send an alert when product quantity falls below the low stock number.
                 </p>
               </div>
             </label>
@@ -470,10 +471,10 @@ export default function SettingsPage() {
               />
               <div>
                 <span className="text-sm font-semibold text-stone-800">
-                  New Acquisition Email Alerts
+                  New Order Email Alerts
                 </span>
                 <p className="text-xs text-stone-500">
-                  Receive instant notifications whenever a client completes a high-jewelry order.
+                  Receive an email notification whenever a customer places an order.
                 </p>
               </div>
             </label>
@@ -545,10 +546,10 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between border-b border-stone-100 pb-3">
                 <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
                   <Database className="w-4 h-4 text-amber-600" />
-                  Firebase Cloud Architecture
+                  Firebase Cloud Database
                 </h2>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                  <ShieldCheck className="w-3.5 h-3.5" /> Architecture Ready
+                  <ShieldCheck className="w-3.5 h-3.5" /> Connected & Ready
                 </span>
               </div>
 
@@ -566,7 +567,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="p-4 bg-stone-50 rounded-lg border border-stone-200 space-y-2 text-xs">
-                  <p className="font-bold text-stone-800">Provisioned Cloud Collections:</p>
+                  <p className="font-bold text-stone-800">Connected Database Collections:</p>
                   <div className="flex flex-wrap gap-2 font-mono text-[11px] text-amber-900">
                     {[
                       "products",
@@ -592,7 +593,7 @@ export default function SettingsPage() {
                   className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   <Cloud className={`w-4 h-4 ${isSyncingCloud ? "animate-spin" : ""}`} />
-                  <span>{isSyncingCloud ? "Syncing Catalog with Cloud..." : "Push Local Catalog to Firebase & Cloudinary"}</span>
+                  <span>{isSyncingCloud ? "Saving to Cloud Database..." : "Save All Products & Photos to Cloud"}</span>
                 </button>
               </div>
             </div>
@@ -602,25 +603,25 @@ export default function SettingsPage() {
                 <div>
                   <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
                     <RotateCcw className="w-4 h-4 text-amber-700" />
-                    Client Handover Data Wipe
+                    Clear Test Orders & Data
                   </h2>
                   <p className="text-xs text-stone-600 mt-0.5">
-                    Clean all test/mock orders, clientele records, reviews, and coupons to handover a clean slate ($0.00 sales, 0 orders).
+                    Clear all test orders, customers, reviews, and coupons to start fresh (Rs. 0 sales, 0 orders).
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
                 <div className="text-xs text-stone-600 space-y-1">
-                  <p className="font-semibold text-emerald-800">✓ Preserved:</p>
-                  <p className="text-stone-500">All products in catalog, categories, inventory threshold rules, and store branding.</p>
+                  <p className="font-semibold text-emerald-800">✓ Safe & Preserved:</p>
+                  <p className="text-stone-500">All products, categories, stock quantities, and store settings.</p>
                 </div>
                 <button
                   type="button"
                   onClick={handleCleanOperational}
                   className="px-4 py-2.5 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold text-xs rounded-lg shadow-sm transition-colors cursor-pointer shrink-0 border border-stone-800"
                 >
-                  Wipe Operational Data (Handover Ready)
+                  Clear Test Data (Start Fresh)
                 </button>
               </div>
             </div>
@@ -632,7 +633,7 @@ export default function SettingsPage() {
             type="submit"
             className="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold shadow-sm transition-colors flex items-center gap-2"
           >
-            <Check className="w-4 h-4" /> Save Store Settings
+            <Check className="w-4 h-4" /> Save Settings
           </button>
         </div>
       </form>

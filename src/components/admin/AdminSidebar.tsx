@@ -80,7 +80,7 @@ export default function AdminSidebar({
       ],
     },
     {
-      label: "Catalog Management",
+      label: "Products & Stock",
       items: [
         {
           label: "Products",
@@ -94,7 +94,7 @@ export default function AdminSidebar({
           icon: FolderTree,
         },
         {
-          label: "Inventory Control",
+          label: "Stock Levels",
           href: "/admin/inventory",
           icon: Boxes,
           badge: lowStockCount > 0 ? `${lowStockCount} Low` : undefined,
@@ -103,7 +103,7 @@ export default function AdminSidebar({
       ],
     },
     {
-      label: "Sales & Clients",
+      label: "Orders & Customers",
       items: [
         {
           label: "Orders",
@@ -113,37 +113,37 @@ export default function AdminSidebar({
           badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
         },
         {
-          label: "Clients & VIPs",
+          label: "Customers",
           href: "/admin/customers",
           icon: Users,
         },
         {
-          label: "Coupons & Offers",
+          label: "Discount Codes",
           href: "/admin/coupons",
           icon: Tag,
         },
       ],
     },
     {
-      label: "Storefront CMS",
+      label: "Website Content",
       items: [
         {
-          label: "Banners & Content",
+          label: "Banners & Slides",
           href: "/admin/content",
           icon: Layers,
         },
         {
-          label: "Client Reviews",
+          label: "Customer Reviews",
           href: "/admin/reviews",
           icon: Star,
         },
       ],
     },
     {
-      label: "Administration",
+      label: "Settings",
       items: [
         {
-          label: "Settings",
+          label: "Store Settings",
           href: "/admin/settings",
           icon: Settings,
         },

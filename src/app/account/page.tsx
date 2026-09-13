@@ -50,12 +50,12 @@ export default function AccountPage() {
           customer: {
             firstName: "Fatima",
             lastName: "Nawaz",
-            email: "f.nawaz@mnawazjewelry.com",
+            email: "f.nawaz@example.com",
             city: "Lahore",
             country: "Pakistan",
           },
           shipping: {
-            name: "Complimentary Insured Courier",
+            name: "Free Standard Delivery",
             eta: "4–6 Business Days",
           },
           items: [
@@ -93,7 +93,7 @@ export default function AccountPage() {
     if (found) {
       setTrackResult(found);
     } else {
-      setTrackError(`No order records found matching ID "${q}". Please verify the format (e.g. SIJ-2026-XXXXX).`);
+      setTrackError(`No order found with ID "${q}". Please check your order number (e.g. MNJ-2026-89421).`);
     }
   };
 
@@ -103,10 +103,10 @@ export default function AccountPage() {
         {/* Heading */}
         <div className="text-center mb-10">
           <p className="text-[12px] uppercase tracking-[3px] text-amber-600 font-bold mb-2">
-            VIP Maison Concierge
+            Customer Account
           </p>
           <h1 className="font-cormorant text-4xl md:text-5xl font-bold text-[#1A1A1A]">
-            Client Portal & Orders
+            My Account & Orders
           </h1>
         </div>
 
@@ -114,9 +114,9 @@ export default function AccountPage() {
         <div className="flex justify-center border-b border-[#eee] mb-10 max-w-2xl mx-auto">
           {(
             [
-              { id: "portal", label: "My Profile & Status" },
+              { id: "portal", label: "My Profile" },
               { id: "orders", label: `Order History (${orders.length})` },
-              { id: "track", label: "Track Acquisition" },
+              { id: "track", label: "Track Order" },
             ] as const
           ).map((tab) => (
             <button
@@ -141,7 +141,7 @@ export default function AccountPage() {
               <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
                   <span className="text-[11px] uppercase tracking-[3px] text-amber-400 font-bold block mb-1">
-                    Maison Privilège Member
+                    Member Account
                   </span>
                   <h2 className="font-cormorant text-3xl md:text-4xl font-bold text-white mb-2">
                     {clientName}
@@ -149,14 +149,14 @@ export default function AccountPage() {
                   <p className="text-[13px] text-[#ccc] flex items-center gap-2">
                     <span>✉️ {clientEmail}</span>
                     <span>•</span>
-                    <span className="text-amber-400 font-bold">Gold Tier Collector</span>
+                    <span className="text-amber-400 font-bold">Gold Member</span>
                   </p>
                 </div>
 
                 <div className="p-4 bg-amber-950/40 border border-amber-500/30 text-center rounded">
-                  <p className="text-[11px] uppercase tracking-wider text-amber-200/80">Available Privileges</p>
-                  <p className="font-cormorant text-2xl font-bold text-amber-400 mt-1">Complimentary</p>
-                  <p className="text-[11px] text-amber-200/60">Insured Courier & VIP Sizing</p>
+                  <p className="text-[11px] uppercase tracking-wider text-amber-200/80">Member Benefits</p>
+                  <p className="font-cormorant text-2xl font-bold text-amber-400 mt-1">Free Delivery</p>
+                  <p className="text-[11px] text-amber-200/60">Free Ring Sizing & Gift Box</p>
                 </div>
               </div>
             </div>
@@ -165,22 +165,22 @@ export default function AccountPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 border border-[#eee] shadow-sm rounded">
                 <p className="font-cormorant text-xl font-bold text-[#1A1A1A] mb-2">
-                  Personal Atelier Concierge
+                  Customer Support
                 </p>
                 <p className="text-[13px] text-[#666] mb-4">
-                  Dedicated master jeweler available for private commission previews and ring resizing.
+                  We are here to help you with order questions, ring resizing, and custom designs.
                 </p>
                 <a
-                  href="mailto:concierge@sirihsan.com"
+                  href="mailto:support@mnawazjewelry.com"
                   className="text-[12px] uppercase tracking-wider font-bold text-amber-600 hover:text-amber-700"
                 >
-                  Contact Concierge →
+                  Contact Support →
                 </a>
               </div>
 
               <div className="bg-white p-6 border border-[#eee] shadow-sm rounded">
                 <p className="font-cormorant text-xl font-bold text-[#1A1A1A] mb-2">
-                  Saved Delivery Address
+                  Delivery Address
                 </p>
                 <p className="text-[13px] text-[#666] mb-4">
                   Gulberg III, M. M. Alam Road<br />
@@ -188,16 +188,16 @@ export default function AccountPage() {
                   Pakistan
                 </p>
                 <span className="text-[12px] uppercase tracking-wider font-bold text-emerald-700 flex items-center gap-1">
-                  ✓ Verified Vault Address
+                  ✓ Default Address
                 </span>
               </div>
 
               <div className="bg-white p-6 border border-[#eee] shadow-sm rounded">
                 <p className="font-cormorant text-xl font-bold text-[#1A1A1A] mb-2">
-                  Saved Wishlist
+                  My Wishlist
                 </p>
                 <p className="text-[13px] text-[#666] mb-4">
-                  Review your curated pieces, diamond solitaire bands, and custom gift lists.
+                  Check your saved jewelry pieces and favorite items.
                 </p>
                 <Link
                   href="/wishlist"
@@ -216,16 +216,16 @@ export default function AccountPage() {
             {orders.length === 0 ? (
               <div className="bg-white p-12 text-center border border-[#eee] shadow-sm">
                 <p className="font-cormorant text-2xl font-bold text-[#1A1A1A] mb-2">
-                  No previous acquisitions recorded
+                  You haven&apos;t placed any orders yet
                 </p>
                 <p className="text-[14px] text-[#777] mb-6">
-                  Browse our handcrafted collections and experience artisan fine jewelry.
+                  Explore our beautiful jewelry collection to find your favorite pieces.
                 </p>
                 <Link
                   href="/shop"
                   className="inline-block bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#E49008] hover:to-[#9A4206] text-white px-8 py-3.5 text-[12px] uppercase tracking-[2px] font-bold transition-all shadow-md shadow-amber-500/25 rounded-sm"
                 >
-                  Explore Boutique
+                  Start Shopping
                 </Link>
               </div>
             ) : (
@@ -244,13 +244,13 @@ export default function AccountPage() {
                     <div className="flex items-center gap-4">
                       <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded">
                         <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-                        In Artisan Preparation
+                        Processing Order
                       </span>
                       <Link
                         href={`/order-success?orderId=${ord.orderId}`}
                         className="px-4 py-2 border border-[#ddd] hover:border-[#D97706] hover:text-[#D97706] text-[12px] uppercase tracking-wider font-bold text-[#555] transition-colors rounded-sm"
                       >
-                        View Official Receipt
+                        View Order Details
                       </Link>
                     </div>
                   </div>
@@ -298,14 +298,14 @@ export default function AccountPage() {
           </div>
         )}
 
-        {/* Tab 3: Track Acquisition */}
+        {/* Tab 3: Track Order */}
         {activeTab === "track" && (
           <div className="max-w-2xl mx-auto bg-white p-8 md:p-10 border border-[#eee] shadow-sm rounded">
             <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] mb-2 text-center">
-              Real-Time Atelier & Courier Tracker
+              Track Your Order
             </h2>
             <p className="text-[13px] text-[#777] text-center mb-6">
-              Enter your official M. Nawaz Jewelry Collection Order Number to view master inspection status and armored transit telemetry.
+              Enter your order number to check where your package is and estimated delivery date.
             </p>
 
             <form onSubmit={handleTrackSearch} className="flex gap-2 mb-6">
@@ -338,7 +338,7 @@ export default function AccountPage() {
                     <p className="font-bold text-[16px] text-[#D97706]">{trackResult.orderId}</p>
                   </div>
                   <span className="text-emerald-700 font-bold text-[13px] bg-emerald-50 px-2.5 py-1 rounded">
-                    ✓ Handcrafting Complete
+                    ✓ Packed & On The Way
                   </span>
                 </div>
 
@@ -346,14 +346,14 @@ export default function AccountPage() {
                   <p><strong>Courier:</strong> {trackResult.shipping.name}</p>
                   <p><strong>Estimated Delivery:</strong> <span className="text-[#D97706] font-semibold">{trackResult.shipping.eta}</span></p>
                   <p><strong>Destination:</strong> {trackResult.customer.city}, {trackResult.customer.country}</p>
-                  <p><strong>Total Value:</strong> <span className="text-[#D97706] font-bold">{formatPrice(trackResult.total)}</span> (Fully Insured)</p>
+                  <p><strong>Total Value:</strong> <span className="text-[#D97706] font-bold">{formatPrice(trackResult.total)}</span> (Paid)</p>
                 </div>
 
                 <Link
                   href={`/order-success?orderId=${trackResult.orderId}`}
                   className="inline-block mt-2 text-[12px] uppercase tracking-wider font-bold text-[#D97706] hover:underline"
                 >
-                  View Full Acquisition Receipt & Tracking Stepper →
+                  View Full Order Receipt & Status →
                 </Link>
               </div>
             )}

@@ -18,22 +18,22 @@ interface ShippingOption {
 const SHIPPING_OPTIONS: ShippingOption[] = [
   {
     id: "free-insured",
-    name: "Complimentary Insured Courier",
-    desc: "Fully insured transit with signature required",
+    name: "Free Standard Delivery",
+    desc: "Safe delivery with tracking",
     price: 0,
     eta: "4–6 Business Days",
   },
   {
     id: "express-air",
-    name: "Priority Air Vault Express",
-    desc: "Air cargo express with tamper-evident seal",
+    name: "Express Delivery",
+    desc: "Fast courier delivery with tracking",
     price: 2500,
     eta: "2–3 Business Days",
   },
   {
     id: "white-glove",
-    name: "White-Glove VIP Delivery",
-    desc: "Personal courier & GIA appraisal pack",
+    name: "Next Day Priority Delivery",
+    desc: "Urgent delivery directly to your doorstep",
     price: 5000,
     eta: "Next Business Day",
   },
@@ -457,7 +457,7 @@ export default function CheckoutPage() {
                     onChange={(e) => setNewsletter(e.target.checked)}
                     className="w-4 h-4 accent-amber-600 rounded"
                   />
-                  <span>Receive bespoke jewellery collection launches & VIP salon invitations</span>
+                  <span>Receive news about new arrivals and special discounts</span>
                 </label>
               </div>
             </div>
@@ -465,7 +465,7 @@ export default function CheckoutPage() {
             {/* Section 2: Delivery Address */}
             <div className="bg-white p-6 md:p-8 border border-[#eee] shadow-sm">
               <h2 className="font-cormorant text-2xl font-bold text-[#1A1A1A] mb-5">
-                2. Delivery & Vault Address
+                2. Delivery Address
               </h2>
 
               <div className="space-y-4">
@@ -755,10 +755,10 @@ export default function CheckoutPage() {
               {paymentMethod === "wire" && (
                 <div className="p-6 bg-[#FAF7F4] border border-[#eee] text-left space-y-2">
                   <p className="font-semibold text-[13px] text-[#1A1A1A]">
-                    Private Vault Bank Wire / Cash On VIP Delivery
+                    Bank Transfer / Cash on Delivery
                   </p>
                   <p className="text-[12px] text-[#666]">
-                    Our private jewellery concierge will reach out to you within 2 business hours via your confirmed telephone number with wire routing details and courier verification protocol.
+                    Our team will contact you within 2 hours on your phone number to share bank details and confirm your delivery.
                   </p>
                 </div>
               )}
@@ -777,10 +777,10 @@ export default function CheckoutPage() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                     </svg>
-                    Securing Order & Vault...
+                    Placing Order...
                   </>
                 ) : (
-                  `Authorize & Place Order • ${formatPrice(total)}`
+                  `Place Order • ${formatPrice(total)}`
                 )}
               </button>
             </div>
@@ -870,10 +870,10 @@ export default function CheckoutPage() {
                 )}
 
                 <div className="flex justify-between items-center">
-                  <span>Transit Insurance & Delivery</span>
+                  <span>Delivery Charges</span>
                   <span className="font-semibold">
                     {selectedShipping.price === 0 ? (
-                      <span className="text-emerald-600 font-bold tracking-wide">COMPLIMENTARY</span>
+                      <span className="text-emerald-600 font-bold tracking-wide">FREE</span>
                     ) : (
                       formatPrice(selectedShipping.price)
                     )}
@@ -881,8 +881,8 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex justify-between">
-                  <span>Taxes & Duties</span>
-                  <span className="font-semibold text-emerald-600">Complimentary Included</span>
+                  <span>Tax & Packaging</span>
+                  <span className="font-semibold text-emerald-600">Free / Included</span>
                 </div>
               </div>
 
@@ -895,7 +895,7 @@ export default function CheckoutPage() {
                   </span>
                 </div>
                 <p className="text-[11px] text-[#888] mt-1">
-                  Includes GIA certification certificate & wax-sealed luxury presentation box.
+                  Includes official authenticity certificate and luxury gift box.
                 </p>
               </div>
 
@@ -912,10 +912,10 @@ export default function CheckoutPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                       </svg>
-                      Securing Order & Vault...
+                      Placing Order...
                     </>
                   ) : (
-                    `Authorize & Place Order • ${formatPrice(total)}`
+                    `Place Order • ${formatPrice(total)}`
                   )}
                 </button>
               </div>
@@ -924,15 +924,15 @@ export default function CheckoutPage() {
               <div className="mt-6 pt-6 border-t border-[#eee] space-y-2.5 text-[11px] text-[#666]">
                 <div className="flex items-center gap-2">
                   <span className="text-[#D97706] font-bold">✦</span>
-                  <span>100% Genuine Handcrafted Ethical Gold & Natural Diamonds</span>
+                  <span>100% Real Gold & Certified Natural Diamonds</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-600 font-bold">✦</span>
-                  <span>Armored Insured Delivery with Real-time GPS Tracker</span>
+                  <span>Safe, Insured Courier Delivery with Tracking</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-blue-600 font-bold">✦</span>
-                  <span>30-Day Complimentary Exchange & Return Guarantee</span>
+                  <span>30-Day Free Return & Exchange Guarantee</span>
                 </div>
               </div>
             </div>

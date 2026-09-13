@@ -133,8 +133,8 @@ export default function ContentManagementPage() {
   const toggleFeaturedProduct = (id: string, currentVal: boolean) => {
     updateProduct(id, { isFeatured: !currentVal });
     addToast({
-      title: "Featured Masterwork Updated",
-      message: `Product ${!currentVal ? "added to" : "removed from"} homepage showcase.`,
+      title: "Featured Product Updated",
+      message: `Product ${!currentVal ? "added to" : "removed from"} homepage.`,
       type: "info",
     });
   };
@@ -145,10 +145,10 @@ export default function ContentManagementPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-stone-900">
-            Storefront CMS & Merchandising
+            Website Banners & Highlights
           </h1>
           <p className="text-sm text-stone-500">
-            Curate hero slides, marketing spotlight cards, and featured fine jewelry on the customer storefront.
+            Manage homepage sliders, promotional banners, and featured products.
           </p>
         </div>
 
@@ -158,7 +158,7 @@ export default function ContentManagementPage() {
           className="inline-flex items-center gap-2 px-3.5 py-2 border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold rounded-lg shadow-xs transition-colors"
         >
           <ExternalLink className="w-4 h-4 text-stone-500" />
-          Preview Live Storefront
+          View Website
         </Link>
       </div>
 
@@ -172,7 +172,7 @@ export default function ContentManagementPage() {
               : "border-transparent text-stone-500 hover:text-stone-900"
           }`}
         >
-          Homepage Hero Slider ({heroBanners.length})
+          Homepage Sliders ({heroBanners.length})
         </button>
 
         <button
@@ -183,7 +183,7 @@ export default function ContentManagementPage() {
               : "border-transparent text-stone-500 hover:text-stone-900"
           }`}
         >
-          Promotional Spotlight Banners ({promoBanners.length})
+          Promo Banners ({promoBanners.length})
         </button>
 
         <button
@@ -194,7 +194,7 @@ export default function ContentManagementPage() {
               : "border-transparent text-stone-500 hover:text-stone-900"
           }`}
         >
-          Featured Showcase ({products.filter((p) => p.isFeatured).length} jewels)
+          Featured on Homepage ({products.filter((p) => p.isFeatured).length} products)
         </button>
       </div>
 
@@ -203,13 +203,13 @@ export default function ContentManagementPage() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <p className="text-xs text-stone-500">
-              Hero slides rotate automatically on the storefront landing page.
+              These images show as large slides at the top of your homepage.
             </p>
             <button
               onClick={() => handleOpenCreateBanner("hero")}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold shadow-xs"
             >
-              <Plus className="w-3.5 h-3.5" /> Add Hero Slide
+              <Plus className="w-3.5 h-3.5" /> Add Slider Image
             </button>
           </div>
 
@@ -284,13 +284,13 @@ export default function ContentManagementPage() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <p className="text-xs text-stone-500">
-              Promotional banners highlight special seasonal acquisitions and bespoke atelier services.
+              Promo banners appear across your homepage to highlight discounts or special collections.
             </p>
             <button
               onClick={() => handleOpenCreateBanner("promo")}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold shadow-xs"
             >
-              <Plus className="w-3.5 h-3.5" /> Add Promo Banner
+              <Plus className="w-3.5 h-3.5" /> Add Banner
             </button>
           </div>
 
@@ -352,7 +352,7 @@ export default function ContentManagementPage() {
       {activeTab === "featured" && (
         <div className="space-y-4">
           <p className="text-xs text-stone-500">
-            Click the star to curate which masterpieces appear on the storefront homepage showcase.
+            Click the star button on any product to show or hide it on your homepage.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -374,7 +374,7 @@ export default function ContentManagementPage() {
                   </div>
                   <span className="text-[11px] text-stone-400 uppercase tracking-widest">{p.category}</span>
                   <h4 className="text-xs font-semibold text-stone-900 line-clamp-1">{p.name}</h4>
-                  <p className="text-xs font-bold text-amber-600 mt-1">${p.price.toLocaleString()}</p>
+                  <p className="text-xs font-bold text-amber-600 mt-1">Rs. {p.price.toLocaleString()}</p>
                 </div>
 
                 <button
@@ -387,7 +387,7 @@ export default function ContentManagementPage() {
                   }`}
                 >
                   <Star className={`w-3.5 h-3.5 ${p.isFeatured ? "fill-amber-600 text-amber-600" : ""}`} />
-                  {p.isFeatured ? "Featured on Home" : "Feature on Home"}
+                  {p.isFeatured ? "Shown on Homepage" : "Show on Homepage"}
                 </button>
               </div>
             ))}
@@ -399,8 +399,8 @@ export default function ContentManagementPage() {
       <SlideOverDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        title={editingBanner ? "Edit Banner Slide" : "Create Storefront Banner"}
-        description="Configure imagery, typography, CTA buttons, and storefront display priority."
+        title={editingBanner ? "Edit Banner" : "Add New Banner"}
+        description="Set banner photo, title, link, and where it appears."
         width="max-w-md"
       >
         <form onSubmit={handleBannerSubmit} className="space-y-4">
@@ -413,33 +413,33 @@ export default function ContentManagementPage() {
               onChange={(e) => setFormType(e.target.value as "hero" | "promo")}
               className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-800 focus:outline-none"
             >
-              <option value="hero">Homepage Hero Slide (Full Width)</option>
-              <option value="promo">Promotional Spotlight Card</option>
+              <option value="hero">Top Homepage Slider</option>
+              <option value="promo">Promo Banner Card</option>
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-              Main Headline <span className="text-red-500">*</span>
+              Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formTitle}
               onChange={(e) => setFormTitle(e.target.value)}
-              placeholder="e.g. Royal Heritage High Jewelry"
+              placeholder="e.g. Elegant Gold Collection"
               className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
             />
           </div>
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-              Eyebrow / Subtitle
+              Subtitle (Optional)
             </label>
             <input
               type="text"
               value={formSubtitle}
               onChange={(e) => setFormSubtitle(e.target.value)}
-              placeholder="e.g. 2026 Haute Joaillerie Collection"
+              placeholder="e.g. Handcrafted Jewelry"
               className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
             />
           </div>
@@ -493,7 +493,7 @@ export default function ContentManagementPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Display Order
+                Display Order (1 = First)
               </label>
               <input
                 type="number"
@@ -513,8 +513,8 @@ export default function ContentManagementPage() {
                 onChange={(e) => setFormIsActive(e.target.value === "active")}
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-800 focus:outline-none"
               >
-                <option value="active">Active (Visible)</option>
-                <option value="draft">Draft (Hidden)</option>
+                <option value="active">Active (Visible on Store)</option>
+                <option value="draft">Hidden</option>
               </select>
             </div>
           </div>
@@ -540,8 +540,8 @@ export default function ContentManagementPage() {
       {/* Delete Dialog */}
       <ConfirmDialog
         isOpen={!!deleteBannerItem}
-        title="Delete Banner Slide?"
-        message="Are you certain you want to remove this banner? The homepage layout will adjust dynamically."
+        title="Delete Banner?"
+        message="Are you sure you want to delete this banner image from your homepage?"
         confirmText="Delete Banner"
         cancelText="Cancel"
         isDestructive={true}

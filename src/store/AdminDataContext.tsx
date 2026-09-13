@@ -450,10 +450,10 @@ export function AdminDataProvider({ children }: { children: React.ReactNode }) {
   const updateOrderStatus = (orderId: string, status: AdminOrder["orderStatus"]) => {
     const statusLabels: Record<AdminOrder["orderStatus"], string> = {
       pending: "Order Placed",
-      processing: "Workshop Processing",
-      shipped: "Armored Transit",
+      processing: "Packing & Preparing",
+      shipped: "Shipped",
       delivered: "Delivered",
-      cancelled: "Order Cancelled",
+      cancelled: "Cancelled",
     };
 
     const label = statusLabels[status] || status;

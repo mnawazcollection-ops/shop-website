@@ -43,7 +43,7 @@ export default function ReviewsPage() {
     approveReview(id);
     addToast({
       title: "Review Approved",
-      message: "Testimonial is now verified and published to storefront.",
+      message: "Review is now approved and visible on your store.",
       type: "success",
     });
   };
@@ -52,7 +52,7 @@ export default function ReviewsPage() {
     rejectReview(id);
     addToast({
       title: "Review Rejected",
-      message: "Testimonial flagged and hidden from store.",
+      message: "Review is rejected and hidden.",
       type: "info",
     });
   };
@@ -61,7 +61,7 @@ export default function ReviewsPage() {
     toggleFeatureReview(r.id);
     addToast({
       title: "Featured Status Changed",
-      message: `Review ${!r.featured ? "spotlighted on homepage" : "un-featured"}.`,
+      message: `Review ${!r.featured ? "featured on homepage" : "removed from homepage"}.`,
       type: "info",
     });
   };
@@ -71,7 +71,7 @@ export default function ReviewsPage() {
       deleteReview(deleteReviewItem.id);
       addToast({
         title: "Review Deleted",
-        message: "Customer feedback permanently removed.",
+        message: "Review deleted successfully.",
         type: "info",
       });
       setDeleteReviewItem(null);
@@ -86,17 +86,17 @@ export default function ReviewsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-stone-900">
-            Client Testimonials & Reviews
+            Customer Reviews
           </h1>
           <p className="text-sm text-stone-500">
-            Moderate certified buyer testimonials, evaluate feedback, and spotlight masterwork endorsements.
+            Read customer reviews, approve or reject feedback, and feature favorites on the homepage.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {pendingCount > 0 && (
             <span className="px-3.5 py-1.5 bg-amber-100 text-amber-900 rounded-lg text-xs font-bold flex items-center gap-1.5">
-              <AlertCircle className="w-3.5 h-3.5" /> {pendingCount} Pending Moderation
+              <AlertCircle className="w-3.5 h-3.5" /> {pendingCount} Pending Reviews
             </span>
           )}
         </div>
@@ -110,7 +110,7 @@ export default function ReviewsPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by patron name, product, or feedback..."
+            placeholder="Search by customer name, product, or review text..."
             className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
           />
         </div>
@@ -121,9 +121,9 @@ export default function ReviewsPage() {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-700 focus:outline-none"
           >
-            <option value="all">All Moderation Status</option>
-            <option value="pending">Pending Review</option>
-            <option value="approved">Approved / Live</option>
+            <option value="all">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
           </select>
 
@@ -132,8 +132,8 @@ export default function ReviewsPage() {
             onChange={(e) => setRatingFilter(e.target.value)}
             className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-700 focus:outline-none"
           >
-            <option value="all">All Star Ratings</option>
-            <option value="5">5 Stars Only</option>
+            <option value="all">All Ratings</option>
+            <option value="5">5 Stars</option>
             <option value="4">4 Stars</option>
             <option value="3">3 Stars</option>
             <option value="2">2 Stars</option>
@@ -148,14 +148,14 @@ export default function ReviewsPage() {
           <table className="w-full text-left border-collapse text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                <th className="py-3 px-4">Patron</th>
-                <th className="py-3 px-4">Masterwork</th>
+                <th className="py-3 px-4">Customer</th>
+                <th className="py-3 px-4">Product</th>
                 <th className="py-3 px-4">Rating</th>
-                <th className="py-3 px-4">Testimonial Content</th>
+                <th className="py-3 px-4">Review</th>
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-center">Featured</th>
-                <th className="py-3 px-4 text-right">Moderation Actions</th>
+                <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
 
@@ -163,7 +163,7 @@ export default function ReviewsPage() {
               {filteredReviews.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="py-12 text-center text-xs text-stone-500">
-                    No testimonials matching your filters.
+                    No reviews found.
                   </td>
                 </tr>
               ) : (
@@ -225,7 +225,7 @@ export default function ReviewsPage() {
                       <button
                         onClick={() => handleToggleFeature(rev)}
                         className="p-1 rounded hover:bg-stone-100"
-                        title={rev.featured ? "Unfeature" : "Spotlight on Homepage"}
+                        title={rev.featured ? "Remove from Homepage" : "Feature on Homepage"}
                       >
                         <Star
                           className={`w-4 h-4 ${
@@ -235,7 +235,7 @@ export default function ReviewsPage() {
                       </button>
                     </td>
 
-                    {/* Moderation Actions */}
+                    {/* Actions */}
                     <td className="py-3.5 px-4 text-right">
                       <div className="flex items-center justify-end gap-1">
                         {rev.status !== "approved" && (
@@ -276,8 +276,8 @@ export default function ReviewsPage() {
       {/* Delete Dialog */}
       <ConfirmDialog
         isOpen={!!deleteReviewItem}
-        title="Delete Customer Testimonial?"
-        message="Are you sure you want to permanently delete this client review from the store records?"
+        title="Delete Review?"
+        message="Are you sure you want to delete this customer review?"
         confirmText="Delete Review"
         cancelText="Cancel"
         isDestructive={true}

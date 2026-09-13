@@ -56,8 +56,8 @@ export default function InventoryPage() {
   const handleQuickAdjust = (productId: string, delta: number) => {
     quickStockAdjust(productId, delta);
     addToast({
-      title: "Stock Adjusted",
-      message: `Adjusted inventory by ${delta > 0 ? `+${delta}` : delta} unit(s).`,
+      title: "Stock Changed",
+      message: `Changed stock by ${delta > 0 ? `+${delta}` : delta} item(s).`,
       type: "info",
     });
   };
@@ -69,8 +69,8 @@ export default function InventoryPage() {
       delete copy[productId];
       setEditingStocks(copy);
       addToast({
-        title: "Inventory Level Saved",
-        message: "Vault records updated successfully.",
+        title: "Stock Saved",
+        message: "Product stock updated successfully.",
         type: "success",
       });
     }
@@ -81,9 +81,9 @@ export default function InventoryPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Vault & Stock Management</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-stone-900">Stock Levels</h1>
           <p className="text-sm text-stone-500">
-            Real-time physical inventory reconciliation, atelier alert thresholds, and restock tracking.
+            Check and update how many items you have in stock.
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export default function InventoryPage() {
           href="/admin/products/new"
           className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"
         >
-          <Plus className="w-4 h-4" /> Add Masterwork
+          <Plus className="w-4 h-4" /> Add Product
         </Link>
       </div>
 
@@ -104,11 +104,10 @@ export default function InventoryPage() {
             </div>
             <div>
               <p className="font-bold text-stone-900">
-                Action Required: {lowCount + outCount} fine jewelry items require workshop replenishment
+                Warning: {lowCount + outCount} items need to be restocked
               </p>
               <p className="text-stone-600 mt-0.5">
-                {outCount} items currently have zero vault units; {lowCount} items are below reserve
-                safety levels.
+                {outCount} items are completely out of stock; {lowCount} items are running low.
               </p>
             </div>
           </div>
@@ -118,13 +117,13 @@ export default function InventoryPage() {
               onClick={() => setFilterLevel("low")}
               className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg"
             >
-              Filter Low Stock ({lowCount})
+              Low Stock ({lowCount})
             </button>
             <button
               onClick={() => setFilterLevel("out")}
               className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg"
             >
-              Filter Depleted ({outCount})
+              Out of Stock ({outCount})
             </button>
           </div>
         </div>
@@ -133,23 +132,23 @@ export default function InventoryPage() {
       {/* Summary KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl border border-stone-200 p-4 shadow-xs">
-          <span className="text-xs text-stone-500 font-medium">Total Vault Units</span>
-          <p className="text-xl font-bold text-stone-900 mt-1">{totalUnits} pieces</p>
+          <span className="text-xs text-stone-500 font-medium">Total Items in Stock</span>
+          <p className="text-xl font-bold text-stone-900 mt-1">{totalUnits} items</p>
         </div>
 
         <div className="bg-white rounded-xl border border-stone-200 p-4 shadow-xs">
-          <span className="text-xs text-stone-500 font-medium">Cataloged SKUs</span>
-          <p className="text-xl font-bold text-stone-900 mt-1">{products.length} SKUs</p>
+          <span className="text-xs text-stone-500 font-medium">Total Products</span>
+          <p className="text-xl font-bold text-stone-900 mt-1">{products.length} products</p>
         </div>
 
         <div className="bg-white rounded-xl border border-stone-200 p-4 shadow-xs">
-          <span className="text-xs text-amber-700 font-medium">Low Stock Alerts</span>
-          <p className="text-xl font-bold text-amber-600 mt-1">{lowCount} pieces</p>
+          <span className="text-xs text-amber-700 font-medium">Low Stock Warning</span>
+          <p className="text-xl font-bold text-amber-600 mt-1">{lowCount} items</p>
         </div>
 
         <div className="bg-white rounded-xl border border-stone-200 p-4 shadow-xs">
-          <span className="text-xs text-red-700 font-medium">Vault Depleted (0 Stock)</span>
-          <p className="text-xl font-bold text-red-600 mt-1">{outCount} pieces</p>
+          <span className="text-xs text-red-700 font-medium">Out of Stock (0 Items)</span>
+          <p className="text-xl font-bold text-red-600 mt-1">{outCount} items</p>
         </div>
       </div>
 
@@ -161,7 +160,7 @@ export default function InventoryPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Filter by masterwork name or SKU..."
+            placeholder="Search by product name or code..."
             className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
           />
         </div>
@@ -206,12 +205,12 @@ export default function InventoryPage() {
           <table className="w-full text-left border-collapse text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                <th className="py-3 px-4">Masterwork</th>
-                <th className="py-3 px-4">SKU</th>
-                <th className="py-3 px-4 text-center">Safety Threshold</th>
-                <th className="py-3 px-4 text-center">Current Stock</th>
-                <th className="py-3 px-4">Vault Status</th>
-                <th className="py-3 px-4">Quick Adjust</th>
+                <th className="py-3 px-4">Product</th>
+                <th className="py-3 px-4">Code / SKU</th>
+                <th className="py-3 px-4 text-center">Alert Below</th>
+                <th className="py-3 px-4 text-center">In Stock</th>
+                <th className="py-3 px-4">Stock Status</th>
+                <th className="py-3 px-4">Quick +/-</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -220,7 +219,7 @@ export default function InventoryPage() {
               {inventoryItems.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-xs text-stone-500">
-                    No matching jewelry inventory items found.
+                    No products found.
                   </td>
                 </tr>
               ) : (
@@ -262,7 +261,7 @@ export default function InventoryPage() {
 
                       {/* Threshold */}
                       <td className="py-3.5 px-4 text-center font-mono text-xs text-stone-500">
-                        {p.lowStockThreshold} units
+                        {p.lowStockThreshold} items
                       </td>
 
                       {/* Stock Input & Stepper */}
@@ -299,15 +298,15 @@ export default function InventoryPage() {
                       <td className="py-3.5 px-4">
                         {isOut ? (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-100 text-red-800 text-[11px] font-bold">
-                            Depleted
+                            Out of Stock
                           </span>
                         ) : isLow ? (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">
-                            Low Reserve
+                            Low Stock
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
-                            Secure Stock
+                            In Stock
                           </span>
                         )}
                       </td>
@@ -333,7 +332,7 @@ export default function InventoryPage() {
                           <button
                             onClick={() => handleQuickAdjust(p.id, 5)}
                             className="px-2 py-0.5 border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 rounded text-[11px] font-bold"
-                            title="Restock +5"
+                            title="Add 5"
                           >
                             +5
                           </button>
@@ -346,7 +345,7 @@ export default function InventoryPage() {
                           href={`/admin/products/${p.id}/edit`}
                           className="inline-flex items-center gap-1 text-xs font-semibold text-stone-500 hover:text-amber-600"
                         >
-                          Manage SKU <ArrowRight className="w-3.5 h-3.5" />
+                          Edit Product <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                       </td>
                     </tr>

@@ -87,15 +87,15 @@ export default function CouponsPage() {
     if (editingCoupon) {
       updateCoupon(editingCoupon.id, payload);
       addToast({
-        title: "Voucher Updated",
-        message: `Privilege code "${payload.code}" updated successfully.`,
+        title: "Coupon Updated",
+        message: `Discount code "${payload.code}" updated successfully.`,
         type: "success",
       });
     } else {
       addCoupon(payload);
       addToast({
-        title: "Privilege Code Created",
-        message: `Voucher "${payload.code}" is now active.`,
+        title: "Coupon Created",
+        message: `Discount code "${payload.code}" is now active.`,
         type: "success",
       });
     }
@@ -107,7 +107,7 @@ export default function CouponsPage() {
     if (deleteCouponItem) {
       deleteCoupon(deleteCouponItem.id);
       addToast({
-        title: "Voucher Removed",
+        title: "Coupon Deleted",
         message: `Code "${deleteCouponItem.code}" was deleted.`,
         type: "info",
       });
@@ -130,10 +130,10 @@ export default function CouponsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-stone-900">
-            Privilege Vouchers & Discounts
+            Discount Codes & Coupons
           </h1>
           <p className="text-sm text-stone-500">
-            Create bespoke promotional codes, VIP collector allowances, and seasonal incentives.
+            Create discount codes to give customers special offers or percentage off.
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export default function CouponsPage() {
           onClick={handleOpenCreate}
           className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"
         >
-          <Plus className="w-4 h-4" /> Create Privilege Voucher
+          <Plus className="w-4 h-4" /> Add Discount Code
         </button>
       </div>
 
@@ -151,11 +151,11 @@ export default function CouponsPage() {
           <table className="w-full text-left border-collapse text-sm min-w-[700px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50/80 text-[11px] uppercase tracking-wider font-semibold text-stone-500">
-                <th className="py-3 px-4">Privilege Code</th>
-                <th className="py-3 px-4">Allowance Value</th>
-                <th className="py-3 px-4">Min. Acquisition</th>
-                <th className="py-3 px-4">Usage & Limit</th>
-                <th className="py-3 px-4">Valid Until</th>
+                <th className="py-3 px-4">Coupon Code</th>
+                <th className="py-3 px-4">Discount</th>
+                <th className="py-3 px-4">Min. Order</th>
+                <th className="py-3 px-4">Times Used</th>
+                <th className="py-3 px-4">Expires On</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
@@ -165,7 +165,7 @@ export default function CouponsPage() {
               {coupons.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-xs text-stone-500">
-                    No active discount vouchers configured yet.
+                    No discount codes created yet.
                   </td>
                 </tr>
               ) : (
@@ -257,14 +257,14 @@ export default function CouponsPage() {
                           <button
                             onClick={() => handleOpenEdit(cpn)}
                             className="p-1.5 text-stone-400 hover:text-amber-600 rounded hover:bg-stone-100 transition-colors"
-                            title="Edit Voucher"
+                            title="Edit Code"
                           >
                             <Edit3 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => setDeleteCouponItem(cpn)}
                             className="p-1.5 text-stone-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors"
-                            title="Delete Voucher"
+                            title="Delete Code"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -283,20 +283,20 @@ export default function CouponsPage() {
       <SlideOverDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        title={editingCoupon ? `Edit Voucher: ${editingCoupon.code}` : "Create Privilege Voucher"}
-        description="Issue promotional discounts for VIP acquisition campaigns or seasonal events."
+        title={editingCoupon ? `Edit Code: ${editingCoupon.code}` : "Add Discount Code"}
+        description="Create a promo code for your customers to use during checkout."
         width="max-w-md"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-              Voucher Code <span className="text-red-500">*</span>
+              Coupon Code <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formCode}
               onChange={(e) => setFormCode(e.target.value.toUpperCase())}
-              placeholder="e.g. SOLITAIRE20"
+              placeholder="e.g. SAVE15"
               className="w-full px-3.5 py-2 font-mono uppercase bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
             />
             {errors.code && <p className="text-xs text-red-600 mt-1">{errors.code}</p>}
@@ -313,13 +313,13 @@ export default function CouponsPage() {
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-800 focus:outline-none"
               >
                 <option value="percentage">Percentage (%)</option>
-                <option value="fixed">Fixed Amount ($)</option>
+                <option value="fixed">Fixed Amount (Rs.)</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Value <span className="text-red-500">*</span>
+                Discount Amount <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -336,28 +336,28 @@ export default function CouponsPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Min. Order (PKR)
+                Minimum Order (Rs.)
               </label>
               <input
                 type="number"
                 min="0"
                 value={formMinOrder}
                 onChange={(e) => setFormMinOrder(e.target.value)}
-                placeholder="25000"
+                placeholder="5000"
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Max. Discount (PKR)
+                Maximum Discount (Rs.)
               </label>
               <input
                 type="number"
                 min="0"
                 value={formMaxDiscount}
                 onChange={(e) => setFormMaxDiscount(e.target.value)}
-                placeholder="Optional cap"
+                placeholder="Optional limit"
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none"
               />
             </div>
@@ -366,7 +366,7 @@ export default function CouponsPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Usage Limit
+                Times Can Be Used
               </label>
               <input
                 type="number"
@@ -380,7 +380,7 @@ export default function CouponsPage() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">
-                Expiry Date
+                Expires On
               </label>
               <input
                 type="date"
@@ -400,8 +400,8 @@ export default function CouponsPage() {
               onChange={(e) => setFormIsActive(e.target.value === "active")}
               className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-xs font-medium text-stone-800 focus:outline-none"
             >
-              <option value="active">Active & Redeemable</option>
-              <option value="inactive">Paused / Inactive</option>
+              <option value="active">Active (Can be used)</option>
+              <option value="inactive">Disabled</option>
             </select>
           </div>
 
@@ -417,7 +417,7 @@ export default function CouponsPage() {
               type="submit"
               className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold"
             >
-              {editingCoupon ? "Update Voucher" : "Create Voucher"}
+              {editingCoupon ? "Save Changes" : "Save Code"}
             </button>
           </div>
         </form>
@@ -427,8 +427,8 @@ export default function CouponsPage() {
       <ConfirmDialog
         isOpen={!!deleteCouponItem}
         title={`Delete "${deleteCouponItem?.code}"?`}
-        message="Are you sure you want to delete this promotional voucher code? Existing completed orders will not be affected."
-        confirmText="Delete Voucher"
+        message="Are you sure you want to delete this discount code? Past orders with this code will not be affected."
+        confirmText="Delete Code"
         cancelText="Cancel"
         isDestructive={true}
         onConfirm={handleDelete}

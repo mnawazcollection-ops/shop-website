@@ -83,17 +83,17 @@ const categoryMetadata: Record<
   },
   "new-arrivals": {
     title: "New Arrivals",
-    subtitle: "Autumn / Winter Haute Joaillerie",
+    subtitle: "Latest Arrivals",
     description:
-      "Explore the latest creations fresh from our atelier. Groundbreaking design, rare stones, and renewed contemporary silhouettes.",
+      "Explore our newest jewelry designs. Handcrafted styles, genuine stones, and everyday elegance.",
     bannerImage:
       "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1600&h=600&fit=crop",
   },
   "best-sellers": {
     title: "Iconic Best Sellers",
-    subtitle: "Most Loved Masterpieces",
+    subtitle: "Customer Favorites",
     description:
-      "Our most sought-after icons, cherished by collectors across the globe for their unmatched beauty and enduring perfection.",
+      "Our most popular jewelry pieces, loved by customers for their quality and beauty.",
     bannerImage:
       "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=1600&h=600&fit=crop",
   },

@@ -268,11 +268,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         lowStockThreshold: Number(lowStockThreshold),
         image: cloudMainImage,
         gallery: cloudGallery.filter(Boolean),
-        shortDescription: shortDescription.trim() || `${name} handcrafted with exceptional master artisanal detail.`,
+        shortDescription: shortDescription.trim() || `${name} handcrafted with beautiful detail.`,
         description:
           description.trim() ||
-          `M. Nawaz Jewelry Collection proudly introduces this masterwork. Flawlessly cut, hand-set in recycled precious metals with certified ethical provenance.`,
-        tags: parsedTags.length > 0 ? parsedTags : ["Handmade", "18K Gold", "Fine Jewelry"],
+          `M. Nawaz Jewelry Collection presents this elegant piece, handcrafted with genuine quality materials.`,
+        tags: parsedTags.length > 0 ? parsedTags : ["Handmade", "Gold", "Jewelry"],
         badge,
         status,
         isFeatured,
@@ -286,14 +286,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         updateProduct(initialProduct.id, productPayload);
         addToast({
           title: "Product Updated",
-          message: `"${productPayload.name}" saved & synced with cloud catalog.`,
+          message: `"${productPayload.name}" saved successfully.`,
           type: "success",
         });
       } else {
         const created = addProduct(productPayload);
         addToast({
           title: "Product Created",
-          message: `"${created.name}" is now live in catalog & synced to cloud.`,
+          message: `"${created.name}" is now live in your store.`,
           type: "success",
         });
       }
@@ -304,7 +304,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       console.error(err);
       addToast({
         title: "Save Failed",
-        message: "An unexpected error occurred while saving the product.",
+        message: "Something went wrong while saving the product. Please try again.",
         type: "error",
       });
     } finally {
@@ -325,12 +325,12 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           </Link>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-stone-900">
-              {isEdit ? `Edit: ${initialProduct?.name}` : "Create New Masterwork"}
+              {isEdit ? `Edit: ${initialProduct?.name}` : "Add New Product"}
             </h1>
             <p className="text-sm text-stone-500">
               {isEdit
-                ? "Update pricing, inventory, variants, and merchandising details."
-                : "Add a prestigious fine jewelry piece to the catalog."}
+                ? "Update price, stock, photos, and product details."
+                : "Add a new jewelry product to your online store."}
             </p>
           </div>
         </div>
@@ -340,7 +340,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             href="/admin/products"
             className="px-4 py-2 border border-stone-200 text-stone-700 hover:bg-stone-100 rounded-lg text-sm font-medium transition-colors"
           >
-            Discard
+            Cancel
           </Link>
           <button
             type="submit"
@@ -355,7 +355,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             ) : (
               <>
                 <Check className="w-4 h-4" />
-                {isEdit ? "Save Changes" : "Publish Masterwork"}
+                {isEdit ? "Save Changes" : "Save & Publish"}
               </>
             )}
           </button>
@@ -366,11 +366,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Columns: Main Details */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Section 1: Basic Information */}
+          {/* Section 1: Product Information */}
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <h2 className="text-base font-semibold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <Tag className="w-4 h-4 text-amber-600" />
-              Basic Information
+              Product Information
             </h2>
 
             <div className="space-y-4">
@@ -382,7 +382,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   type="text"
                   value={name}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  placeholder="e.g. Royal Solitaire Diamond Ring 18K"
+                  placeholder="e.g. Gold Diamond Ring 18K"
                   className={`w-full px-3.5 py-2.5 bg-stone-50 border rounded-lg text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all ${
                     errors.name ? "border-red-400 bg-red-50/20" : "border-stone-200"
                   }`}
@@ -393,27 +393,27 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                    Slug / URL Key
+                    Website Link (Slug)
                   </label>
                   <input
                     type="text"
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
-                    placeholder="royal-solitaire-diamond-ring"
+                    placeholder="gold-diamond-ring"
                     className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm font-mono text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
-                  <p className="text-[11px] text-stone-400 mt-1">Direct URL on storefront: /product/{slug || "..."}</p>
+                  <p className="text-[11px] text-stone-400 mt-1">Page link: /product/{slug || "..."}</p>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                    SKU Code <span className="text-red-500">*</span>
+                    Product Code / SKU <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
-                    placeholder="SI-RNG-009"
+                    placeholder="RNG-009"
                     className={`w-full px-3.5 py-2 bg-stone-50 border rounded-lg text-sm font-mono text-stone-800 uppercase focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
                       errors.sku ? "border-red-400 bg-red-50/20" : "border-stone-200"
                     }`}
@@ -424,43 +424,43 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Short Description
+                  Short Summary
                 </label>
                 <input
                   type="text"
                   value={shortDescription}
                   onChange={(e) => setShortDescription(e.target.value)}
-                  placeholder="e.g. Masterpiece engagement ring with certified GIA oval diamond."
+                  placeholder="e.g. Beautiful gold ring with shiny diamond stone."
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Full Description & Story
+                  Full Description & Details
                 </label>
                 <textarea
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Detailed craftsmanship narrative, metal purity, certification, and styling advice..."
+                  placeholder="Write full details about this jewelry item, metal purity, design, and size..."
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-y"
                 />
               </div>
             </div>
           </div>
 
-          {/* Section 2: Pricing & Economics */}
+          {/* Section 2: Pricing & Profit */}
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <h2 className="text-base font-semibold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <DollarSign className="w-4 h-4 text-amber-600" />
-              Pricing & Economics
+              Pricing & Profit
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Regular Price (PKR) <span className="text-red-500">*</span>
+                  Selling Price (Rs.) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2.5 text-stone-400 text-xs font-semibold">Rs.</span>
@@ -481,7 +481,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Sale / Promo Price (PKR)
+                  Discount Price (Optional)
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2.5 text-stone-400 text-xs font-semibold">Rs.</span>
@@ -491,7 +491,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     step="1"
                     value={salePrice}
                     onChange={(e) => setSalePrice(e.target.value)}
-                    placeholder="Optional promo price"
+                    placeholder="Discount price"
                     className={`w-full pl-9 pr-3 py-2 bg-stone-50 border rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 ${
                       errors.salePrice ? "border-red-400 bg-red-50/20" : "border-stone-200"
                     }`}
@@ -502,7 +502,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Cost Price (PKR)
+                  Your Cost Price (Rs.)
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2.5 text-stone-400 text-xs font-semibold">Rs.</span>
@@ -512,33 +512,33 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     step="1"
                     value={costPrice}
                     onChange={(e) => setCostPrice(e.target.value)}
-                    placeholder="Workshop cost"
+                    placeholder="How much you paid"
                     className="w-full pl-9 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
                 </div>
-                <p className="text-[11px] text-stone-400 mt-1">Internal only. Never shown to clients.</p>
+                <p className="text-[11px] text-stone-400 mt-1">Only you can see this. Customers cannot see it.</p>
               </div>
             </div>
 
             {grossMargin && (
               <div className="p-3 bg-amber-50/60 border border-amber-200/60 rounded-lg flex items-center justify-between text-xs text-amber-900">
-                <span className="font-medium">Estimated Gross Margin:</span>
+                <span className="font-medium">Estimated Profit Margin:</span>
                 <span className="font-bold text-sm text-amber-700">{grossMargin}%</span>
               </div>
             )}
           </div>
 
-          {/* Section 3: Inventory & Fulfillment */}
+          {/* Section 3: Stock & Inventory */}
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <h2 className="text-base font-semibold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-3">
               <Box className="w-4 h-4 text-amber-600" />
-              Inventory & Stock Management
+              Stock & Inventory
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Current Stock Available <span className="text-red-500">*</span>
+                  Items in Stock <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -555,7 +555,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Low-Stock Threshold Alert
+                  Low Stock Warning (Alert when below)
                 </label>
                 <input
                   type="number"
@@ -565,7 +565,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   placeholder="3"
                   className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                 />
-                <p className="text-[11px] text-stone-400 mt-1">Triggers warning when units fall below this.</p>
+                <p className="text-[11px] text-stone-400 mt-1">Alerts you when stock falls below this number.</p>
               </div>
             </div>
 
@@ -577,27 +577,27 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
               />
               <div>
-                <span className="text-sm font-medium text-stone-800">Allow Made-to-Order / Backorders</span>
+                <span className="text-sm font-medium text-stone-800">Allow Orders When Out of Stock</span>
                 <p className="text-xs text-stone-500">
-                  Allow clients to purchase even when vault inventory reaches 0 (3-4 week atelier crafting cycle).
+                  Customers can still place orders even if stock is 0 (made to order).
                 </p>
               </div>
             </label>
           </div>
 
-          {/* Section 4: Product Images & Media */}
+          {/* Section 4: Product Photos */}
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
               <h2 className="text-base font-semibold text-stone-900 flex items-center gap-2">
                 <ImageIcon className="w-4 h-4 text-amber-600" />
-                Product Imagery & Gallery
+                Product Photos
               </h2>
-              <span className="text-xs text-stone-500">{1 + gallery.length} media assets</span>
+              <span className="text-xs text-stone-500">{1 + gallery.length} photos</span>
             </div>
 
             {/* Primary Cover Image via ImageUploader */}
             <ImageUploader
-              label="Primary Masterwork Image"
+              label="Main Product Photo"
               value={mainImage}
               onChange={(url) => setMainImage(url)}
               folder="sir-ihsan/products"
@@ -610,11 +610,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             <div className="pt-4 border-t border-stone-100 space-y-3">
               <div className="flex items-center justify-between">
                 <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700">
-                  Additional Gallery Views ({gallery.length})
+                  More Product Photos ({gallery.length})
                 </label>
                 <label className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-300 rounded-lg text-xs font-semibold hover:bg-amber-100 cursor-pointer transition-colors">
                   <Upload className="w-3.5 h-3.5 text-amber-700" />
-                  <span>{isUploadingGallery ? "Uploading..." : "Upload to Cloud"}</span>
+                  <span>{isUploadingGallery ? "Uploading..." : "Upload Photo"}</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -693,16 +693,16 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             </div>
           </div>
 
-          {/* Section 5: Jewelry Variants & Options */}
+          {/* Section 5: Product Options (Sizes & Metals) */}
           <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-xs space-y-5">
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
               <div>
                 <h2 className="text-base font-semibold text-stone-900 flex items-center gap-2">
                   <Layers className="w-4 h-4 text-amber-600" />
-                  Jewelry Variants & Options
+                  Product Options (Sizes & Metals)
                 </h2>
                 <p className="text-xs text-stone-500 mt-0.5">
-                  Configure precious metals, ring sizes, and gemstones for custom ordering.
+                  Choose which metal colors and sizes are available for this item.
                 </p>
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
@@ -712,7 +712,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   onChange={(e) => setHasVariants(e.target.checked)}
                   className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
                 />
-                <span className="text-xs font-semibold text-stone-700">Enable Variants</span>
+                <span className="text-xs font-semibold text-stone-700">Enable Options</span>
               </label>
             </div>
 
@@ -720,7 +720,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <div className="space-y-4 pt-2">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-2">
-                    Precious Metals Available
+                    Available Metals
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {[
@@ -757,7 +757,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-2">
-                    Ring / Bracelet Sizes
+                    Available Sizes
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {["5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "One Size"].map((size) => {
@@ -790,12 +790,12 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           </div>
         </div>
 
-        {/* Right 1 Column: Organization, Status & Merchandising */}
+        {/* Right 1 Column: Organization, Status & Highlights */}
         <div className="space-y-6">
           {/* Status Panel */}
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-4">
             <h3 className="text-sm font-bold text-stone-900 uppercase tracking-wider border-b border-stone-100 pb-2">
-              Publication Status
+              Publish Status
             </h3>
 
             <div>
@@ -807,12 +807,12 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               >
                 <option value="active">Active (Visible in Store)</option>
                 <option value="draft">Draft (Hidden)</option>
-                <option value="archived">Archived</option>
+                <option value="archived">Archived (Deleted)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Display Badge</label>
+              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Show Badge</label>
               <select
                 value={badge || ""}
                 onChange={(e) => setBadge((e.target.value as "new" | "sale" | "hot") || undefined)}
@@ -820,8 +820,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               >
                 <option value="">No Badge</option>
                 <option value="new">NEW ARRIVAL</option>
-                <option value="sale">SPECIAL PROMO</option>
-                <option value="hot">HOT / TRENDING</option>
+                <option value="sale">SALE / DISCOUNT</option>
+                <option value="hot">HOT / BEST SELLER</option>
               </select>
             </div>
           </div>
@@ -829,12 +829,12 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           {/* Categorization Panel */}
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-4">
             <h3 className="text-sm font-bold text-stone-900 uppercase tracking-wider border-b border-stone-100 pb-2">
-              Categorization
+              Category & Tags
             </h3>
 
             <div>
               <label className="block text-xs font-semibold text-stone-700 mb-1.5">
-                Primary Category <span className="text-red-500">*</span>
+                Category <span className="text-red-500">*</span>
               </label>
               <select
                 value={category}
@@ -850,23 +850,23 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Sub-Collection</label>
+              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Sub Category</label>
               <input
                 type="text"
                 value={subCategory}
                 onChange={(e) => setSubCategory(e.target.value)}
-                placeholder="e.g. Engagement Rings, Solitaires"
+                placeholder="e.g. Engagement Rings, Solitaire"
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Tags (comma separated)</label>
+              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Search Tags (comma separated)</label>
               <input
                 type="text"
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
-                placeholder="Diamond, 18K, Solitaire, Luxury"
+                placeholder="Diamond, Gold, Ring, Gift"
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
               />
             </div>
@@ -875,7 +875,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           {/* Merchandising & Highlights */}
           <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-xs space-y-3">
             <h3 className="text-sm font-bold text-stone-900 uppercase tracking-wider border-b border-stone-100 pb-2">
-              Store Merchandising
+              Featured on Website
             </h3>
 
             <label className="flex items-center gap-3 cursor-pointer py-1">
@@ -885,7 +885,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 onChange={(e) => setIsFeatured(e.target.checked)}
                 className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
               />
-              <span className="text-xs font-medium text-stone-800">Feature on Homepage</span>
+              <span className="text-xs font-medium text-stone-800">Show on Homepage</span>
             </label>
 
             <label className="flex items-center gap-3 cursor-pointer py-1">
@@ -895,7 +895,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 onChange={(e) => setIsNewArrival(e.target.checked)}
                 className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
               />
-              <span className="text-xs font-medium text-stone-800">Mark as New Arrival</span>
+              <span className="text-xs font-medium text-stone-800">Show in New Arrivals</span>
             </label>
 
             <label className="flex items-center gap-3 cursor-pointer py-1">
@@ -905,14 +905,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 onChange={(e) => setIsBestSeller(e.target.checked)}
                 className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 border-stone-300"
               />
-              <span className="text-xs font-medium text-stone-800">Mark as Best Seller</span>
+              <span className="text-xs font-medium text-stone-800">Show in Best Sellers</span>
             </label>
           </div>
 
           {/* Storefront Preview Card */}
           <div className="bg-gradient-to-br from-stone-900 to-stone-950 rounded-xl p-5 text-white space-y-3">
             <div className="flex items-center justify-between text-xs text-amber-400 font-semibold uppercase tracking-wider">
-              <span>Client Preview</span>
+              <span>Live Preview</span>
               <Sparkles className="w-3.5 h-3.5" />
             </div>
 
@@ -921,7 +921,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 <Image src={mainImage} alt="Card preview" fill className="object-cover" unoptimized />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-stone-500 text-xs">
-                  No preview available
+                  No photo added yet
                 </div>
               )}
             </div>
@@ -929,15 +929,15 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             <div className="pt-1">
               <p className="text-xs text-stone-400 uppercase tracking-widest">{category}</p>
               <h4 className="text-sm font-serif font-medium text-stone-100 truncate mt-0.5">
-                {name || "Untitled Masterpiece"}
+                {name || "Untitled Product"}
               </h4>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-sm font-semibold text-amber-400">
-                  ${price ? Number(price).toLocaleString() : "0.00"}
+                  Rs. {price ? Number(price).toLocaleString() : "0"}
                 </span>
                 {salePrice && (
                   <span className="text-xs text-stone-500 line-through">
-                    ${Number(salePrice).toLocaleString()}
+                    Rs. {Number(salePrice).toLocaleString()}
                   </span>
                 )}
               </div>
